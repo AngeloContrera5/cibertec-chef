@@ -2,26 +2,24 @@
  if (Dropzone.instances.length > 0) Dropzone.instances.forEach(dz => dz.destroy());
  Dropzone.autoDiscover = false;
 
-  var previewNode = document.querySelector("#template")
-  previewNode.id = ""
-  var previewTemplate = previewNode.parentNode.innerHTML
-  previewNode.parentNode.removeChild(previewNode)
- 
- 
-  var myDropzone = new Dropzone(document.body, { // Make the whole body a dropzone
-    url: "/target-url1", // Set the url
-    thumbnailWidth: 80,
-    thumbnailHeight: 80,
-    parallelUploads: 20,
-    previewTemplate: previewTemplate,
-    autoQueue: false, // Make sure the files aren't queued until manually added
-    previewsContainer: "#previews", // Define the container to display the previews
-    clickable: ".fileinput-button" // Define the element that should be used as click trigger to select files.
-  })
- 
- // Get the template HTML and remove it from the doumenthe template HTML and remove it from the doument
- Dropzone.autoDiscover = false
 
+  var previewNode1 = document.querySelector("#template1")
+  previewNode1.id = ""
+  var previewTemplate1 = previewNode1.parentNode.innerHTML
+  previewNode1.parentNode.removeChild(previewNode1)
+ 
+  var myDropzone1 = new Dropzone(document.body, { // Make the whole body a dropzone
+   url: "/target-url", // Set the url
+   thumbnailWidth: 80,
+   thumbnailHeight: 80,
+   parallelUploads: 20,
+   previewTemplate: previewTemplate1,
+   autoQueue: false, // Make sure the files aren't queued until manually added
+   previewsContainer: "#previews", // Define the container to display the previews
+   clickable: ".fileinput-button" // Define the element that should be used as click trigger to select files.
+ })
+ 
+ Dropzone.autoDiscover = false
 /*
  myDropzone.on("addedfile", function(file) {
    // Hookup the start button

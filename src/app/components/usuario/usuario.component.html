@@ -28,7 +28,7 @@
               <div class="card-header">
                 <h3 class="card-title">
                   <i class="fas fa-arrow-circle-right p-1"></i>
-                  Registrar Usuario  N° <span id="mosCodigo">001</span>
+                  Registrar Usuario 
                 </h3>
               </div>
               <div class="card-body">
@@ -41,20 +41,16 @@
                             <input type="text" class="form-control" id="idnombres" placeholder=""  >
                         </div>	
                         <div class="form-group col-sm-12">
-                            <label for="	idapellidos">Apellido Paterno</label>
-                            <input type="text" class="form-control" id="idapepaterno" placeholder=""  >
+                            <label for="	idapellidos">Apellidos</label>
+                            <input type="text" class="form-control" id="idape" placeholder=""  >
                         </div>
                         <div class="form-group col-sm-12">
-                            <label for="	idapellidos">Apellido Materno</label>
-                            <input type="text" class="form-control" id="idapematerno" placeholder="" >
+                            <label for="	idapellidos">Fecha de Nacimiento</label>
+                            <input type="date" class="form-control" id="idfecnaci" placeholder="" >
                         </div>	
                        
                     </div>
                     <div class="col-sm-4">
-                        <div class="form-group col-sm-12">
-                            <label for="iddni">DNI</label>
-                            <input type="text" class="form-control" id="iddni" placeholder=""  >
-                        </div>
                         <div class="form-group col-sm-12">
                             <label for="idtelefono">Teléfono</label>
                             <input type="text" class="form-control" id="idtelefono" placeholder=""  >
@@ -63,8 +59,15 @@
                             <label for="idcorreo">Correo</label>
                             <input type="text" class="form-control" id="idcorreo" placeholder="" >
                         </div>
-                                                    
+                        <div class="form-group col-sm-12	">
+                          <label for="idcontrasena" >Rol</label>
+                          <select class="form-control" name="dificultad" id="idrol" >
+                            <option value="-1">[Seleccione]</option>
+                            <option *ngFor="let obj of rol" value="{{obj.id_rol}}">
+                              {{obj.descripcion}}</option>
+                        </select>                        
                     </div>
+                  </div>
                     <div class="col-sm-4">
                         
                         <div class="form-group col-sm-12">
@@ -75,9 +78,10 @@
                         <label for="idcontrasena" >Contraseña</label>
                     <input type="password" class="form-control" id="idcontrasena" placeholder=""  >
                   </div>
-                     
-                                                    
-                    </div>
+                 
+              </div>
+                          
+              
                 <div class="col-sm-12">
                        
                           <div class="form-group col-sm-12	">
@@ -97,7 +101,7 @@
                               </div>
                             </div>
                             <div class="table table-striped files" id="previews">
-                              <div id="template" class="row mt-2">
+                              <div id="template1" class="row mt-2">
                                 <div class="col-auto">
                                     <span class="preview"><img src="data:," alt="" data-dz-thumbnail /></span>
                                 </div>
@@ -154,7 +158,6 @@
                         <th>Código</th>
                         <th>Nombres</th>
                         <th>Apellidos</th>
-                        <th>Dni</th>
                         <th>Teléfono</th>
                         <th>Correo</th>
                         <th>Usuario</th>
@@ -171,7 +174,6 @@
                       <td>Win 95+</td>
                       <td>Win 95+</td>
                       <td>Win 95+</td>
-                      <td> 4</td>
                       <td> 4</td>
                       <td class="d-flex align-items-center justify-content-center">
                         <button type="button" class="btn btn-warning mr-2" data-toggle="modal" data-target="#modalVer" id="btnVer">
@@ -223,18 +225,23 @@
                                   <dt class="col-sm-3">Apellidos:</dt>
                                   <dd class="col-sm-9" id="det3"></dd>
                                   
-                                  <dt class="col-sm-3">DNI:</dt>
+                                  <dt class="col-sm-3">Teléfono:</dt>
                                   <dd class="col-sm-9" id="det4"></dd>
                                   
-                                  <dt class="col-sm-3">Teléfono:</dt>
-                                  <dd class="col-sm-9" id="det5"></dd>
-                                  
                                   <dt class="col-sm-3">Correo:</dt>
+                                  <dd class="col-sm-9" id="det5"></dd>
+
+                                  <dt class="col-sm-3">Fecha de nacimiento:</dt>
                                   <dd class="col-sm-9" id="det6"></dd>
-                                  
+                                                                    
                                   <dt class="col-sm-3">Usuario:</dt>
-                                  <dd class="col-sm-9" id="det11"></dd>
-                                  
+                                  <dd class="col-sm-9" id="det7"></dd>
+
+                                  <dt class="col-sm-3">Rol:</dt>
+                                  <dd class="col-sm-9" id="det8"></dd>
+
+                                  <dt class="col-sm-3">Fecha de registro:</dt>
+                                  <dd class="col-sm-9" id="det9"></dd>
                                   <!--  
                                   <dt class="col-sm-3">Contraseña:</dt>
                                   <dd class="col-sm-9" id="det12"></dd>

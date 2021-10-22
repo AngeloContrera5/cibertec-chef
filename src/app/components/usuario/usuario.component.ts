@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import * as $ from "jquery";
+import { Rol } from 'src/app/models/rol.model';
+import { RolService } from 'src/app/services/rol.service';
 
 @Component({
   selector: 'app-usuario',
@@ -7,11 +9,19 @@ import * as $ from "jquery";
   styleUrls: ['./usuario.component.css']
 })
 export class UsuarioComponent implements OnInit {
+  rol: Rol[] = [];
 
-  constructor() { }
+  constructor(private rolService: RolService,) {  
+    this.rolService.listarRol().subscribe(
+      (rol) => this.rol = rol
+    );
+
+  }
+
+
 
   ngOnInit(): void {
-    $.getScript('assets/dist/js/file.js');
+    $.getScript('assets/dist/js/file1.js');
     $.getScript('assets/dist/js/datatable.js');
   }
 
