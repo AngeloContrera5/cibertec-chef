@@ -31,13 +31,13 @@
                 </h3>
               </div>
               <div class="card-body">
-                <form id="idRegistrarUsuario" role="form" method="post">
+                <form id="idRegistrar" role="form" method="post" (ngSubmit)="registra()">
                   <div class="row">
   
                     <div class="col-sm-8">
                       <div class="form-group col-sm-12 ">
                         <label for="idnombre">Nombre de dieta</label>
-                        <input type="text" class="form-control" id="idnombre" placeholder="">
+                        <input type="text" class="form-control" id="idnombre" placeholder="" name="nombre">
                       </div>
                     </div>
                   </div>
@@ -87,12 +87,12 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td></td>
-                      <td> </td>
-                      <td> </td>
-                      <td> </td>
-                      <td> </td>
+                    <tr *ngFor="let obj of dieta">
+                      <td>{{obj.id_dieta}}</td>
+                      <td>{{obj.nombre}} </td>
+                      <td> {{obj.usuario!.nombres}}  {{obj.usuario!.apellidos}}</td>
+                      <td> {{obj.fecha_registra}}</td>
+                      <td>{{obj.estado}} </td>
                       <td class="d-flex align-items-center justify-content-center">
                         <button type="button" class="btn btn-info mr-2" data-toggle="modal" id="btnEditar">
                           <i class="fas fa-edit"></i></button>

@@ -23,6 +23,10 @@ export class DietaComponent implements OnInit {
   ngOnInit(): void {
     
     $.getScript('assets/dist/js/datatable.js');
+    $.getScript('assets/build/js/dieta.js');
   }
 
+  registra(){
+
+  }
 }

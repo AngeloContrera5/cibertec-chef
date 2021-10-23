@@ -1,36 +1,7 @@
 $(document).ready(function () {
-    cargarEscalaMagisterial();
-    cargarGrupoOcupacional();
-    cargarJornadaLaboral();
+   
 });
 
-function cargarEscalaMagisterial() {
-    $.getJSON("/DAWI_PROYECTO-ver1.1/infEscalafonarioCbo/listadoEM", {}, function (response) {
-
-        $("#idescmagisterial").html("<option value=''>[Seleccione]</option>");
-        $.each(response, function (index, item) {
-            $("#idescmagisterial").append("<option value='" + item.codEsMag + "'>" + item.escala + "</option>")
-        });
-    });
-}
-function cargarGrupoOcupacional() {
-    $.getJSON("/DAWI_PROYECTO-ver1.1/infEscalafonarioCbo/listadoGO", {}, function (response) {
-
-        $("#idocupacional").html("<option value=''>[Seleccione]</option>");
-        $.each(response, function (index, item) {
-            $("#idocupacional").append("<option value='" + item.codGrupOcp + "'>" + item.grupo + "</option>")
-        });
-    });
-}
-function cargarJornadaLaboral() {
-    $.getJSON("/DAWI_PROYECTO-ver1.1/infEscalafonarioCbo/listadoJL", {}, function (response) {
-
-        $("#idjornada").html("<option value=''>[Seleccione]</option>");
-        $.each(response, function (index, item) {
-            $("#idjornada").append("<option value='" + item.codJorLabo + "'>" + item.jornada + "</option>")
-        });
-    });
-}
 
 
 $("[type='number']").keypress(function (evt) {
@@ -209,110 +180,36 @@ $(document).on("click", "#btnVer", function () {
 
 
 $(document).ready(function () {
-    $('#idtiempototal').val(1);
-    $('#idtiempoultimocargo').val(1);
-    $('#idRegistrar').bootstrapValidator({
-        fields: {
-            tp: {
-                validators: {
-                    notEmpty: {
-                        message: 'Campo Título Profesional es obligatorio'
-                    },
-                    regexp: {
-                        regexp: /^([a-zA-Z\\ñáéíóúÁÉÍÓÚÑ\s]{7,150})$/,
-                        message: 'Campo Título Profesional de 7 a 150 letras'
-                    }
-                }
-            },
-            ca: {
-                validators: {
-                    notEmpty: {
-                        message: 'Campo Cargo Actual es obligatorio'
-                    },
-                    regexp: {
-                        regexp: /^([a-zA-Z\\ñáéíóúÁÉÍÓÚÑ\s]{4,50})$/,
-                        message: 'Campo Cargo Actual de 4 a 50 letras'
-                    }
-                }
-            },
-            escalamagisterial: {
-                validators: {
-                    notEmpty: {
-                        message: 'Seleccione una Escala Magisterial'
-                    }
-                }
-            },
-            ocupacional: {
-                validators: {
-                    notEmpty: {
-                        message: 'Seleccione un Grupo Ocupacional'
-                    }
-                }
-            },
-            jornada: {
-                validators: {
-                    notEmpty: {
-                        message: 'Seleccione una Jornada Laboral'
-                    }
-                }
-            },
-
-            tsUc: {
-                validators: {
-                    notEmpty: {
-                        message: 'Campo Tiempo de Serv. en el último cargo es obligatorio'
-                    },
-                    regexp: {
-                        regexp: /^[1-9][0-9]*$/,
-                        message: 'Campo Tiempo de Serv. en el último cargo es obligatorio'
-                    }
-                }
-            },
-            tst: {
-                validators: {
-                    notEmpty: {
-                        message: 'Campo Tiempo de Servicio Total es obligatorio'
-                    },
-                    regexp: {
-                        regexp: /^[1-9][0-9]*$/,
-                        message: 'Campo Tiempo de Servicio Total es obligatorio'
-                    }
-                }
-            },
-            ant: {
-                validators: {
-                    notEmpty: {
-                        message: 'Campo Antecedentes es obligatorio'
-                    },
-                    regexp: {
-                        regexp: /^([a-zA-Z\\ñáéíóúÁÉÍÓÚÑ\0-9°._:-\s@]{4,150})$/,
-                        message: 'Campo Antecedentes de 4 a 150 letras o números'
-                    }
-                }
-            },
-            reslicsingocerem: {
-                validators: {
-                    notEmpty: {
-                        message: 'Campo Res. de Lic. sin Goce de Remuneración es obligatorio'
-                    },
-                    regexp: {
-                        regexp: /^([a-zA-Z\\ñáéíóúÁÉÍÓÚÑ\0-9°._:-\s@]{4,150})$/,
-                        message: 'Campo Res. de Lic. sin Goce de Remuneración de 4 a 150 letras o números'
-                    }
-                }
-            },
-            resdemerito: {
-                validators: {
-                    notEmpty: {
-                        message: 'Campo Resolución de Demérito es obligatorio'
-                    },
-                    regexp: {
-                        regexp: /^([a-zA-Z\\ñáéíóúÁÉÍÓÚÑ\0-9°._:-\s@]{4,150})$/,
-                        message: 'Campo Resolución de Demérito de 4 a 150 letras o números'
-                    }
-                }
-            },
-
-        }
-    });
+    $('#idRegistrar').validate({
+        rules: {
+          nombre:{
+             required: true,
+             regex:  /^([a-zA-Z\\ñáéíóúÁÉÍÓÚÑ\s]{5,45})$/,
+             },
+           
+                 
+         },
+         messages: {
+          nombre:{
+              required: 'Campo Nombre de Dieta es Obligatorio',
+              regex: 'Campo Nombre de Dieta de 5 a 45 caracteres'  
+        },
+          
+         }
+         });
+    
+    
+    
 });
+
+
+
+$.validator.addMethod(
+    "regex",
+    function(value, element, regexp) {
+        return this.optional(element) || regexp.test(value);
+    },
+    "Please check your input."
+  );
+  
+  
