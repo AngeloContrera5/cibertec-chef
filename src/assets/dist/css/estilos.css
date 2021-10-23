@@ -1,16 +1,12 @@
 
-.help-block {
-    color: red;
-    font-size: 18px!important;
+  
+ .error {
+  color: red!important;
   }
   
-  .form-group.has-error .form-control-label {
-  color: red;
-  }
-  
-  .form-group.has-error .form-control {
-  border: 1px solid red;
-  box-shadow: 0 0 0 0.2rem rgba(250, 16, 0, 0.18);
+  .form-control.error{
+  border: 1px solid red!important;
+  box-shadow: 0 0 0 0.2rem rgba(250, 16, 0, 0.18)!important;
   }
   
 .no{
