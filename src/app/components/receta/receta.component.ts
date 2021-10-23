@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import * as $ from "jquery";
+declare var Swal: any;
 import { Dificultad } from 'src/app/models/dificultad.model';
 import { Ocasion } from 'src/app/models/ocasion.model';
 import { Receta } from 'src/app/models/receta.model';

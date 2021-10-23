@@ -6,6 +6,9 @@ import { UsuarioComponent } from './components/usuario/usuario.component';
 import { RecetaComponent } from './components/receta/receta.component';
 import { LoginComponent } from './components/login/login.component';
 import { OcasionComponent } from './components/ocasion/ocasion.component';
+import { DietaComponent } from './components/dieta/dieta.component';
+import { EstiloPlatoComponent } from './components/estilo-plato/estilo-plato.component';
+import { TipoComidaComponent } from './components/tipo-comida/tipo-comida.component';
 
 
 
@@ -15,6 +18,9 @@ const routes: Routes = [
   {path:"usuario",component: UsuarioComponent},
   {path:"receta",component: RecetaComponent},
   {path:"ocasion",component: OcasionComponent},
+  {path:"estilo-plato",component: EstiloPlatoComponent},
+  {path:"tipo-comida",component: TipoComidaComponent},
+  {path:"dieta",component: DietaComponent},
   { path: 'login', component: LoginComponent },
   { path: '**', redirectTo: 'home' }
 
