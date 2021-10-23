@@ -11,22 +11,60 @@ import { Dieta } from 'src/app/models/dieta.model';
 })
 export class DietaComponent implements OnInit {
 
-  dieta: Dieta[] = [];
+  dietas: Dieta[] = [];
+  dieta: Dieta ={
+    id_dieta:0,
+  } ;
 
-  constructor(private dietaService: DietaService,) { 
+  constructor(private dietaService: DietaService,) {
     this.dietaService.listarDietas().subscribe(
-      (dieta) => this.dieta = dieta
+      (dietas) => this.dietas = dietas
     );
 
   }
 
   ngOnInit(): void {
-    
+
     $.getScript('assets/dist/js/datatable.js');
     $.getScript('assets/build/js/dieta.js');
   }
 
-  registra(){
+  registra() {
+    this.dietaService.registrarDieta(this.dieta).subscribe(
+      response => {
+        console.log(response.mensaje);
+
+            Swal.fire({
+              title: 'Se registró dieta exitosamente.',
+              text: '',
+              icon: 'success',
+              buttons: false,
+              closeOnClickOutside: false,
+              timer: 2500,
+              showCancelButton: false,
+              showConfirmButton: false,
+            
+            })
+              .then(function () {
+                window.location.href = "http://localhost:4200/dieta";
+              });
+     
+
+      },
+      error => {
+        console.log(error);
+        Swal.fire({
+          title: 'Error al registrar dieta.',
+          text: '',
+          icon: 'error',
+          showCloseButton: true,
+        })
+      },
+    );
+
+
+
 
   }
 }
+
