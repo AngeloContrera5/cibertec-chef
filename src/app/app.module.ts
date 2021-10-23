@@ -12,6 +12,8 @@ import { EstiloPlatoComponent } from './components/estilo-plato/estilo-plato.com
 import { TipoComidaComponent } from './components/tipo-comida/tipo-comida.component';
 import { DietaComponent } from './components/dieta/dieta.component';
 import { HttpClientModule } from '@angular/common/http';
+import { MicroondasComponent } from './components/microondas/microondas.component';
+import { EncuestaComponent } from './components/encuesta/encuesta.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +25,9 @@ import { HttpClientModule } from '@angular/common/http';
     OcasionComponent,
     EstiloPlatoComponent,
     TipoComidaComponent,
-    DietaComponent
+    DietaComponent,
+    MicroondasComponent,
+    EncuestaComponent
   ],
   imports: [
     BrowserModule,

@@ -9,6 +9,8 @@ import { OcasionComponent } from './components/ocasion/ocasion.component';
 import { DietaComponent } from './components/dieta/dieta.component';
 import { EstiloPlatoComponent } from './components/estilo-plato/estilo-plato.component';
 import { TipoComidaComponent } from './components/tipo-comida/tipo-comida.component';
+import { EncuestaComponent } from './components/encuesta/encuesta.component';
+import { MicroondasComponent } from './components/microondas/microondas.component';
 
 
 
@@ -21,6 +23,8 @@ const routes: Routes = [
   {path:"estilo-plato",component: EstiloPlatoComponent},
   {path:"tipo-comida",component: TipoComidaComponent},
   {path:"dieta",component: DietaComponent},
+  {path:"encuesta",component: EncuestaComponent},
+  {path:"microondas",component: MicroondasComponent},
   { path: 'login', component: LoginComponent },
   { path: '**', redirectTo: 'home' }
 
