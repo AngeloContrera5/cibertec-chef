@@ -18,14 +18,14 @@
     clickable: ".fileinput-button", // Define the element that should be used as click trigger to select files.
     acceptedFiles: 'image/*',
     maxFiles: 1,
-    addRemoveLinks: true,
   })
  
  // Get the template HTML and remove it from the doumenthe template HTML and remove it from the doument
  Dropzone.autoDiscover = false;
 
  document.querySelector("#actions .cancel").onclick = function() {
-  myDropzone.removeAllFiles(true)
+  myDropzone.removeAllFiles(true);
+  $('#previews').empty();
 }
 
 /*

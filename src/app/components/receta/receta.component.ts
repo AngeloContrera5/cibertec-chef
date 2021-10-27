@@ -14,6 +14,8 @@ import { EstiloPlatoService } from 'src/app/services/estilo-plato.service';
 import { OcasionService } from 'src/app/services/ocasion.service';
 import { RecetaService } from 'src/app/services/receta.service';
 import { TipoComidaService } from 'src/app/services/tipo-comida.service';
+import { MicroondasService } from 'src/app/services/microondas.service';
+import { Microondas } from 'src/app/models/microondas.model';
 declare var fotoBlob: any;
 
 @Component({
@@ -30,6 +32,7 @@ export class RecetaComponent implements OnInit {
   estiloPlato: EstiloPlato[] = [];
   tipoComida: TipoComida[] = [];
   allDataFetched: boolean = false;
+  microondas: Microondas[] = [];
   receta: Receta = {
     tiempo_preparacion: 1,
     porcion: 1,
@@ -68,12 +71,11 @@ export class RecetaComponent implements OnInit {
   }
   recetaEliminar: Receta = {}
   recetaVer: Receta = {}
-  foto: any;
-  blob: any;
+
 
   constructor(private recetaService: RecetaService, private dificultadService: DificultadService,
     private ocasionService: OcasionService, private dietaService: DietaService, private tipoComidaService: TipoComidaService,
-    private estiloPlatoService: EstiloPlatoService) {
+    private estiloPlatoService: EstiloPlatoService, private microondasService: MicroondasService) {
     this.recetaService.listarRecetas().subscribe(
       (recetas) => {
         this.recetas = recetas,
@@ -119,7 +121,7 @@ export class RecetaComponent implements OnInit {
 
         Swal.fire({
           title: 'Se está registrando receta',
-          text: 'Redirigiendo...',
+          text: 'Procesando datos...',
           width: '500px',
           imageUrl: 'https://www.boasnotas.com/img/loading2.gif',
           imageHeight: 150,
@@ -167,7 +169,6 @@ export class RecetaComponent implements OnInit {
           this.recetaEditar = recetaEditar;
         });
 
-
       Swal.fire({
         title: '¿Seguro que deseas modificar receta?',
         text: '',
@@ -204,8 +205,8 @@ export class RecetaComponent implements OnInit {
           this.recetaService.actualizarReceta(this.recetaEditar).subscribe(
 
             Swal.fire({
-              title: 'Se está modificando receta',
-              text: 'Redirigiendo...',
+              title: 'Se está modificando receta.',
+              text: 'Procesando datos...',
               width: '500px',
               imageUrl: 'https://www.boasnotas.com/img/loading2.gif',
               imageHeight: 150,
@@ -271,6 +272,11 @@ export class RecetaComponent implements OnInit {
         this.recetaEliminar = recetaEliminar;
       });
 
+    this.microondasService.listarMicroondasxReceta(idReceta).subscribe(
+      (microondas) => {
+        this.microondas = microondas;
+      });
+
     if (estado == 2) {
       Swal.fire({
         title: 'La receta ya está en estado inactivo.',
@@ -284,7 +290,7 @@ export class RecetaComponent implements OnInit {
 
       Swal.fire({
         title: '¿Seguro que deseas modificar receta a estado inactivo?',
-        text: '',
+        text: 'Se modificará receta y sus microondas a estado inactivo',
         icon: "warning",
         closeOnClickOutside: false,
         confirmButtonText: 'Sí',
@@ -295,37 +301,68 @@ export class RecetaComponent implements OnInit {
       }).then((result: { [x: string]: any; }) => {
         if (result['isConfirmed']) {
           this.recetaEliminar.estado = 2;
+
+
           this.recetaService.actualizarReceta(this.recetaEliminar).subscribe(
             response => {
-              console.log(response.mensaje);
+              this.microondas.forEach(obj => {
+                obj.estado = 2;
+                this.microondasService.actualizarMicroondas(obj).subscribe(
 
-              Swal.fire({
-                title: 'Se modificó receta a estado inactivo exitosamente.',
-                text: '',
-                icon: 'success',
-                buttons: false,
-                closeOnClickOutside: false,
-                timer: 2500,
-                showCancelButton: false,
-                showConfirmButton: false,
+                  Swal.fire({
+                    title: 'Se está modificando receta y microondas.',
+                    text: 'Procesando datos...',
+                    width: '500px',
+                    imageUrl: 'https://www.boasnotas.com/img/loading2.gif',
+                    imageHeight: 150,
+                    imageWidth: 150,
+                    buttons: false,
+                    timerProgressBar: true,
+                    closeOnClickOutside: false,
+                    timer: 8000,
+                    showCancelButton: false,
+                    showConfirmButton: false,
+                  })
+                    .then(function () {
+                      Swal.fire({
+                        title: 'Se modificó receta y microondas a estado inactivo exitosamente.',
+                        text: '',
+                        icon: 'success',
+                        buttons: false,
+                        closeOnClickOutside: false,
+                        timer: 2500,
+                        showCancelButton: false,
+                        showConfirmButton: false,
 
+                      })
+                        .then(function () {
+                          window.location.href = "http://localhost:4200/receta";
+                        })
+                    })
+                  ,
+                  error => {
+                    console.log(error);
+                    Swal.fire({
+                      title: 'Error al modificar microondas.',
+                      text: '',
+                      icon: 'error',
+                      confirmButtonColor: '#780116',
+                      showCloseButton: true,
+                    })
+                  },
+                )
               })
-                .then(function () {
-                  window.location.href = "http://localhost:4200/receta";
-                });
-
-
             },
-            error => {
-              console.log(error);
-              Swal.fire({
-                title: 'Error al modificar receta.',
-                text: '',
-                icon: 'error',
-                confirmButtonColor: '#780116',
-                showCloseButton: true,
-              })
-            },
+              error => {
+                console.log(error);
+                Swal.fire({
+                  title: 'Error al modificar receta.',
+                  text: '',
+                  icon: 'error',
+                  confirmButtonColor: '#780116',
+                  showCloseButton: true,
+                })
+              },
           );
 
         } else {
@@ -350,7 +387,7 @@ export class RecetaComponent implements OnInit {
         $("#detalle1").text(idReceta);
         $("#detalle2").attr("src", this.recetaVer.fotoBase64);
         $("#detalle3").text(String(this.recetaVer.nombre_platillo));
-        $("#detalle4").text(String(this.recetaVer.tiempo_preparacion) + "minuto(s)");
+        $("#detalle4").text(String(this.recetaVer.tiempo_preparacion) + " minuto(s)");
         $("#detalle5").text(String(this.recetaVer.porcion));
         $("#detalle6").text(String(this.recetaVer.dificultad?.descripcion));
         $("#detalle7").text(String(this.recetaVer.tipoComida?.nombre));
@@ -394,78 +431,88 @@ export class RecetaComponent implements OnInit {
 
   }
 
-  editar(val: any) {
+  editar(val: any, val2: any) {
     const idReceta = val;
-   
-    this.recetaService.getRecetaxId(idReceta).subscribe(
-      (recetaEditar) => {
-        this.recetaEditar = recetaEditar;
-        $("#idRegistrar").trigger('reset');
-        $("#idCodReceta").val(idReceta);
-        $('#idnombre').removeClass('error').next('label.error').remove();
-        $('#idtiempoprep').removeClass('error').next('label.error').remove();
-        $("#idingredientes").removeClass('error').next('label.error').remove();
-        $("#idintrucciones").removeClass('error').next('label.error').remove();
-        $('#idporciones').removeClass('error').next('label.error').remove();
-        $('#idutensilios').removeClass('error').next('label.error').remove();
-        $('#idtips').removeClass('error').next('label.error').remove();
-        $('#iddieta').removeClass('error').next('label.error').remove();
-        $('#iddificultad').removeClass('error').next('label.error').remove();
-        $('#idestiloplato').removeClass('error').next('label.error').remove();
-        $('#idtipocomida').removeClass('error').next('label.error').remove();
-        $('#idocasion').removeClass('error').next('label.error').remove();
-        $('#idvideo').removeClass('error').next('label.error').remove();
-        $('#elimFoto').click();
-        $("#errorimagen").text();
-       
-
-        $("#idnombre").val(String(this.recetaEditar.nombre_platillo));
-        $("#idtiempoprep").val(String(this.recetaEditar.tiempo_preparacion));
-        $("#idporciones").val(String(this.recetaEditar.porcion));
-        $("#iddificultad").val(String(this.recetaEditar.dificultad?.id_dificultad));
-
-        if (this.recetaEditar.estiloPlato?.estado == 2) {
-          $("#idestiloplato").val(-1)
-        }
-        else {
-          $("#idestiloplato").val(String(this.recetaEditar.estiloPlato?.id_estilo_plato));
-        }
-
-        if (this.recetaEditar.dieta?.estado == 2) {
-          $("#iddieta").val(-1)
-        }
-        else {
-          $("#iddieta").val(String(this.recetaEditar.dieta?.id_dieta));
-        }
-        if (this.recetaEditar.tipoComida?.estado == 2) {
-          $("#idtipocomida").val(-1)
-        }
-        else {
-          $("#idtipocomida").val(String(this.recetaEditar.tipoComida?.id_tipo_comida));
-        }
-        if (this.recetaEditar.ocasion?.estado == 2) {
-          $("#idocasion").val(-1)
-        }
-        else {
-          $("#idocasion").val(String(this.recetaEditar.ocasion?.id_ocasion));
-        }
+    const estado = val2;
+    if (estado != 2) {
+      this.recetaService.getRecetaxId(idReceta).subscribe(
+        (recetaEditar) => {
+          this.recetaEditar = recetaEditar;
+          $("#idRegistrar").trigger('reset');
+          $("#idCodReceta").val(idReceta);
+          $('#idnombre').removeClass('error').next('label.error').remove();
+          $('#idtiempoprep').removeClass('error').next('label.error').remove();
+          $("#idingredientes").removeClass('error').next('label.error').remove();
+          $("#idintrucciones").removeClass('error').next('label.error').remove();
+          $('#idporciones').removeClass('error').next('label.error').remove();
+          $('#idutensilios').removeClass('error').next('label.error').remove();
+          $('#idtips').removeClass('error').next('label.error').remove();
+          $('#iddieta').removeClass('error').next('label.error').remove();
+          $('#iddificultad').removeClass('error').next('label.error').remove();
+          $('#idestiloplato').removeClass('error').next('label.error').remove();
+          $('#idtipocomida').removeClass('error').next('label.error').remove();
+          $('#idocasion').removeClass('error').next('label.error').remove();
+          $('#idvideo').removeClass('error').next('label.error').remove();
+          $('#elimFoto').click();
+          $("#errorimagen").text();
 
 
-        $("#idingredientes").val(String(this.recetaEditar.ingrediente));
-        $("#idintrucciones").val(String(this.recetaEditar.instruccion));
-        $("#idutensilios").val(String(this.recetaEditar.utensilio));
-        $("#idtips").val(String(this.recetaEditar.tip));
-        $("#idvideo").val(String(this.recetaEditar.video));
-        $('#previews').empty();
-        $("#previews").append("<div class='row mt-2 dz-image-preview'><div class='col-auto'><span class='preview'><img" +
-          " src='" + this.recetaEditar.fotoBase64 + "' alt='Foto-de-receta-guardada' style='width:350px; height:200px'></span></div>" +
-          "<div class='col d-flex align-items-center'><p clas='mb-0'><span class='lead'>Foto-de-receta-" + idReceta + ".jpg</span></p>" +
-          "</div></div></div>");
+          $("#idnombre").val(String(this.recetaEditar.nombre_platillo));
+          $("#idtiempoprep").val(String(this.recetaEditar.tiempo_preparacion));
+          $("#idporciones").val(String(this.recetaEditar.porcion));
+          $("#iddificultad").val(String(this.recetaEditar.dificultad?.id_dificultad));
+
+          if (this.recetaEditar.estiloPlato?.estado == 2) {
+            $("#idestiloplato").val(-1)
+          }
+          else {
+            $("#idestiloplato").val(String(this.recetaEditar.estiloPlato?.id_estilo_plato));
+          }
+
+          if (this.recetaEditar.dieta?.estado == 2) {
+            $("#iddieta").val(-1)
+          }
+          else {
+            $("#iddieta").val(String(this.recetaEditar.dieta?.id_dieta));
+          }
+          if (this.recetaEditar.tipoComida?.estado == 2) {
+            $("#idtipocomida").val(-1)
+          }
+          else {
+            $("#idtipocomida").val(String(this.recetaEditar.tipoComida?.id_tipo_comida));
+          }
+          if (this.recetaEditar.ocasion?.estado == 2) {
+            $("#idocasion").val(-1)
+          }
+          else {
+            $("#idocasion").val(String(this.recetaEditar.ocasion?.id_ocasion));
+          }
+
+
+          $("#idingredientes").val(String(this.recetaEditar.ingrediente));
+          $("#idintrucciones").val(String(this.recetaEditar.instruccion));
+          $("#idutensilios").val(String(this.recetaEditar.utensilio));
+          $("#idtips").val(String(this.recetaEditar.tip));
+          $("#idvideo").val(String(this.recetaEditar.video));
+          $('#previews').empty();
+          $("#previews").append("<div class='row mt-2 dz-image-preview'><div class='col-auto'><span class='preview'><img" +
+            " src='" + this.recetaEditar.fotoBase64 + "' alt='Foto-de-receta-guardada' style='width:350px; height:200px'></span></div>" +
+            "<div class='col d-flex align-items-center'><p clas='mb-0'><span class='lead'>Foto-de-receta-" + idReceta + ".jpg</span></p>" +
+            "</div></div></div>");
 
 
 
-      });
-
+        });
+    }
+    else {
+      Swal.fire({
+        title: 'La receta está en estado inactivo.',
+        text: '',
+        icon: 'warning',
+        confirmButtonColor: '#780116',
+        showCloseButton: true,
+      })
+    }
   }
 
 }

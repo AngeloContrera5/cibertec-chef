@@ -6,13 +6,14 @@ $(document).ready(function () {
 $(document).on("click", "#inserFoto", function () {
   $('#elimFoto').click();
   $('#previews').empty();
+  $("#errorimagen").text("");
 })
 
 
 $("[type='number']").keypress(function (evt) {
   evt.preventDefault();
 })
-//$.trim($("#errorimagen").html())!=''
+
 $('#idnombre, #idtiempoprep,#idporciones,#iddificultad,#idingredientes,#idintrucciones,#idutensilios,#idtips,#iddieta,#idestiloplato,#idtipocomida,#idocasion,#idvideo')
   .bind('keyup', function () {
     if (($("#idnombre").hasClass("error")) || ($("#idtiempoprep").hasClass("error")) || ($("#idporciones").hasClass("error"))
@@ -50,7 +51,7 @@ $('#idnombre, #idtiempoprep,#idporciones,#iddificultad,#idingredientes,#idintruc
   })
 
 
-/*
+
 $('.fileinput-button').on('click', function () {
   $("#errorimagen").text("");
 })
@@ -67,7 +68,7 @@ $('#previews')
     }
 
     else {
-      
+  
       $('.errorFoto').each(function (i, obj) {
         if ($(".errorFoto").text() != '') {
           $('#btnRegistrar').prop('disabled', true);
@@ -110,12 +111,10 @@ $('#previews')
        
       })
 
-     
       
     }
   })
 
-*/
 
 
 $('#btnRegistrar').on('click', function () {
@@ -151,7 +150,7 @@ $('#btnRegistrar').on('click', function () {
     $('#btnRegistrar').attr('disabled', true);
     $('#btnRegistrar').prop("type", "button");
   }
-  /*else if ($(".dz-image-preview").length > 0){
+  else if ($(".dz-image-preview").length > 0){
     if (($("#idnombre").hasClass("error")) || ($("#idtiempoprep").hasClass("error")) || ($("#idporciones").hasClass("error"))
     || ($("#iddificultad").hasClass("error")) || ($("#idingredientes").hasClass("error")) || ($("#idintrucciones").hasClass("error"))
     || ($("#idutensilios").hasClass("error")) || ($("#idtips").hasClass("error"))
@@ -168,7 +167,7 @@ $('#btnRegistrar').on('click', function () {
     $('#btnRegistrar').prop('disabled', false);
     $('#btnRegistrar').prop("type", "submit");
   }
-  }*/
+  }
 
   else {
     $('#btnRegistrar').prop('disabled', false);
@@ -193,10 +192,12 @@ $(document).on("click", "#btnLimpiar", function () {
   $('#idocasion').removeClass('error').next('label.error').remove();
   $('#idvideo').removeClass('error').next('label.error').remove();
   $('#elimFoto').click();
-  $("#errorimagen").text();
-
+  $("#errorimagen").text("");
+  $('#previews').empty();
   $('#btnRegistrar').attr('disabled', false);
   $('#btnRegistrar').prop("type", "button");
+  $('#titulo').text("Registrar Receta");
+  $('#boton').text("Registrar");
 })
 
 
@@ -205,7 +206,9 @@ $(document).on("click", "#btnEditar", function () {
   $("#idRegistrar").trigger('reset');
   var cod;
   cod = $(this).parents("tr").find("td")[0].innerHTML;
-  
+  $("#errorimagen").text("");
+  $('#btnRegistrar').prop('disabled', false);
+  $('#btnRegistrar').prop("type", "button");
   $("#idCodReceta").val(cod);
   $('#titulo').text("Editar Receta");
   $('#boton').text("Editar");
@@ -276,8 +279,8 @@ $('#idRegistrar').validate({
     },
     messages: {
       nombre: {
-        required: 'Campo Nombre de Dieta es Obligatorio',
-        regex: 'Campo Nombre de Dieta de 5 a 45 caracteres'
+        required: 'Campo Nombre de Receta es Obligatorio',
+        regex: 'Campo Nombre de Receta de 5 a 45 caracteres'
       },
       ingredientes: {
         required: 'Campo Ingredientes es Obligatorio',

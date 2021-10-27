@@ -49,6 +49,9 @@ $(document).on("click", "#btnLimpiar", function () {
     $('#idnombre').removeClass('error').next('label.error').remove();
     $('#btnRegistrar').attr('disabled',false);
     $('#btnRegistrar').prop("type", "button");
+    
+  $('#titulo').text("Registrar Receta");
+  $('#boton').text("Registrar");
 })
 
 

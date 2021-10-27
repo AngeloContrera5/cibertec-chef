@@ -23,8 +23,11 @@ export class RecetaService {
     return this.http.get<Receta[]>(baseUrl);
   }
   
-  getRecetaxId(idProd:any):Observable<Receta>{
-    return this.http.get<Receta>(baseUrl+"/id/"+idProd);
+  getRecetaxId(idReceta:any):Observable<Receta>{
+    return this.http.get<Receta>(baseUrl+"/id/"+idReceta);
   }
 
+  listarRecetasActivas():Observable<Receta[]>{
+    return this.http.get<Receta[]>(baseUrl+"/activas");
+  }
 }

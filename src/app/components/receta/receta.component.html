@@ -33,7 +33,7 @@
             <div class="card-body">
               <form id="idRegistrar" role="form" method="post" (ngSubmit)="registra()" >
                 <div class="row">
-                  <input type="text" class="form-control" id="idCodReceta"  value="" >
+                  <input type="text" class="form-control" id="idCodReceta"  value=""  hidden>
                   <div class="col-sm-4">
                     <div class="form-group col-sm-12 ">
                       <label for="idnombre">Nombre del platillo</label>
@@ -145,7 +145,7 @@
                               </span>
                               <button type="button" class="btn btn-danger col cancel" id="elimFoto">
                                 <i class="fas fa-times-circle p-1"></i>
-                                <span>Eliminar fotos</span>
+                                <span>Eliminar foto</span>
                               </button>
                             </div>
                           </div>
@@ -237,7 +237,7 @@
                       <button type="button" class="btn btn-warning mr-2" data-toggle="modal" data-target="#modalVer" (click)="ver(obj.id_receta)"
                         id="btnVer">
                         <i class="fas fa-eye"></i></button>
-                      <button type="button" class="btn btn-info mr-2" data-toggle="modal" id="btnEditar" (click)="editar(obj.id_receta)">
+                      <button type="button" class="btn btn-info mr-2" data-toggle="modal" id="btnEditar" (click)="editar(obj.id_receta,obj.estado)">
                         <i class="fas fa-edit"></i></button>
                         <form id="idEliminar" role="form" (ngSubmit)="elimina(obj.id_receta,obj.estado)">
                           <button type="submit" class="btn btn-danger" 
