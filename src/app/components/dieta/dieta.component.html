@@ -27,13 +27,13 @@
               <div class="card-header">
                 <h3 class="card-title">
                   <i class="fas fa-arrow-circle-right p-1"></i>
-                  Registrar Dieta
+                 <span id="titulo">Registrar Dieta</span> 
                 </h3>
               </div>
               <div class="card-body">
                 <form id="idRegistrar" role="form" method="post" (ngSubmit)="registra()">
                   <div class="row">
-  
+                    <input type="text" class="form-control" id="idCodDieta"  value="" hidden>
                     <div class="col-sm-8">
                       <div class="form-group col-sm-12 ">
                         <label for="idnombre">Nombre de dieta</label>
@@ -47,8 +47,8 @@
                     <div class="col-sm-12 ">
                       <button type="button" class="btn btn-outline-secondary float-right m-2" id="btnLimpiar">
                         <i class="fas fa-broom p-1"></i><span class="boton">Limpiar</span></button>
-                      <button type="submit" class="btn btn-info float-right m-2 " id="btnRegistrar">
-                        <i class="fas fa-save p-1"></i><span class="boton">Registrar</span></button>
+                      <button type="button" class="btn btn-info float-right m-2 " id="btnRegistrar">
+                        <i class="fas fa-save p-1"></i><span class="boton" id="boton">Registrar</span></button>
                     </div>
                   </div>
                 </form>
@@ -82,28 +82,32 @@
                       <th>Nombre de dieta</th>
                       <th>Usuario</th>
                       <th>Fecha de registro</th>
+                      <th>Fecha de actualización</th>
                       <th>Estado</th>
                       <th class="ult-col"></th>
   
   
                     </tr>
                   </thead>
-                  <tbody>
+                  <tbody *ngIf="allDataFetched">
                     <tr *ngFor="let obj of dietas">
                       <td>{{obj.id_dieta}}</td>
                       <td>{{obj.nombre}} </td>
                       <td> {{obj.usuario!.nombres}}  {{obj.usuario!.apellidos}}</td>
-                      <td> {{obj.fecha_registra}}</td>
-                      <td>{{obj.estado}} </td>
+                      <td> {{obj.fecha_registra | date : 'dd/MM/yyyy'}}</td>
+                      <td *ngIf="obj.fecha_actualiza!=null"> {{obj.fecha_actualiza | date : 'dd/MM/yyyy'}}</td>
+                      <td *ngIf="obj.fecha_actualiza==null">No existe</td>
+                      <td *ngIf="obj.estado==1">Activo</td>
+                      <td *ngIf="obj.estado==2">Inactivo</td>
                       <td class="d-flex align-items-center justify-content-center">
                         <button type="button" class="btn btn-info mr-2" data-toggle="modal" id="btnEditar">
                           <i class="fas fa-edit"></i></button>
-                        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalEliminar"
-                          id="btnEliminar">
-                          <i class="fas fa-trash-alt"></i></button>
+                          <form id="idEliminar" role="form" (ngSubmit)="elimina(obj.id_dieta,obj.estado)">
+                            <button type="submit" class="btn btn-danger" 
+                            id="btnEliminar" >  <i class="fas fa-trash-alt"></i></button>
+                            </form>
                       </td>
                     </tr>
-  
   
                 </table>
               </div>
@@ -118,23 +122,7 @@
       </div><!-- /.container-fluid -->
   
   
-      <div class="modal fade" id="modalEliminar" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog  modal-dialog-centered modal-lg">
-          <div class="modal-content">
-  
-            <div class="modal-body" style="padding-top: 5%;">
-              <form method="post">
-                <input type="hidden" id="idEliminar" name="codigoEliminar">
-                <h4>¿Seguro que deseas eliminar Dieta?</h4>
-                <div class="modal-footer">
-                  <button type="submit" class="btn btn-info">Sí</button>
-                  <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">No</button>
-                </div>
-              </form>
-            </div>
-          </div>
-        </div>
-      </div>
+      
       <!-- /.modal -->
   
     </section>

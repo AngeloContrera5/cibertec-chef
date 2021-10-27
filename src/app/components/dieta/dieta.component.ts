@@ -12,13 +12,26 @@ import { Dieta } from 'src/app/models/dieta.model';
 export class DietaComponent implements OnInit {
 
   dietas: Dieta[] = [];
-  dieta: Dieta ={
-    id_dieta:0,
-  } ;
+  dieta: Dieta = {
+    id_dieta: 0,
+  };
+  dietaEditar: Dieta = {
+    id_dieta: 0,
+  };
+  dietaEliminar: Dieta = {
+    id_dieta: 0,
+  };
+  allDataFetched: boolean = false;
+  nombre : String="";
 
   constructor(private dietaService: DietaService,) {
     this.dietaService.listarDietas().subscribe(
-      (dietas) => this.dietas = dietas
+      (dietas) => {
+        this.dietas = dietas,
+        this.allDataFetched = true;
+
+      }
+
     );
 
   }
@@ -30,12 +43,144 @@ export class DietaComponent implements OnInit {
   }
 
   registra() {
-    this.dietaService.registrarDieta(this.dieta).subscribe(
-      response => {
-        console.log(response.mensaje);
+    if ($("#idCodDieta").val() == "") {
+      this.dietaService.registrarDieta(this.dieta).subscribe(
+        response => {
+          console.log(response.mensaje);
+
+          Swal.fire({
+            title: 'Se registró dieta exitosamente.',
+            text: '',
+            icon: 'success',
+            buttons: false,
+            closeOnClickOutside: false,
+            timer: 2500,
+            showCancelButton: false,
+            showConfirmButton: false,
+
+          })
+            .then(function () {
+              window.location.href = "http://localhost:4200/dieta";
+            });
+
+
+        },
+        error => {
+          console.log(error);
+          Swal.fire({
+            title: 'Error al registrar dieta.',
+            text: '',
+            icon: 'error',
+            confirmButtonColor: '#780116',
+            showCloseButton: true,
+          })
+        },
+      );
+    }
+    else if ($("#idCodDieta").val() != "") {
+      this.dietaService.getDietaxId(Number($("#idCodDieta").val())).subscribe(
+        (dietaEditar) => {this.dietaEditar = dietaEditar;
+        });
+    
+       
+      Swal.fire({
+        title: '¿Seguro que deseas modificar dieta?',
+        text: '',
+        icon: "warning",
+        closeOnClickOutside: false,
+        confirmButtonText: 'Sí',
+        confirmButtonColor: '#780116',
+        showCancelButton: true,
+        cancelButtonText: "No",
+        dangerMode: true,
+
+      }).then((result: { [x: string]: any; }) => {
+        if (result['isConfirmed']) {
+          this.dietaEditar.nombre=String($("#idnombre").val());
+          this.dietaService.actualizarDieta(this.dietaEditar).subscribe(
+            response => {
+              console.log(response.mensaje);
+
+              Swal.fire({
+                title: 'Se modificó dieta exitosamente.',
+                text: '',
+                icon: 'success',
+                buttons: false,
+                closeOnClickOutside: false,
+                timer: 2500,
+                showCancelButton: false,
+                showConfirmButton: false,
+
+              })
+                .then(function () {
+                  window.location.href = "http://localhost:4200/dieta";
+                });
+
+
+            },
+            error => {
+              console.log(error);
+              Swal.fire({
+                title: 'Error al modificar dieta.',
+                text: '',
+                icon: 'error',
+                confirmButtonColor: '#780116',
+                showCloseButton: true,
+              })
+            },
+          );
+
+
+        } else {
+          Swal.fire({
+            title: 'Se canceló modificación.',
+            text: '',
+            icon: 'error',
+            confirmButtonColor: '#780116',
+            showCloseButton: true,
+          })
+        }
+      })
+    }
+  }
+
+  elimina(val:any, val2:any){
+    const idProduc = val;
+    const estado = val2;
+    this.dietaService.getDietaxId(idProduc).subscribe(
+      (dietaEliminar) => {this.dietaEliminar = dietaEliminar;
+      });
+  
+    if(estado==2){
+      Swal.fire({
+        title: 'La dieta ya está en estado inactivo.',
+        text: '',
+        icon: 'warning',
+        confirmButtonColor: '#780116',
+        showCloseButton: true,
+      })
+    }
+    else{
+
+    Swal.fire({
+      title: '¿Seguro que deseas modificar dieta a estado inactivo?',
+      text: '',
+      icon: "warning",
+      closeOnClickOutside: false,
+      confirmButtonText: 'Sí',
+      showCancelButton: true,
+      cancelButtonText: "No",
+      dangerMode: true,
+      confirmButtonColor: '#780116',
+    }).then((result: { [x: string]: any; }) => {
+      if (result['isConfirmed']) {
+        this.dietaEliminar.estado=2;
+        this.dietaService.actualizarDieta(this.dietaEliminar).subscribe(
+          response => {
+            console.log(response.mensaje);
 
             Swal.fire({
-              title: 'Se registró dieta exitosamente.',
+              title: 'Se modificó dieta a estado inactivo exitosamente.',
               text: '',
               icon: 'success',
               buttons: false,
@@ -43,28 +188,40 @@ export class DietaComponent implements OnInit {
               timer: 2500,
               showCancelButton: false,
               showConfirmButton: false,
-            
+
             })
               .then(function () {
                 window.location.href = "http://localhost:4200/dieta";
               });
-     
 
-      },
-      error => {
-        console.log(error);
+
+          },
+          error => {
+            console.log(error);
+            Swal.fire({
+              title: 'Error al modificar dieta.',
+              text: '',
+              icon: 'error',
+              confirmButtonColor: '#780116',
+              showCloseButton: true,
+            })
+          },
+        );
+
+      } else {
         Swal.fire({
-          title: 'Error al registrar dieta.',
+          title: 'Se canceló modificación.',
           text: '',
           icon: 'error',
+          confirmButtonColor: '#780116',
           showCloseButton: true,
         })
-      },
-    );
-
-
-
-
+      }
+    })
+  
+    }
   }
+
+
 }
 

@@ -1,3 +1,5 @@
+
+import { Byte } from "@angular/compiler/src/util";
 import { Dieta } from "./dieta.model";
 import { Dificultad } from "./dificultad.model";
 import { EstiloPlato } from "./estilo-plato.model";
@@ -11,7 +13,6 @@ export class Receta {
     tiempo_preparacion?:number;
     porcion?:number;
     dificultad?:Dificultad;
-    precio?:number;
     ingrediente?:string;
     utensilio?:string;
     instruccion?:string;
@@ -24,6 +25,6 @@ export class Receta {
     estado?:number;
     fecha_registro?:Date;
     fecha_actualiza?:Date;
-
-	
+    video?:string;
+	fotoBase64?:any;
 }

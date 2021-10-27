@@ -25,7 +25,7 @@ export class OcasionService {
   }
 
   listarOcasionesActivas():Observable<Ocasion[]>{
-    return this.http.get<Ocasion[]>(baseUrl+"/activas");
+    return this.http.get<Ocasion[]>(baseUrl+"/activos");
   }
   
   getOcasionxId(idProd:any):Observable<Ocasion>{

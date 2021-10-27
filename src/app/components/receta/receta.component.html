@@ -26,37 +26,37 @@
           <div class="card card-warning card-outline">
             <div class="card-header">
               <h3 class="card-title">
-                <i class="fas fa-arrow-circle-right p-1"></i>
-                Registrar Receta
+                <i class="fas fa-arrow-circle-right p-1" > </i>
+                <span id="titulo">Registrar Receta</span>
               </h3>
             </div>
             <div class="card-body">
-              <form id="idRegistrar" role="form" method="post">
+              <form id="idRegistrar" role="form" method="post" (ngSubmit)="registra()" >
                 <div class="row">
-
+                  <input type="text" class="form-control" id="idCodReceta"  value="" >
                   <div class="col-sm-4">
                     <div class="form-group col-sm-12 ">
                       <label for="idnombre">Nombre del platillo</label>
-                      <input type="text" class="form-control" id="idnombre" placeholder="">
+                      <input type="text" class="form-control" id="idnombre" placeholder="" name="nombre"   [(ngModel)]="receta.nombre_platillo" >
                     </div>
 
                     <div class="col-sm-12">
                       <label for="	idtiempoprep">Tiempo de preparación</label>
                     </div>
                     <div class="col-sm-12 form-group form-inline">
-                      <input type="number" class="form-control" id="idtiempoprep" name="tiempoprep" max="300" min="1"
+                      <input type="number" class="form-control" id="idtiempoprep" name="tiempoprep" max="300" min="1"  [(ngModel)]="receta.tiempo_preparacion" 
                         value="1">
                       <label style="padding-left: 10px">Minuto(s)</label>
                     </div>
 
                     <div class="form-group col-sm-12 ">
                       <label for="	idporciones">Porciones</label>
-                      <input type="number" class="form-control" id="idporciones" name="porciones" max="100" min="1"
+                      <input type="number" class="form-control" id="idporciones" name="porciones" max="100" min="1"  [(ngModel)]="receta.porcion" 
                         value="1">
                     </div>
                     <div class="form-group col-sm-12">
                       <label for="	iddificultad">Dificultad</label>
-                      <select class="form-control" name="dificultad" id="iddificultad">
+                      <select class="form-control" name="dificultad" id="iddificultad"  [(ngModel)]="receta.dificultad!.id_dificultad" >
                         <option value="-1">[Seleccione]</option>
                         <option *ngFor="let obj of dificultad" value="{{obj.id_dificultad}}">
                           {{obj.descripcion}}</option>
@@ -67,11 +67,11 @@
                   <div class="col-sm-4">
                     <div class="form-group col-sm-12">
                       <label for="idingredientes">Ingredientes</label>
-                      <textarea class="form-control" id="idingredientes" rows="4" name="ingredientes"></textarea>
+                      <textarea class="form-control" id="idingredientes" rows="4" name="ingredientes"  [(ngModel)]="receta.ingrediente" ></textarea>
                     </div>
                     <div class="form-group col-sm-12">
                       <label for="idintrucciones">Instrucciones</label>
-                      <textarea class="form-control" id="idintrucciones" rows="4" name="ingredientes"></textarea>
+                      <textarea class="form-control" id="idintrucciones" rows="4" name="instrucciones"  [(ngModel)]="receta.instruccion" ></textarea>
                     </div>
                   </div>
 
@@ -79,61 +79,74 @@
 
                     <div class="form-group col-sm-12">
                       <label for="idutensilios">Utensilios</label>
-                      <textarea class="form-control" id="idutensilios" rows="4" name="ingredientes"></textarea>
+                      <textarea class="form-control" id="idutensilios" rows="4" name="utensilios"  [(ngModel)]="receta.utensilio" ></textarea>
                     </div>
                     <div class="form-group col-sm-12">
                       <label for="idtips">Tips</label>
-                      <textarea class="form-control" id="idtips" rows="4" name="ingredientes"></textarea>
+                      <textarea class="form-control" id="idtips" rows="4" name="tips"  [(ngModel)]="receta.tip" ></textarea>
                     </div>
                   </div>
 
                   <div class="col-sm-3">
                     <div class="form-group col-sm-12">
                       <label for="	iddieta">Dieta</label>
-                      <select class="form-control" name="dieta" id="iddieta">
-                        <option value="">[Seleccione]</option>
+                      <select class="form-control" name="dieta" id="iddieta"  [(ngModel)]="receta.dieta!.id_dieta" >
+                        <option value="-1">[Seleccione]</option>
+                        <option *ngFor="let obj of dieta" value="{{obj.id_dieta}}">
+                          {{obj.nombre}}</option>
                       </select>
+                    
                     </div>
                   </div>
                   <div class="col-sm-3">
                     <div class="form-group col-sm-12">
                       <label for="	idestiloplato">Estilo de plato</label>
-                      <select class="form-control" name="estiloplato" id="idestiloplato">
-                        <option value="">[Seleccione]</option>
+                      <select class="form-control" name="estiloplato" id="idestiloplato"  [(ngModel)]="receta.estiloPlato!.id_estilo_plato" >
+                        <option value="-1">[Seleccione]</option>
+                        <option *ngFor="let obj of estiloPlato" value="{{obj.id_estilo_plato}}">
+                          {{obj.nombre}}</option>
                       </select>
                     </div>
                   </div>
                   <div class="col-sm-3">
                     <div class="form-group col-sm-12">
                       <label for="	idtipocomida">Tipo de comida</label>
-                      <select class="form-control" name="tipocomida" id="idtipocomida">
-                        <option value="">[Seleccione]</option>
+                      <select class="form-control" name="tipocomida" id="idtipocomida"  [(ngModel)]="receta.tipoComida!.id_tipo_comida" >
+                        <option value="-1">[Seleccione]</option>
+                        <option *ngFor="let obj of tipoComida" value="{{obj.id_tipo_comida}}">
+                          {{obj.nombre}}</option>
                       </select>
                     </div>
                   </div>
                     <div class="col-sm-3">
                     <div class="form-group col-sm-12">
                       <label for="	idocasion">Ocasión</label>
-                      <select class="form-control" name="ocasion" id="idocasion">
-                        <option value="">[Seleccione]</option>
+                      <select class="form-control" name="ocasion" id="idocasion"  [(ngModel)]="receta.ocasion!.id_ocasion" >
+                        <option value="-1">[Seleccione]</option>
+                        <option *ngFor="let obj of ocasion" value="{{obj.id_ocasion}}">
+                          {{obj.nombre}}</option>
                       </select>
                     </div>
                   </div>
                   <div class="col-sm-12">
                     <div class="form-group col-sm-8 ">
-                      <label for="idvideo">Url del video</label>
-                      <input type="text" class="form-control" id="idvideo" placeholder="">
+                      <label for="idvideo">Link del video</label>
+                      <input type="text" class="form-control" id="idvideo" name="video" placeholder=""  [(ngModel)]="receta.video" >
                     </div>
-                    <div class="form-group col-sm-12	">
+                    <div class="form-group col-sm-7	">
                       <label for="idperfil">Foto del platillo</label>
                       <div class="card-body">
                         <div id="actions" class="row">
-                          <div class="col-lg-3">
+                          <div class="col-lg-12">
                             <div class="btn-group w-100">
-                              <span class="btn btn-warning col fileinput-button">
+                              <span class="btn btn-warning col fileinput-button"  id="inserFoto">
                                 <i class="fas fa-plus p-1"></i>
                                 <span>Adjuntar foto</span>
                               </span>
+                              <button type="button" class="btn btn-danger col cancel" id="elimFoto">
+                                <i class="fas fa-times-circle p-1"></i>
+                                <span>Eliminar fotos</span>
+                              </button>
                             </div>
                           </div>
                           <div class="col-lg-6 d-flex align-items-center">
@@ -150,11 +163,12 @@
                                 <span class="lead" data-dz-name></span>
                                 (<span data-dz-size></span>)
                               </p>
-                              <strong class="error text-danger" data-dz-errormessage></strong>
+                              <strong class="error text-danger errorFoto" data-dz-errormessage ></strong>
                             </div>
 
                           </div>
                         </div>
+                        <label id="errorimagen" class="error"></label>
                       </div>
                     </div>
                   </div>
@@ -166,8 +180,8 @@
                   <div class="col-sm-12 ">
                     <button type="button" class="btn btn-outline-secondary float-right m-2" id="btnLimpiar">
                       <i class="fas fa-broom p-1"></i><span class="boton">Limpiar</span></button>
-                    <button type="submit" class="btn btn-info float-right m-2 " id="btnRegistrar">
-                      <i class="fas fa-save p-1"></i><span class="boton">Registrar</span></button>
+                    <button type="button" class="btn btn-info float-right m-2 " id="btnRegistrar">
+                      <i class="fas fa-save p-1"></i><span class="boton" id="boton">Registrar</span></button>
                   </div>
                 </div>
               </form>
@@ -199,33 +213,37 @@
                   <tr>
                     <th>Código</th>
                     <th>Nombre del platillo</th>
-                    <th>Tiempo de preparación</th>
-                    <th>Porciones</th>
-                    <th>Dificultad</th>
+                    <th>Usuario</th>
+                    <th>Fecha de registro</th>
+                    <th>Fecha de actualización</th>
+                    <th>Estado</th>
 
                     <th class="ult-col"></th>
 
 
                   </tr>
                 </thead>
-                <tbody>
-                  <tr>
-                    <td>Trident</td>
-                    <td>Internet
-                      Explorer 4.0
-                    </td>
-                    <td>Win 95+</td>
-                    <td>Win 95+</td>
-                    <td>Win 95+</td>
+                <tbody *ngIf="allDataFetched">
+                  <tr *ngFor="let obj of recetas">
+                    <td>{{obj.id_receta}}</td>
+                    <td>{{obj.nombre_platillo}} </td>
+                      <td> {{obj.usuario!.nombres}}  {{obj.usuario!.apellidos}}</td>
+                      <td> {{obj.fecha_registro | date : 'dd/MM/yyyy'}}</td>
+                      <td *ngIf="obj.fecha_actualiza!=null"> {{obj.fecha_actualiza | date : 'dd/MM/yyyy'}}</td>
+                      <td *ngIf="obj.fecha_actualiza==null">No existe</td>
+                      <td *ngIf="obj.estado==1">Activo</td>
+                      <td *ngIf="obj.estado==2">Inactivo</td>
                     <td class="d-flex align-items-center justify-content-center">
-                      <button type="button" class="btn btn-warning mr-2" data-toggle="modal" data-target="#modalVer"
+                      <button type="button" class="btn btn-warning mr-2" data-toggle="modal" data-target="#modalVer" (click)="ver(obj.id_receta)"
                         id="btnVer">
                         <i class="fas fa-eye"></i></button>
-                      <button type="button" class="btn btn-info mr-2" data-toggle="modal" id="btnEditar">
+                      <button type="button" class="btn btn-info mr-2" data-toggle="modal" id="btnEditar" (click)="editar(obj.id_receta)">
                         <i class="fas fa-edit"></i></button>
-                      <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalEliminar"
-                        id="btnEliminar">
-                        <i class="fas fa-trash-alt"></i></button>
+                        <form id="idEliminar" role="form" (ngSubmit)="elimina(obj.id_receta,obj.estado)">
+                          <button type="submit" class="btn btn-danger" 
+                          id="btnEliminar" >  <i class="fas fa-trash-alt"></i></button>
+                          </form>
+                     
                     </td>
                   </tr>
 
@@ -247,7 +265,7 @@
       <div class="modal-dialog  modal-dialog-centered modal-lg">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Detalle de Receta N° <span id="detalle20"></span></h5>
+            <h5 class="modal-title" id="exampleModalLabel">Detalle de Receta N° <span id="detalle1"></span></h5>
 
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
@@ -263,13 +281,13 @@
                       <dt class="col-sm-4" style="text-align: center;">
                         <img alt="" class="img-fluid rounded " width="180px" height="180px"
                           src="https://cdn0.iconfinder.com/data/icons/thanksgiving-essentials/48/v-64-512.png"
-                          id="detalle12">
+                          id="detalle2">
 
 
                       </dt>
                       <dd class="col-sm-8">
                         <dl class="row">
-                          <h2 class="col-sm-12" id="detalle1">Nombre del Platillo</h2>
+                          <h2 class="col-sm-12" id="detalle3">Nombre del Platillo</h2>
                           <div class="col-sm-12">
 
                             <div class="rateit" data-rateit-value="2.5" data-rateit-ispreset="true"
@@ -283,16 +301,16 @@
 
                     </dl>
                     <dl class="row">
-                      <dt class="col-sm-6">
+                      <div class="col-sm-6">
                         <dl class="row">
                         <dt class="col-sm-7">Tiempo de Preparación:</dt>
-                        <dd class="col-sm-5" id="detalle2"></dd>
+                        <dd class="col-sm-5" id="detalle4"></dd>
     
                         <dt class="col-sm-5">Porciones:</dt>
-                        <dd class="col-sm-7" id="detalle3"></dd>
+                        <dd class="col-sm-7" id="detalle5"></dd>
     
                         <dt class="col-sm-5">Dificultad:</dt>
-                        <dd class="col-sm-7" id="detalle4"></dd>
+                        <dd class="col-sm-7" id="detalle6"></dd>
     
                       
     
@@ -302,25 +320,28 @@
                         <dt class="col-sm-5">Ocasión:</dt>
                         <dd class="col-sm-7" id="detalle8"></dd>
                       </dl>
-                      </dt>
-                      <dd class="col-sm-6" id="">
+                      </div>
+                      <div class="col-sm-6" id="">
                         <dl class="row">
                           <dt class="col-sm-5">Dieta:</dt>
-                          <dd class="col-sm-7" id="detalle5"></dd>
+                          <dd class="col-sm-7" id="detalle9"></dd>
       
                           <dt class="col-sm-5">Estilo de Plato:</dt>
-                          <dd class="col-sm-7" id="detalle6"></dd>
+                          <dd class="col-sm-7" id="detalle10"></dd>
 
                           <dt class="col-sm-5"></dt>
                           <dd class="col-sm-7" ></dd>
 
                           <dt class="col-sm-5">Usuario:</dt>
-                          <dd class="col-sm-7" id="detalle9"></dd>
+                          <dd class="col-sm-7" id="detalle11"></dd>
 
                           <dt class="col-sm-5">Fecha de registro:</dt>
-                          <dd class="col-sm-7" id="detalle10"></dd>
+                          <dd class="col-sm-7" id="detalle12"></dd>
+
+                          <dt class="col-sm-7">Fecha de actualización:</dt>
+                          <dd class="col-sm-5" id="detalle13"></dd>
                         </dl>
-                      </dd>
+                      </div>
                   </dl>
                     <dl class="row">
                       <dd class="col-sm-12">
@@ -341,17 +362,17 @@
                               aria-controls="custom-content-below-messages" aria-selected="false">Utensilios</a>
                           </li>
                           <li class="nav-item">
-                            <a class="nav-link" id="custom-content-below-settings-tab" data-toggle="pill"
-                              href="#custom-content-below-settings" role="tab"
+                            <a class="nav-link" id="custom-content-below-settings1-tab" data-toggle="pill"
+                              href="#custom-content-below-settings1" role="tab"
                               aria-controls="custom-content-below-settings" aria-selected="false">Tips</a>
                           </li>
                           <li class="nav-item">
-                            <a class="nav-link" id="custom-content-below-settings-tab" data-toggle="pill"
+                            <a class="nav-link" id="custom-content-below-settings2-tab" data-toggle="pill"
                               href="#custom-content-below-settings2" role="tab"
                               aria-controls="custom-content-below-settings" aria-selected="false">Comentarios</a>
                           </li>
                           <li class="nav-item">
-                            <a class="nav-link" id="custom-content-below-settings-tab" data-toggle="pill"
+                            <a class="nav-link" id="custom-content-below-settings3-tab" data-toggle="pill"
                               href="#custom-content-below-settings3" role="tab"
                               aria-controls="custom-content-below-settings" aria-selected="false">Video</a>
                           </li>
@@ -359,47 +380,22 @@
                         <div class="tab-content" id="custom-content-below-tabContent">
                           <div class="tab-pane fade show active" id="custom-content-below-home" role="tabpanel"
                             aria-labelledby="custom-content-below-home-tab">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin malesuada lacus ullamcorper
-                            dui molestie, sit amet congue quam finibus. Etiam ultricies nunc non magna feugiat commodo.
-                            Etiam odio magna, mollis auctor felis vitae, ullamcorper ornare ligula. Proin pellentesque
-                            tincidunt nisi, vitae ullamcorper felis aliquam id. Pellentesque habitant morbi tristique
-                            senectus et netus et malesuada fames ac turpis egestas. Proin id orci eu lectus blandit
-                            suscipit. Phasellus porta, ante et varius ornare, sem enim sollicitudin eros, at commodo leo
-                            est vitae lacus. Etiam ut porta sem. Proin porttitor porta nisl, id tempor risus rhoncus
-                            quis. In in quam a nibh cursus pulvinar non consequat neque. Mauris lacus elit, condimentum
-                            ac condimentum at, semper vitae lectus. Cras lacinia erat eget sapien porta consectetur.
+                            <p id="detalle14" style="white-space: pre-line"></p>
                           </div>
                           <div class="tab-pane fade" id="custom-content-below-profile" role="tabpanel"
                             aria-labelledby="custom-content-below-profile-tab">
-                            Mauris tincidunt mi at erat gravida, eget tristique urna bibendum. Mauris pharetra purus ut
-                            ligula tempor, et vulputate metus facilisis. Lorem ipsum dolor sit amet, consectetur
-                            adipiscing elit. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere
-                            cubilia Curae; Maecenas sollicitudin, nisi a luctus interdum, nisl ligula placerat mi, quis
-                            posuere purus ligula eu lectus. Donec nunc tellus, elementum sit amet ultricies at, posuere
-                            nec nunc. Nunc euismod pellentesque diam.
+                            <p id="detalle15" style="white-space: pre-line"></p>
                           </div>
                           <div class="tab-pane fade" id="custom-content-below-messages" role="tabpanel"
                             aria-labelledby="custom-content-below-messages-tab">
-                            Morbi turpis dolor, vulputate vitae felis non, tincidunt congue mauris. Phasellus volutpat
-                            augue id mi placerat mollis. Vivamus faucibus eu massa eget condimentum. Fusce nec hendrerit
-                            sem, ac tristique nulla. Integer vestibulum orci odio. Cras nec augue ipsum. Suspendisse ut
-                            velit condimentum, mattis urna a, malesuada nunc. Curabitur eleifend facilisis velit finibus
-                            tristique. Nam vulputate, eros non luctus efficitur, ipsum odio volutpat massa, sit amet
-                            sollicitudin est libero sed ipsum. Nulla lacinia, ex vitae gravida fermentum, lectus ipsum
-                            gravida arcu, id fermentum metus arcu vel metus. Curabitur eget sem eu risus tincidunt
-                            eleifend ac ornare magna.
+                            <p id="detalle16" style="white-space: pre-line"></p>
                           </div>
-                          <div class="tab-pane fade" id="custom-content-below-settings" role="tabpanel"
-                            aria-labelledby="custom-content-below-settings-tab">
-                            Pellentesque vestibulum commodo nibh nec blandit. Maecenas neque magna, iaculis tempus
-                            turpis ac, ornare sodales tellus. Mauris eget blandit dolor. Quisque tincidunt venenatis
-                            vulputate. Morbi euismod molestie tristique. Vestibulum consectetur dolor a vestibulum
-                            pharetra. Donec interdum placerat urna nec pharetra. Etiam eget dapibus orci, eget aliquet
-                            urna. Nunc at consequat diam. Nunc et felis ut nisl commodo dignissim. In hac habitasse
-                            platea dictumst. Praesent imperdiet accumsan ex sit amet facilisis.
+                          <div class="tab-pane fade" id="custom-content-below-settings1" role="tabpanel"
+                            aria-labelledby="custom-content-below-settings1-tab">
+                            <p id="detalle17" style="white-space: pre-line"></p>
                           </div>
                           <div class="tab-pane fade" id="custom-content-below-settings2" role="tabpanel"
-                            aria-labelledby="custom-content-below-settings-tab">
+                            aria-labelledby="custom-content-below-settings2-tab">
                             <div class="card-footer card-comments">
                               <div class="card-comment">
                                 <!-- User image -->
@@ -442,9 +438,9 @@
 
                           </div>
                           <div class="tab-pane fade p-5" id="custom-content-below-settings3" role="tabpanel"
-                            aria-labelledby="custom-content-below-settings-tab">
+                            aria-labelledby="custom-content-below-settings3-tab">
                             <iframe width="420" height="315"
-                            src="https://www.youtube.com/embed/tgbNymZ7vqY?mute=1">
+                            src="https://www.youtube.com/embed/tgbNymZ7vqY?mute=1" id="detalle18">>
                             </iframe>
                           </div>
                         </div>

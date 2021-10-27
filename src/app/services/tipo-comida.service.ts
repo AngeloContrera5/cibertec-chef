@@ -26,7 +26,7 @@ export class TipoComidaService {
   }
 
   listarTipoComidasActivas():Observable<TipoComida[]>{
-    return this.http.get<TipoComida[]>(baseUrl+"/activas");
+    return this.http.get<TipoComida[]>(baseUrl+"/activos");
   }
   getTipoComidaxId(idProd:any):Observable<TipoComida>{
     return this.http.get<TipoComida>(baseUrl+"/id/"+idProd);

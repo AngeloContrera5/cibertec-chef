@@ -35,7 +35,7 @@ import { EncuestaComponent } from './components/encuesta/encuesta.component';
     HttpClientModule,
     FormsModule,
   ],
-  providers: [],
+  providers: [RecetaComponent, DietaComponent,],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

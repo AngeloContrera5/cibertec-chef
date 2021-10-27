@@ -25,7 +25,7 @@ export class DietaService {
   }
 
   listarDietasActivas():Observable<Dieta[]>{
-    return this.http.get<Dieta[]>(baseUrl+"/activas");
+    return this.http.get<Dieta[]>(baseUrl+"/activos");
   }
   getDietaxId(idProd:any):Observable<Dieta>{
     return this.http.get<Dieta>(baseUrl+"/id/"+idProd);

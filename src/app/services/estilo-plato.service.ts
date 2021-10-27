@@ -25,7 +25,7 @@ export class EstiloPlatoService {
   }
 
   listarEstiloPlatosActivas():Observable<EstiloPlato[]>{
-    return this.http.get<EstiloPlato[]>(baseUrl+"/activas");
+    return this.http.get<EstiloPlato[]>(baseUrl+"/activos");
   }
   getEstiloPlatoxId(idProd:any):Observable<EstiloPlato>{
     return this.http.get<EstiloPlato>(baseUrl+"/id/"+idProd);

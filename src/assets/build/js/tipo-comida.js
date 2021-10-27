@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    $("#idCodDieta").val("");
+    $("#idCodTipoComida").val("");
 });
 
 $(document).on("click", "#btnEliminar", function () {
@@ -59,9 +59,9 @@ $(document).on("click", "#btnEditar", function () {
     cod = $(this).parents("tr").find("td")[0].innerHTML;
     $("#idRegistrar").trigger('reset');
     $('#idnombre').val(nombre);
-    $('#titulo').text("Editar Dieta");
+    $('#titulo').text("Editar Tipo de Comida");
     $('#boton').text("Editar");
-    $("#idCodDieta").val(cod);
+    $("#idCodTipoComida").val(cod);
 })
 
 
@@ -78,8 +78,8 @@ $('#idRegistrar').validate({
      },
      messages: {
       nombre:{
-          required: 'Campo Nombre de Dieta es Obligatorio',
-          regex: 'Campo Nombre de Dieta de 5 a 45 caracteres'  
+          required: 'Campo Nombre de Tipo de Comida es Obligatorio',
+          regex: 'Campo Nombre de Tipo de Comida de 5 a 45 caracteres'  
     },
       
      }
