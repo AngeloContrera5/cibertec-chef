@@ -28,13 +28,15 @@
               <div class="card-header">
                 <h3 class="card-title">
                   <i class="fas fa-arrow-circle-right p-1"></i>
-                  Registrar Usuario 
+                 <span id="titulo"> Registrar Usuario</span>
                 </h3>
               </div>
               <div class="card-body">
                 <form id="idRegistrarUsuario"  role="form" method="post" >
                 <div class="row">	
-                    					
+                  <!--para el editar-->
+                  <input type="text" class="form-control" id="idCodUsuario"  value=""  hidden>	
+                  	<!---->			
                     <div class="col-sm-4">
                         <div class="form-group col-sm-12">
                             <label for="idnombres">Nombres</label>
@@ -88,33 +90,38 @@
                            <label for="idperfil" >Foto de Perfil</label>
                            <div class="card-body">
                             <div id="actions" class="row">
-                              <div class="col-lg-3">
+                              <div class="col-lg-12">
                                 <div class="btn-group w-100">
-                                  <span class="btn btn-warning col fileinput-button">
+                                  <span class="btn btn-warning col fileinput-button"  id="inserFoto">
                                     <i class="fas fa-plus p-1"></i>
                                     <span>Adjuntar foto</span>
                                   </span>
+                                  <button type="button" class="btn btn-danger col cancel" id="elimFoto">
+                                    <i class="fas fa-times-circle p-1"></i>
+                                    <span>Eliminar foto</span>
+                                  </button>
                                 </div>
                               </div>
                               <div class="col-lg-6 d-flex align-items-center">
-                               
+    
                               </div>
                             </div>
                             <div class="table table-striped files" id="previews">
                               <div id="template1" class="row mt-2">
                                 <div class="col-auto">
-                                    <span class="preview"><img src="data:," alt="" data-dz-thumbnail /></span>
+                                  <span class="preview"><img src="data:," alt="" data-dz-thumbnail /></span>
                                 </div>
                                 <div class="col d-flex align-items-center">
-                                    <p class="mb-0">
-                                      <span class="lead" data-dz-name></span>
-                                      (<span data-dz-size></span>)
-                                    </p>
-                                    <strong class="error text-danger" data-dz-errormessage></strong>
+                                  <p class="mb-0">
+                                    <span class="lead" data-dz-name></span>
+                                    (<span data-dz-size></span>)
+                                  </p>
+                                  <strong class="error text-danger errorFoto" data-dz-errormessage ></strong>
                                 </div>
-                               
+    
                               </div>
                             </div>
+                            <label id="errorimagen" class="error"></label>
                           </div>
                         </div>                         
                     </div>
@@ -125,7 +132,7 @@
                         <button type="button" class="btn btn-outline-secondary float-right m-2" id="btnLimpiar" >
                         <i class="fas fa-broom p-1"></i><span class="boton">Limpiar</span></button>
                         <button type="submit" class="btn btn-info float-right m-2 " id="btnRegistrar" >
-                        <i class="fas fa-save p-1"></i><span class="boton">Registrar</span></button>
+                        <i class="fas fa-save p-1"></i><span class="boton" id="boton">Registrar</span></button>
                     </div>
                 </div>
                 </form>
@@ -180,8 +187,10 @@
                         <i class="fas fa-eye"></i></button>
                         <button type="button" class="btn btn-info mr-2" data-toggle="modal" id="btnEditar">
                         <i class="fas fa-edit"></i></button>
-                        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalEliminar" id="btnEliminar">
-                        <i class="fas fa-trash-alt"></i></button>
+                        <form id="idEliminar" role="form" >
+                          <button type="submit" class="btn btn-danger" 
+                          id="btnEliminar" >  <i class="fas fa-trash-alt"></i></button>
+                          </form>
                     </td>
                     </tr>
                   

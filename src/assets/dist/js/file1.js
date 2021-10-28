@@ -10,16 +10,24 @@
  
   var myDropzone1 = new Dropzone(document.body, { // Make the whole body a dropzone
    url: "/target-url", // Set the url
-   thumbnailWidth: 80,
-   thumbnailHeight: 80,
-   parallelUploads: 20,
+   thumbnailWidth:350,
+   thumbnailHeight: 200,
    previewTemplate: previewTemplate1,
    autoQueue: false, // Make sure the files aren't queued until manually added
    previewsContainer: "#previews", // Define the container to display the previews
-   clickable: ".fileinput-button" // Define the element that should be used as click trigger to select files.
+   clickable: ".fileinput-button", // Define the element that should be used as click trigger to select files.
+   acceptedFiles: 'image/*',
+   maxFiles: 1,
  })
  
  Dropzone.autoDiscover = false
+
+
+ document.querySelector("#actions .cancel").onclick = function() {
+  myDropzone1.removeAllFiles(true);
+  $('#previews').empty();
+}
+
 /*
  myDropzone.on("addedfile", function(file) {
    // Hookup the start button
