@@ -59,11 +59,24 @@ $(document).on("click", "#btnEditar", function () {
   nombre = $(this).parents("tr").find("td")[1].innerHTML;
   var cod;
   cod = $(this).parents("tr").find("td")[0].innerHTML;
+  var estado;
+  estado = $(this).parents("tr").find("td")[5].innerHTML;
+  if (estado != "Inactivo") {
+
   $("#idRegistrar").trigger('reset');
   $('#idnombre').val(nombre);
   $('#titulo').text("Editar Dieta");
   $('#boton').text("Editar");
-  $("#idCodDieta").val(cod);
+  $("#idCodDieta").val(cod);}
+  else{
+    Swal.fire({
+      title: 'La dieta está en estado inactivo.',
+      text: '',
+      icon: 'warning',
+      confirmButtonColor: '#780116',
+      showCloseButton: true,
+    })
+  }
 })
 
 
@@ -73,7 +86,7 @@ $('#idRegistrar').validate({
   rules: {
     nombre: {
       required: true,
-      regex: /^([a-zA-Z\\ñáéíóúÁÉÍÓÚÑ\s]{5,45})$/,
+      regex: /^([a-zA-Z\\ñáéíóúÁÉÍÓÚÑ\s]{4,45})$/,
     },
 
 
@@ -81,7 +94,7 @@ $('#idRegistrar').validate({
   messages: {
     nombre: {
       required: 'Campo Nombre de Dieta es Obligatorio',
-      regex: 'Campo Nombre de Dieta de 5 a 45 caracteres'
+      regex: 'Campo Nombre de Dieta de 4 a 45 caracteres'
     },
 
   }
