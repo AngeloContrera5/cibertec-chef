@@ -1,294 +1,297 @@
-
-    <div class="content-wrapper" style="padding-left: 60px;padding-right:60px;">
-    <!-- Content Header (Page header) -->
-    <section class="content-header">
-      <div class="container-fluid">
-        <div class="row mb-2">
-          <div class="col-sm-6">
-            <h1>
-              Usuario
-            </h1>
-          </div>
-          <div class="col-sm-6">
-            <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">Usuario</li>
-            </ol>
-          </div>
+<div class="content-wrapper" style="padding-left: 60px;padding-right:60px;">
+  <!-- Content Header (Page header) -->
+  <section class="content-header">
+    <div class="container-fluid">
+      <div class="row mb-2">
+        <div class="col-sm-6">
+          <h1>
+            Usuario
+          </h1>
         </div>
-      </div><!-- /.container-fluid -->
-    </section>
+        <div class="col-sm-6">
+          <ol class="breadcrumb float-sm-right">
+            <li class="breadcrumb-item"><a href="#">Home</a></li>
+            <li class="breadcrumb-item active">Usuario</li>
+          </ol>
+        </div>
+      </div>
+    </div><!-- /.container-fluid -->
+  </section>
 
-    <!-- Main content -->
-    <section class="content">
-      <div class="container-fluid">
-        <div class="row">
-          <div class="col-md-12">
-            <div class="card card-warning card-outline">
-              <div class="card-header">
-                <h3 class="card-title">
-                  <i class="fas fa-arrow-circle-right p-1"></i>
-                 <span id="titulo"> Registrar Usuario</span>
-                </h3>
-              </div>
-              <div class="card-body">
-                <form id="idRegistrarUsuario"  role="form" method="post" >
-                <div class="row">	
-                  <!--para el editar-->
-                  <input type="text" class="form-control" id="idCodUsuario"  value=""  hidden>	
-                  	<!---->			
-                    <div class="col-sm-4">
-                        <div class="form-group col-sm-12">
-                            <label for="idnombres">Nombres</label>
-                            <input type="text" class="form-control" id="idnombres" placeholder=""  >
-                        </div>	
-                        <div class="form-group col-sm-12">
-                            <label for="	idapellidos">Apellidos</label>
-                            <input type="text" class="form-control" id="idape" placeholder=""  >
-                        </div>
-                        <div class="form-group col-sm-12">
-                            <label for="	idapellidos">Fecha de Nacimiento</label>
-                            <input type="date" class="form-control" id="idfecnaci" placeholder="" >
-                        </div>	
-                       
+  <!-- Main content -->
+  <section class="content">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card card-warning card-outline">
+            <div class="card-header">
+              <h3 class="card-title">
+                <i class="fas fa-arrow-circle-right p-1"> </i>
+                <span id="titulo">Registrar Usuario</span>
+              </h3>
+            </div>
+            <div class="card-body">
+              <form id="idRegistrarUsuario" #f="ngForm" (ngSubmit)="onRegister()" novalidate>
+                <div class="row">
+                  <input type="text" class="form-control" id="idCodUsuario">
+                  <div class="col-sm-4">
+                    <div class="form-group col-sm-12">
+                      <label for="idnombres">Nombres</label>
+                      <input type="text" class="form-control" id="idnombres" placeholder="" name="nombres"
+                        [(ngModel)]="nombres" required>
                     </div>
-                    <div class="col-sm-4">
-                        <div class="form-group col-sm-12">
-                            <label for="idtelefono">Teléfono</label>
-                            <input type="text" class="form-control" id="idtelefono" placeholder=""  >
-                        </div>
-                        <div class="form-group col-sm-12">
-                            <label for="idcorreo">Correo</label>
-                            <input type="text" class="form-control" id="idcorreo" placeholder="" >
-                        </div>
-                        <div class="form-group col-sm-12	">
-                          <label for="idcontrasena" >Rol</label>
-                          <select class="form-control" name="dificultad" id="idrol" >
-                            <option value="-1">[Seleccione]</option>
-                            <option *ngFor="let obj of rol" value="{{obj.id_rol}}">
-                              {{obj.descripcion}}</option>
-                        </select>                        
+                    <div class="form-group col-sm-12">
+                      <label for="	idapellidos">Apellidos</label>
+                      <input type="text" class="form-control" id="idapellidos" placeholder="" name="apellidos"
+                        [(ngModel)]="apellidos" required>
+                    </div>
+                    <div class="form-group col-sm-12">
+                      <label for="	idapellidos">Fecha de Nacimiento</label>
+                      <input type="date" class="form-control" id="idfecnac" placeholder="" name="fecha_nacimiento"
+                        [(ngModel)]="fecha_nacimiento" required>
+                    </div>
+
+                  </div>
+                  <div class="col-sm-4">
+                    <div class="form-group col-sm-12">
+                      <label for="idtelefono">Teléfono</label>
+                      <input type="text" class="form-control" id="idtelefono" placeholder="" name="telefono"
+                        [(ngModel)]="telefono" required>
+                    </div>
+                    <div class="form-group col-sm-12">
+                      <label for="idcorreo">Correo</label>
+                      <input type="text" class="form-control" id="idcorreo" placeholder="" name="correo"
+                        [(ngModel)]="correo" required>
+                    </div>
+                    <div class="form-group col-sm-12	">
+                      <label for="idrol">Rol</label>
+                      <select class="form-control" name="rol" id="idrol">
+                        <!-- [ngModel] = "rol" -->
+                        <option value="-1">[Seleccione]</option>
+                        <option *ngFor="let obj of rol" value="{{obj.id}}">
+                          {{obj.rolNombre}}</option>
+                      </select>
                     </div>
                   </div>
-                    <div class="col-sm-4">
-                        
-                        <div class="form-group col-sm-12">
-                            <label for="idusuario" >Usuario</label>
-                            <input type="text" class="form-control" id="idusuario" placeholder="" >
-                      </div>
-                      <div class="form-group col-sm-12	">
-                        <label for="idcontrasena" >Contraseña</label>
-                    <input type="password" class="form-control" id="idcontrasena" placeholder=""  >
+                  <div class="col-sm-4">
+
+                    <div class="form-group col-sm-12">
+                      <label for="idusuario">Usuario</label>
+                      <input type="text" class="form-control" id="idusuario" placeholder="" name="usuario"
+                        [(ngModel)]="usuario" required>
+                    </div>
+                    <div class="form-group col-sm-12	">
+                      <label for="idcontrasena">Contraseña</label>
+                      <input type="password" value="XXXXXXXXXX" class="form-control" id="idcontrasena" placeholder=""
+                        name="clave" [(ngModel)]="clave" required>
+                    </div>
+
                   </div>
-                 
-              </div>
-                          
-              
-                <div class="col-sm-12">
-                       
-                          <div class="form-group col-sm-12	">
-                           <label for="idperfil" >Foto de Perfil</label>
-                           <div class="card-body">
-                            <div id="actions" class="row">
-                              <div class="col-lg-12">
-                                <div class="btn-group w-100">
-                                  <span class="btn btn-warning col fileinput-button"  id="inserFoto">
-                                    <i class="fas fa-plus p-1"></i>
-                                    <span>Adjuntar foto</span>
-                                  </span>
-                                  <button type="button" class="btn btn-danger col cancel" id="elimFoto">
-                                    <i class="fas fa-times-circle p-1"></i>
-                                    <span>Eliminar foto</span>
-                                  </button>
-                                </div>
-                              </div>
-                              <div class="col-lg-6 d-flex align-items-center">
-    
-                              </div>
+
+
+                  <div class="col-sm-12">
+
+                    <div class="form-group col-sm-7	">
+                      <label for="idperfil">Foto de Perfil</label>
+                      <div class="card-body">
+                        <div id="actions" class="row">
+                          <div class="col-lg-12">
+                            <div class="btn-group w-100">
+                              <span class="btn btn-warning col fileinput-button">
+                                <i class="fas fa-plus p-1"></i>
+                                <span>Adjuntar foto</span>
+                              </span>
+                              <button type="button" class="btn btn-danger col cancel" id="elimFoto">
+                                <i class="fas fa-times-circle p-1"></i>
+                                <span>Eliminar foto</span>
+                              </button>
                             </div>
-                            <div class="table table-striped files" id="previews">
-                              <div id="template1" class="row mt-2">
-                                <div class="col-auto">
-                                  <span class="preview"><img src="data:," alt="" data-dz-thumbnail /></span>
-                                </div>
-                                <div class="col d-flex align-items-center">
-                                  <p class="mb-0">
-                                    <span class="lead" data-dz-name></span>
-                                    (<span data-dz-size></span>)
-                                  </p>
-                                  <strong class="error text-danger errorFoto" data-dz-errormessage ></strong>
-                                </div>
-    
-                              </div>
-                            </div>
-                            <label id="errorimagen" class="error"></label>
                           </div>
-                        </div>                         
+                          <div class="col-lg-6 d-flex align-items-center">
+
+                          </div>
+                        </div>
+                        <div class="table table-striped files" id="previews">
+                          <div id="template1" class="row mt-2">
+                            <div class="col-auto">
+                              <span class="preview"><img src="data:," alt="" data-dz-thumbnail /></span>
+                            </div>
+                            <div class="col d-flex align-items-center">
+                              <p class="mb-0">
+                                <span class="lead" data-dz-name></span>
+                                (<span data-dz-size></span>)
+                              </p>
+                              <strong class="error text-danger errorFoto" data-dz-errormessage></strong>
+                              <!--<strong class="error text-danger" data-dz-errormessage></strong>-->
+                            </div>
+
+                          </div>
+                        </div>
+                        <label id="errorimagen" class="error"></label>
+                      </div>
                     </div>
+                  </div>
                 </div>
-            
+
                 <div class="row">
-                    <div class="col-sm-12 ">
-                        <button type="button" class="btn btn-outline-secondary float-right m-2" id="btnLimpiar" >
-                        <i class="fas fa-broom p-1"></i><span class="boton">Limpiar</span></button>
-                        <button type="submit" class="btn btn-info float-right m-2 " id="btnRegistrar" >
-                        <i class="fas fa-save p-1"></i><span class="boton" id="boton">Registrar</span></button>
-                    </div>
+                  <div class="col-sm-12 ">
+                    <button type="button" class="btn btn-outline-secondary float-right m-2" id="btnLimpiar">
+                      <i class="fas fa-broom p-1"></i><span class="boton">Limpiar</span></button>
+                    <button type="submit" class="btn btn-info float-right m-2 " id="btnRegistrar">
+                      <i class="fas fa-save p-1"></i><span id="boton" class="boton">Registrar</span></button>
+                  </div>
                 </div>
-                </form>
-               
-              </div>
-              <!-- /.card -->
+              </form>
+
             </div>
-
-
+            <!-- /.card -->
           </div>
-          <!-- /.col -->
-        </div>
-        <!-- ./row -->
-      </div><!-- /.container-fluid -->
 
-      <div class="container-fluid">
-        <div class="row">
-          <div class="col-md-12">
-            <div class="card card-warning card-outline">
-              <div class="card-header">
-                <h3 class="card-title">
-                  <i class="fas fa-arrow-circle-right p-1"></i>
-                  Lista de Usuarios
-                </h3>
-              </div>
-              <div class="card-body">
-                <table id="example1" class="table table-bordered ">
-                    <thead>
-                    <tr>
-                        <th>Código</th>
-                        <th>Nombres</th>
-                        <th>Apellidos</th>
-                        <th>Teléfono</th>
-                        <th>Correo</th>
-                        <th>Usuario</th>
-                        <!--  <th>Contraseña</th>-->
-                        <th class="ult-col"></th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                      <td>Trident</td>
-                      <td>Internet
-                        Explorer 4.0
-                      </td>
-                      <td>Win 95+</td>
-                      <td>Win 95+</td>
-                      <td>Win 95+</td>
-                      <td> 4</td>
-                      <td class="d-flex align-items-center justify-content-center">
-                        <button type="button" class="btn btn-warning mr-2" data-toggle="modal" data-target="#modalVer" id="btnVer">
+
+        </div>
+        <!-- /.col -->
+      </div>
+      <!-- ./row -->
+    </div><!-- /.container-fluid -->
+
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card card-warning card-outline">
+            <div class="card-header">
+              <h3 class="card-title">
+                <i class="fas fa-arrow-circle-right p-1"></i>
+                Lista de Usuarios
+              </h3>
+            </div>
+            <div class="card-body">
+              <table id="example1" class="table table-bordered ">
+                <thead>
+                  <tr>
+                    <th>Código</th>
+                    <th>Nombres</th>
+                    <th>Apellidos</th>
+                    <th>Teléfono</th>
+                    <th>Correo</th>
+                    <th>Usuario</th>
+                    <!--  <th>Contraseña</th>-->
+                    <th class="ult-col"></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let aux of usuarios">
+                    <td>{{aux.id_usuario}}</td>
+                    <td>{{aux.nombres}}</td>
+                    <td>{{aux.apellidos}}</td>
+                    <td>{{aux.telefono}}</td>
+                    <td>{{aux.correo}}</td>
+                    <td>{{aux.usuario}}</td>
+                    <td class="d-flex align-items-center justify-content-center">
+                      <button type="button" class="btn btn-warning mr-2" data-toggle="modal" data-target="#modalVer"
+                        id="btnVer" (click)="ver(aux.id_usuario)">
                         <i class="fas fa-eye"></i></button>
-                        <button type="button" class="btn btn-info mr-2" data-toggle="modal" id="btnEditar">
+                      <button type="button" class="btn btn-info mr-2" data-toggle="modal" id="btnEditar"
+                        (click)="editar(aux.id_usuario,aux.estado)">
                         <i class="fas fa-edit"></i></button>
-                        <form id="idEliminar" role="form" >
-                          <button type="submit" class="btn btn-danger" 
-                          id="btnEliminar" >  <i class="fas fa-trash-alt"></i></button>
-                          </form>
+                      <form id="idEliminar" role="form" (ngSubmit)="elimina(aux.id_usuario,aux.estado)">
+                        <button type="submit" class="btn btn-danger" id="btnEliminar"> <i
+                            class="fas fa-trash-alt"></i></button>
+                      </form>
                     </td>
-                    </tr>
-                  
-                    
-                  </table>
-              </div>
-              <!-- /.card -->
+                  </tr>
+
+
+              </table>
             </div>
-
-
+            <!-- /.card -->
           </div>
-          <!-- /.col -->
+
+
         </div>
-        <!-- ./row -->
-      </div><!-- /.container-fluid -->
+        <!-- /.col -->
+      </div>
+      <!-- ./row -->
+    </div><!-- /.container-fluid -->
 
-     <!-- Modal Ver detalle-->
-	<div class="modal fade" id="modalVer" tabindex="-1"
-    aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog  modal-dialog-centered  modal-lg">
+    <!-- Modal Ver detalle-->
+    <div class="modal fade" id="modalVer" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog  modal-dialog-centered  modal-lg">
         <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Detalle de Usuario</h5>
-                <button type="button" class="close" data-dismiss="modal"
-                    aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body" style="padding-top: 0px;">			
-                <div class="row">
-                            <div class="card-body">
-                                <div class="row card1">
-                                <div class="col-sm-6 ">  
-                                <dl class="row"  >
-                                  <dt class="col-sm-3">Código:</dt>
-                                  <dd class="col-sm-9" id="det1"></dd>
-                                  
-                                  <dt class="col-sm-3">Nombres:</dt>
-                                  <dd class="col-sm-9" id="det2"></dd>
-                                  
-                                  <dt class="col-sm-3">Apellidos:</dt>
-                                  <dd class="col-sm-9" id="det3"></dd>
-                                  
-                                  <dt class="col-sm-3">Teléfono:</dt>
-                                  <dd class="col-sm-9" id="det4"></dd>
-                                  
-                                  <dt class="col-sm-3">Correo:</dt>
-                                  <dd class="col-sm-9" id="det5"></dd>
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Detalle de Usuario</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body" style="padding-top: 0px;">
+            <div class="row">
+              <div class="card-body">
+                <div class="row card1">
+                  <div class="col-sm-6 ">
+                    <dl class="row">
+                      <dt class="col-sm-3">Código:</dt>
+                      <dd class="col-sm-9" id="det1"></dd>
 
-                                  <dt class="col-sm-3">Fecha de nacimiento:</dt>
-                                  <dd class="col-sm-9" id="det6"></dd>
-                                                                    
-                                  <dt class="col-sm-3">Usuario:</dt>
-                                  <dd class="col-sm-9" id="det7"></dd>
+                      <dt class="col-sm-3">Nombres:</dt>
+                      <dd class="col-sm-9" id="det2"></dd>
 
-                                  <dt class="col-sm-3">Rol:</dt>
-                                  <dd class="col-sm-9" id="det8"></dd>
+                      <dt class="col-sm-3">Apellidos:</dt>
+                      <dd class="col-sm-9" id="det3"></dd>
 
-                                  <dt class="col-sm-3">Fecha de registro:</dt>
-                                  <dd class="col-sm-9" id="det9"></dd>
-                                  <!--  
+                      <dt class="col-sm-3">Teléfono:</dt>
+                      <dd class="col-sm-9" id="det4"></dd>
+
+                      <dt class="col-sm-3">Correo:</dt>
+                      <dd class="col-sm-9" id="det5"></dd>
+
+                      <dt class="col-sm-3">Fecha de nacimiento:</dt>
+                      <dd class="col-sm-9" id="det6"></dd>
+
+                      <dt class="col-sm-3">Usuario:</dt>
+                      <dd class="col-sm-9" id="det7"></dd>
+
+                      <dt class="col-sm-3">Rol:</dt>
+                      <dd class="col-sm-9" id="det8"></dd>
+
+                      <dt class="col-sm-5">Fecha de registro:</dt>
+                      <dd class="col-sm-9" id="det9"></dd>
+                      <!--  
                                   <dt class="col-sm-3">Contraseña:</dt>
                                   <dd class="col-sm-9" id="det12"></dd>
                                   -->
-                                 </dl> 		
-                                </div>
-                                <div class="img-fluid d-flex align-items-center justify-content-center col-sm-6 ">
-                                    <img id="fotoDetalle" class="rounded" alt="" src=""   width="300px" height="250px" />
-                                </div>
-                                </div>
-                                </div>
-                            </div>
-                </div>		
+                    </dl>
+                  </div>
+                  <div class="img-fluid d-flex align-items-center justify-content-center col-sm-6 ">
+                    <img id="fotoDetalle" class="rounded" alt="" src="" width="300px" height="250px" />
+                  </div>
+                </div>
+              </div>
             </div>
+          </div>
         </div>
+      </div>
     </div>
 
 
-    <div class="modal fade" id="modalEliminar" tabindex="-1"
-    aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog  modal-dialog-centered modal-lg">
+    <div class="modal fade" id="modalEliminar" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog  modal-dialog-centered modal-lg">
         <div class="modal-content">
-                        
-            <div class="modal-body" style="padding-top: 5%;">			
-            <form  method="post">
-            <input type="hidden" id="idEliminar" name="codigoEliminar">
-            <h4>¿Seguro que deseas eliminar Usuario?</h4>
-             <div class="modal-footer">
-                 <button type="submit" class="btn btn-info">Sí</button>
+
+          <div class="modal-body" style="padding-top: 5%;">
+            <form method="post">
+              <input type="hidden" id="idEliminar" name="codigoEliminar">
+              <h4>¿Seguro que deseas eliminar Usuario?</h4>
+              <div class="modal-footer">
+                <button type="submit" class="btn btn-info">Sí</button>
                 <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">No</button>
-               </div>
+              </div>
             </form>
-                </div>		
-            </div>
+          </div>
         </div>
-    </div>		
-      <!-- /.modal -->
-    
-    </section>
-    <!-- /.content -->
-  </div>
+      </div>
+    </div>
+    <!-- /.modal -->
+
+  </section>
+  <!-- /.content -->
+</div>

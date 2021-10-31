@@ -6,12 +6,12 @@ import { Rol } from '../models/rol.model';
 const baseUrl = 'http://localhost:8080/rest/rol';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class RolService {
-  constructor(private http:HttpClient) { }
+  constructor(private http: HttpClient) {}
 
-  listarRol():Observable<Rol[]>{
+  listarRol(): Observable<Rol[]> {
     return this.http.get<Rol[]>(baseUrl);
   }
 }
