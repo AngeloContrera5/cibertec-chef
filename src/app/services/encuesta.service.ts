@@ -31,6 +31,10 @@ export class EncuestaService {
   retornarCodigo(): Observable<any>{
     return this.http.get(baseUrl+"/codigo");
   }
+
+  finalizarEncuesta(idEncuesta:number): Observable<any>{
+    return this.http.get(baseUrl+"/finaliza_encuesta/"+idEncuesta);
+  }
 }
 
 
