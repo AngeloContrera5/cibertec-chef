@@ -14,9 +14,9 @@ declare var Swal: any;
   styleUrls: ['./encuesta.component.css']
 })
 export class EncuestaComponent implements OnInit {
-  //setear usuario -- cuando se loguee
+  //setear usuario -- cuando se loguee <------
   usuarioRegAct:Usuario = {
-    id_usuario:1
+    id_usuario:4
   }
 
   allDataFetched: boolean = false;
@@ -65,6 +65,7 @@ export class EncuestaComponent implements OnInit {
     ) { 
     this.listarEncuestas();
     this.retornaCodigo();
+    //alert(this.idEncuesta.id_encuesta)
   }
 
   showModalReg(msg:string, detalle:string){
@@ -88,9 +89,13 @@ export class EncuestaComponent implements OnInit {
   }
   retornaCodigo (){
     this.encuestaService.retornarCodigo().subscribe(
-      response => this.idEncuesta ={
-        id_encuesta: response
-      }
+      response =>{
+        this.idEncuesta ={
+          id_encuesta: response
+        }
+        //alert(response)
+        //alert(this.idEncuesta.id_encuesta)
+      } 
     )
   }
   
@@ -182,6 +187,7 @@ export class EncuestaComponent implements OnInit {
   }
 
   registrarEncuesta(){
+
     if(this.tituloEncuesta != ''){
       if(this.itemLista.length > 2){
         ///let arrayRegistraItem = new EncuestaItem();
@@ -214,7 +220,7 @@ export class EncuestaComponent implements OnInit {
               this.showModalReg(response.mensaje, 'Ocurrió un error en el sistema')
             }
             this.encuestaItemService.registrarEncuestaItems(this.itemListaRegistrar).subscribe(
-              //responseItem => alert(responseItem.mensaje+"----Item")
+              responseItem => console.log(responseItem.mensaje+"----Item")
             )
             this.tituloEncuesta =""
             this.itemLista=[];

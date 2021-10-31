@@ -135,7 +135,7 @@
                                     <tr *ngFor="let aux of encuesta">
                                         <td>{{aux.id_encuesta}}</td>
                                         <td>{{aux.titulo_encuesta}}</td>
-                                        <td>{{aux.usuario?.usuario_alias}}</td>
+                                        <td>{{aux.usuario?.usuario}}</td>
                                         <td>{{aux.fecha_registra}}</td>
                                         <td *ngIf="aux.estado==1" >Activo</td>
                                         <td class="d-flex align-items-center justify-content-center">
@@ -257,7 +257,7 @@
                                 <div class="form-group row" style="margin-bottom: 1px;">
                                     <label for="staticEmail" class="col-sm-5 col-form-label">Usuario:</label>
                                     <div class="col-sm-6">
-                                        <p class="form-control-plaintext">{{encuesta_by_id.usuario?.usuario_alias}}</p>
+                                        <p class="form-control-plaintext">{{encuesta_by_id.usuario?.usuario}}</p>
                                     </div>
                                 </div>
                                 <div class="form-group row" style="margin-bottom: 1px;">

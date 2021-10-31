@@ -336,6 +336,7 @@ export class RecetaComponent implements OnInit {
 
                       })
                         .then(function () {
+                          alert("-")
                           window.location.href = "http://localhost:4200/receta";
                         })
                     })
