@@ -15,20 +15,21 @@ declare var Swal: any;
 })
 export class MicroondasComponent implements OnInit {
 
-  recetas: Receta []=[]
-  microondas: Microondas[]=[]
-  microondasxReceta: Microondas[]=[]
+  recetas: Receta[] = []
+  microondas: Microondas[] = []
+  microondasxReceta: Microondas[] = []
   microonda: Microondas = {
-    receta:{
+    receta: {
     }
   }
   microondaEditar: Microondas = {
-    receta:{
+    receta: {
     }
   }
   microondaVer: Microondas = {}
   microondaEliminar: Microondas = {}
-  receta: Receta = {tiempo_preparacion: 1,
+  receta: Receta = {
+    tiempo_preparacion: 1,
     porcion: 1,
     dificultad: {
       id_dificultad: -1
@@ -44,15 +45,17 @@ export class MicroondasComponent implements OnInit {
     },
     ocasion: {
       id_ocasion: -1
-    },}
+    },
+  }
   allDataFetched: boolean = false;
   allDataFetched1: boolean = false;
 
-  constructor(private recetaService: RecetaService, private microondasService: MicroondasService) { 
+  constructor(private recetaService: RecetaService, private microondasService: MicroondasService) {
     this.recetaService.listarRecetasActivas().subscribe(
       (recetas) => {
-        this.recetas = recetas ,
-        this.allDataFetched1 = true;}
+        this.recetas = recetas,
+          this.allDataFetched1 = true;
+      }
     );
     this.microondasService.listarMicroondas().subscribe(
       (microondas) => {
@@ -71,20 +74,20 @@ export class MicroondasComponent implements OnInit {
 
 
 
-  obtenerReceta(val:any){
+  obtenerReceta(val: any) {
 
     this.recetaService.getRecetaxId(Number(val)).subscribe(
       (receta) => {
         this.receta = receta;
       });
 
-     /* this.microondasService.listarMicroondasxReceta(this.receta.id_receta).subscribe(
-        (microondasxReceta) => {
-          this.microondasxReceta = microondasxReceta;
-        });*/
-   
+    /* this.microondasService.listarMicroondasxReceta(this.receta.id_receta).subscribe(
+       (microondasxReceta) => {
+         this.microondasxReceta = microondasxReceta;
+       });*/
+
   }
-  cambioNombre(){
+  cambioNombre() {
     this.microondasService.listarMicroondasxReceta(Number($("#idcodigoReceta").val())).subscribe(
       (microondasxReceta) => {
         this.microondasxReceta = microondasxReceta;
@@ -93,52 +96,52 @@ export class MicroondasComponent implements OnInit {
   registra() {
     if ($("#idCodMicroondas").val() == "") {
       this.microonda.fotoBase64 = $('.preview img').attr('src');
-    
-        this.microonda.receta=this.receta;
-        var i=0;
-        
-        this.microondasxReceta.forEach(obj => {
-          if(obj.descripcion==$("#idnombre").val()){
-            i=1;
-            
-          }
-        });
-      if(i==0){
+
+      this.microonda.receta = this.receta;
+      var i = 0;
+
+      this.microondasxReceta.forEach(obj => {
+        if (obj.descripcion == $("#idnombre").val()) {
+          i = 1;
+
+        }
+      });
+      if (i == 0) {
         this.microondasService.registrarMicroondas(this.microonda).subscribe(
 
-
-          Swal.fire({
-            title: 'Se está registrando horno microondas',
-            text: 'Procesando datos...',
-            width: '500px',
-            imageUrl: 'https://www.boasnotas.com/img/loading2.gif',
-            imageHeight: 150,
-            imageWidth: 150,
-            buttons: false,
-            timerProgressBar: true,
-            closeOnClickOutside: false,
-            timer: 10000,
-            showCancelButton: false,
-            showConfirmButton: false,
-          })
-            .then(function () {
-              Swal.fire({
-                title: 'Se registró horno microondas exitosamente.',
-                text: '',
-                icon: 'success',
-                buttons: false,
-                closeOnClickOutside: false,
-                timer: 3500,
-                showCancelButton: false,
-                showConfirmButton: false,
-  
-              })
-                .then(function () {
-                  window.location.href = "http://localhost:4200/microondas";
-                });
+          response => {
+            Swal.fire({
+              title: 'Se está registrando horno microondas',
+              text: 'Procesando datos...',
+              width: '500px',
+              imageUrl: 'https://www.boasnotas.com/img/loading2.gif',
+              imageHeight: 150,
+              imageWidth: 150,
+              buttons: false,
+              timerProgressBar: true,
+              closeOnClickOutside: false,
+              timer: 2000,
+              showCancelButton: false,
+              showConfirmButton: false,
             })
-  
-          ,
+              .then(function () {
+                Swal.fire({
+                  title: 'Se registró horno microondas exitosamente.',
+                  text: '',
+                  icon: 'success',
+                  buttons: false,
+                  closeOnClickOutside: false,
+                  timer: 3500,
+                  showCancelButton: false,
+                  showConfirmButton: false,
+
+                })
+                  .then(function () {
+                    window.location.href = "http://localhost:4200/microondas";
+                  });
+              })
+
+          },
           error => {
             console.log(error);
             Swal.fire({
@@ -151,7 +154,7 @@ export class MicroondasComponent implements OnInit {
           },
         );
       }
-      else{
+      else {
         Swal.fire({
           title: 'La receta ya tiene este horno microondas.',
           text: '',
@@ -160,13 +163,13 @@ export class MicroondasComponent implements OnInit {
           showCloseButton: true,
         })
       }
-     
+
     }
     else if ($("#idCodMicroondas").val() != "") {
-        this.microondasService.getMicroondasxId(Number($("#idCodMicroondas").val())).subscribe(
-          (microondaEditar) => {
-            this.microondaEditar = microondaEditar;
-          });
+      this.microondasService.getMicroondasxId(Number($("#idCodMicroondas").val())).subscribe(
+        (microondaEditar) => {
+          this.microondaEditar = microondaEditar;
+        });
 
       Swal.fire({
         title: '¿Seguro que deseas modificar horno microondas?',
@@ -183,7 +186,7 @@ export class MicroondasComponent implements OnInit {
         if (result['isConfirmed']) {
           this.microondaEditar.descripcion = String($("#idnombre").val());
           this.microondaEditar.receta = this.receta;
-      
+
 
           if (this.microondaEditar.fotoBase64 != $('.preview img').attr('src')) {
             this.microondaEditar.fotoBase64 = $('.preview img').attr('src')
@@ -192,39 +195,40 @@ export class MicroondasComponent implements OnInit {
 
 
           this.microondasService.actualizarMicroondas(this.microondaEditar).subscribe(
+            response => {
+              Swal.fire({
+                title: 'Se está modificando horno microondas',
+                text: 'Procesando datos...',
+                width: '500px',
+                imageUrl: 'https://www.boasnotas.com/img/loading2.gif',
+                imageHeight: 150,
+                imageWidth: 150,
+                buttons: false,
+                timerProgressBar: true,
+                closeOnClickOutside: false,
+                timer: 2000,
+                showCancelButton: false,
+                showConfirmButton: false,
+              })
+                .then(function () {
+                  Swal.fire({
+                    title: 'Se modificó horno microondas exitosamente.',
+                    text: '',
+                    icon: 'success',
+                    buttons: false,
+                    closeOnClickOutside: false,
+                    timer: 3500,
+                    showCancelButton: false,
+                    showConfirmButton: false,
 
-            Swal.fire({
-              title: 'Se está modificando horno microondas',
-              text: 'Procesando datos...',
-              width: '500px',
-              imageUrl: 'https://www.boasnotas.com/img/loading2.gif',
-              imageHeight: 150,
-              imageWidth: 150,
-              buttons: false,
-              timerProgressBar: true,
-              closeOnClickOutside: false,
-              timer: 10000,
-              showCancelButton: false,
-              showConfirmButton: false,
-            })
-              .then(function () {
-                Swal.fire({
-                  title: 'Se modificó horno microondas exitosamente.',
-                  text: '',
-                  icon: 'success',
-                  buttons: false,
-                  closeOnClickOutside: false,
-                  timer: 3500,
-                  showCancelButton: false,
-                  showConfirmButton: false,
+                  })
+                    .then(function () {
+                      window.location.href = "http://localhost:4200/microondas";
+                    })
+
 
                 })
-                  .then(function () {
-                    window.location.href = "http://localhost:4200/microondas";
-                  })
-
-
-              }),
+            },
             error => {
               console.log(error);
               Swal.fire({
@@ -287,35 +291,49 @@ export class MicroondasComponent implements OnInit {
           this.microondaEliminar.estado = 2;
           this.microondasService.actualizarMicroondas(this.microondaEliminar).subscribe(
             response => {
-              console.log(response.mensaje);
+                Swal.fire({
+                  title: 'Se está registrando horno microondas',
+                  text: 'Procesando datos...',
+                  width: '500px',
+                  imageUrl: 'https://www.boasnotas.com/img/loading2.gif',
+                  imageHeight: 150,
+                  imageWidth: 150,
+                  buttons: false,
+                  timerProgressBar: true,
+                  closeOnClickOutside: false,
+                  timer: 2000,
+                  showCancelButton: false,
+                  showConfirmButton: false,
+                })
+                  .then(function () {
+                    Swal.fire({
+                      title: 'Se modificó horno microondas a estado inactivo exitosamente.',
+                      text: '',
+                      icon: 'success',
+                      buttons: false,
+                      closeOnClickOutside: false,
+                      timer: 3500,
+                      showCancelButton: false,
+                      showConfirmButton: false,
 
-              Swal.fire({
-                title: 'Se modificó horno microondas a estado inactivo exitosamente.',
-                text: '',
-                icon: 'success',
-                buttons: false,
-                closeOnClickOutside: false,
-                timer: 2500,
-                showCancelButton: false,
-                showConfirmButton: false,
-
-              })
-                .then(function () {
-                  window.location.href = "http://localhost:4200/microondas";
-                });
+                    })
+                  })
+                  .then(function () {
+                    window.location.href = "http://localhost:4200/microondas";
+                  });
 
 
-            },
-            error => {
-              console.log(error);
-              Swal.fire({
-                title: 'Error al modificar horno microondas.',
-                text: '',
-                icon: 'error',
-                confirmButtonColor: '#780116',
-                showCloseButton: true,
-              })
-            },
+              },
+                error => {
+                  console.log(error);
+                  Swal.fire({
+                    title: 'Error al modificar horno microondas.',
+                    text: '',
+                    icon: 'error',
+                    confirmButtonColor: '#780116',
+                    showCloseButton: true,
+                  })
+                },
           );
 
         } else {
@@ -359,48 +377,48 @@ export class MicroondasComponent implements OnInit {
         $("#detalle13").text(String(this.microondaVer.receta!.estiloPlato?.nombre));
         $("#detalle14").text(String(this.microondaVer.receta!.tipoComida?.nombre));
         $("#detalle16").attr("src", this.microondaVer.receta!.fotoBase64);
-       
+
 
       });
 
   }
 
-  editar(val: any,val2: any) {
+  editar(val: any, val2: any) {
     const idMicroondas = val;
-    const estado=val2;
-    if(estado!=2){
-    this.microondasService.getMicroondasxId(idMicroondas).subscribe(
-      (microondaEditar) => {
-        this.microondaEditar = microondaEditar;
-        $("#idRegistrar").trigger('reset');
-        $("#idCodMicroondas").val(idMicroondas);
-        $('#idnombre').removeClass('error').next('label.error').remove();
-        $('#elimFoto').click();
-        $("#errorimagen").text();
+    const estado = val2;
+    if (estado != 2) {
+      this.microondasService.getMicroondasxId(idMicroondas).subscribe(
+        (microondaEditar) => {
+          this.microondaEditar = microondaEditar;
+          $("#idRegistrar").trigger('reset');
+          $("#idCodMicroondas").val(idMicroondas);
+          $('#idnombre').removeClass('error').next('label.error').remove();
+          $('#elimFoto').click();
+          $("#errorimagen").text();
 
-        $('#btnRegistrar').prop('disabled', false);
-        $('#btnLimpiar').prop('disabled', false);
-     
-        $("#idcodigoReceta").val(String(this.microondaEditar.receta!.id_receta));
-        $("#idnombreReceta").val(String(this.microondaEditar.receta!.nombre_platillo));
-        $("#idtiempoReceta").val(String(this.microondaEditar.receta!.tiempo_preparacion));
-        $("#idporcionReceta").val(String(this.microondaEditar.receta!.porcion));        
-        $("#idimgMicroonda").attr("src", this.microondaEditar.receta!.fotoBase64);        
+          $('#btnRegistrar').prop('disabled', false);
+          $('#btnLimpiar').prop('disabled', false);
 
-        $("#idnombre").val(String(this.microondaEditar.descripcion));
+          $("#idcodigoReceta").val(String(this.microondaEditar.receta!.id_receta));
+          $("#idnombreReceta").val(String(this.microondaEditar.receta!.nombre_platillo));
+          $("#idtiempoReceta").val(String(this.microondaEditar.receta!.tiempo_preparacion));
+          $("#idporcionReceta").val(String(this.microondaEditar.receta!.porcion));
+          $("#idimgMicroonda").attr("src", this.microondaEditar.receta!.fotoBase64);
 
-       
-        $('#previews').empty();
-        $("#previews").append("<div class='row mt-2 dz-image-preview'><div class='col-auto'><span class='preview'><img" +
-          " src='" + this.microondaEditar.fotoBase64 + "' alt='Foto-de-receta-guardada' style='width:350px; height:200px'></span></div>" +
-          "<div class='col d-flex align-items-center'><p clas='mb-0'><span class='lead'>Foto-de-microondas-" + idMicroondas + ".jpg</span></p>" +
-          "</div></div></div>");
+          $("#idnombre").val(String(this.microondaEditar.descripcion));
 
 
+          $('#previews').empty();
+          $("#previews").append("<div class='row mt-2 dz-image-preview'><div class='col-auto'><span class='preview'><img" +
+            " src='" + this.microondaEditar.fotoBase64 + "' alt='Foto-de-receta-guardada' style='width:350px; height:200px'></span></div>" +
+            "<div class='col d-flex align-items-center'><p clas='mb-0'><span class='lead'>Foto-de-microondas-" + idMicroondas + ".jpg</span></p>" +
+            "</div></div></div>");
 
-      });
+
+
+        });
     }
-    else{
+    else {
       Swal.fire({
         title: 'El horno microondas está en estado inactivo.',
         text: '',

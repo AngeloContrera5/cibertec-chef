@@ -118,7 +118,7 @@ export class RecetaComponent implements OnInit {
 
       this.recetaService.registrarReceta(this.receta).subscribe(
 
-
+        response => {
         Swal.fire({
           title: 'Se está registrando receta',
           text: 'Procesando datos...',
@@ -129,7 +129,7 @@ export class RecetaComponent implements OnInit {
           buttons: false,
           timerProgressBar: true,
           closeOnClickOutside: false,
-          timer: 10000,
+          timer: 2000,
           showCancelButton: false,
           showConfirmButton: false,
         })
@@ -150,7 +150,7 @@ export class RecetaComponent implements OnInit {
               });
           })
 
-        ,
+        },
         error => {
           console.log(error);
           Swal.fire({
@@ -203,7 +203,7 @@ export class RecetaComponent implements OnInit {
 
 
           this.recetaService.actualizarReceta(this.recetaEditar).subscribe(
-
+            response => {
             Swal.fire({
               title: 'Se está modificando receta.',
               text: 'Procesando datos...',
@@ -214,7 +214,7 @@ export class RecetaComponent implements OnInit {
               buttons: false,
               timerProgressBar: true,
               closeOnClickOutside: false,
-              timer: 10000,
+              timer: 2000,
               showCancelButton: false,
               showConfirmButton: false,
             })
@@ -235,7 +235,7 @@ export class RecetaComponent implements OnInit {
                   })
 
 
-              }),
+              })},
             error => {
               console.log(error);
               Swal.fire({
@@ -308,39 +308,9 @@ export class RecetaComponent implements OnInit {
               this.microondas.forEach(obj => {
                 obj.estado = 2;
                 this.microondasService.actualizarMicroondas(obj).subscribe(
-
-                  Swal.fire({
-                    title: 'Se está modificando receta y microondas.',
-                    text: 'Procesando datos...',
-                    width: '500px',
-                    imageUrl: 'https://www.boasnotas.com/img/loading2.gif',
-                    imageHeight: 150,
-                    imageWidth: 150,
-                    buttons: false,
-                    timerProgressBar: true,
-                    closeOnClickOutside: false,
-                    timer: 8000,
-                    showCancelButton: false,
-                    showConfirmButton: false,
-                  })
-                    .then(function () {
-                      Swal.fire({
-                        title: 'Se modificó receta y microondas a estado inactivo exitosamente.',
-                        text: '',
-                        icon: 'success',
-                        buttons: false,
-                        closeOnClickOutside: false,
-                        timer: 2500,
-                        showCancelButton: false,
-                        showConfirmButton: false,
-
-                      })
-                        .then(function () {
-                          alert("-")
-                          window.location.href = "http://localhost:4200/receta";
-                        })
-                    })
-                  ,
+                  response => {
+                console.log(response);
+                  },
                   error => {
                     console.log(error);
                     Swal.fire({
@@ -353,6 +323,36 @@ export class RecetaComponent implements OnInit {
                   },
                 )
               })
+              Swal.fire({
+                title: 'Se está modificando receta y microondas.',
+                text: 'Procesando datos...',
+                width: '500px',
+                imageUrl: 'https://www.boasnotas.com/img/loading2.gif',
+                imageHeight: 150,
+                imageWidth: 150,
+                buttons: false,
+                timerProgressBar: true,
+                closeOnClickOutside: false,
+                timer: 2000,
+                showCancelButton: false,
+                showConfirmButton: false,
+              })
+                .then(function () {
+                  Swal.fire({
+                    title: 'Se modificó receta y microondas a estado inactivo exitosamente.',
+                    text: '',
+                    icon: 'success',
+                    buttons: false,
+                    closeOnClickOutside: false,
+                    timer: 3500,
+                    showCancelButton: false,
+                    showConfirmButton: false,
+
+                  })
+                    .then(function () {
+                      window.location.href = "http://localhost:4200/receta";
+                    })
+                })
             },
               error => {
                 console.log(error);
