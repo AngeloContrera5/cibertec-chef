@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { LoginUsuario } from 'src/app/models/login-usuario';
+import { Usuario } from 'src/app/models/usuario.model';
 import { AuthService } from 'src/app/services/auth.service';
 import { TokenService } from 'src/app/services/token.service';
+import { UsuarioService } from 'src/app/services/usuario.service';
 declare var Swal: any;
 
 @Component({
@@ -18,11 +20,13 @@ export class LoginComponent implements OnInit {
   password?: string;
   roles: String[] = [];
   errMsj?: string;
+  usuarioObj?: Usuario;
 
   constructor(
     private tokenService: TokenService,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private usuarioService: UsuarioService
   ) {}
 
   ngOnInit() {
