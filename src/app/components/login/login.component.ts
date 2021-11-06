@@ -34,6 +34,8 @@ export class LoginComponent implements OnInit {
       this.isLogged = true;
       this.isLoginFail = false;
       this.roles = this.tokenService.getAuthorities();
+      this.router.navigate(['/home']);
+      //window.location.href = 'http://localhost:4200/home';
     }
   }
 
@@ -46,8 +48,12 @@ export class LoginComponent implements OnInit {
         this.tokenService.setToken(data.token!);
         this.tokenService.setUserName(data.username!);
         this.tokenService.setAuthorities(data.authorities!);
+        this.tokenService.setNombresCompletos(data.nombresCompletos!);
+        this.tokenService.setId(data.id!);
         this.roles = data.authorities!;
-        this.router.navigate(['/home']);
+        this.router.navigate(['']).then(function () {
+          window.location.href = 'http://localhost:4200/home';
+        });
       },
       (err) => {
         this.isLogged = false;
@@ -63,4 +69,4 @@ export class LoginComponent implements OnInit {
       }
     );
   }
-} //FINNNNNNNNNNNNNNNN
+} 

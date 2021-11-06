@@ -11,7 +11,7 @@
   var myDropzone = new Dropzone(document.body, { // Make the whole body a dropzone
     url: "/target-url1", // Set the url
     thumbnailWidth: 350,
-    thumbnailHeight:  200,
+    thumbnailHeight:  350,
     previewTemplate: previewTemplate,
     autoQueue: false, // Make sure the files aren't queued until manually added
     previewsContainer: "#previews", // Define the container to display the previews

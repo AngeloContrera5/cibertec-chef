@@ -21,6 +21,10 @@ export class UsuarioService {
     return this.http.get<Usuario>(baseURL + 'id/' + idUsuario);
   }
 
+  getUsuarioxUsername(username: any): Observable<Usuario> {
+    return this.http.get<Usuario>(baseURL + 'username/' + username);
+  }
+
   actualizarUsuario(data: Usuario): Observable<any> {
     return this.http.put(baseURL, data);
   }

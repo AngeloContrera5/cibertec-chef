@@ -3,6 +3,7 @@ import * as $ from "jquery";
 declare var Swal: any;
 import { DietaService } from 'src/app/services/dieta.service';
 import { Dieta } from 'src/app/models/dieta.model';
+import { TokenService } from 'src/app/services/token.service';
 
 @Component({
   selector: 'app-dieta',
@@ -14,6 +15,9 @@ export class DietaComponent implements OnInit {
   dietas: Dieta[] = [];
   dieta: Dieta = {
     id_dieta: 0,
+    usuario:{
+      id_usuario: parseInt(this.tokenService.getId())
+    }
   };
   dietaEditar: Dieta = {
     id_dieta: 0,
@@ -24,13 +28,12 @@ export class DietaComponent implements OnInit {
   allDataFetched: boolean = false;
   nombre : String="";
 
-  constructor(private dietaService: DietaService,) {
+  constructor(private dietaService: DietaService,private tokenService: TokenService) {
     $("#example1 > tbody").empty(),
     this.dietaService.listarDietasActivas().subscribe(
       (dietas) => {
         this.dietas = dietas,
         this.allDataFetched = true;
-
       }
 
     );
@@ -81,8 +84,9 @@ export class DietaComponent implements OnInit {
     else if ($("#idCodDieta").val() != "") {
       this.dietaService.getDietaxId(Number($("#idCodDieta").val())).subscribe(
         (dietaEditar) => {this.dietaEditar = dietaEditar;
+         
         });
-    
+       
        
       Swal.fire({
         title: '¿Seguro que deseas modificar dieta?',
@@ -98,6 +102,7 @@ export class DietaComponent implements OnInit {
       }).then((result: { [x: string]: any; }) => {
         if (result['isConfirmed']) {
           this.dietaEditar.nombre=String($("#idnombre").val());
+          this.dietaEditar.usuario!.id_usuario= parseInt(this.tokenService.getId());
           this.dietaService.actualizarDieta(this.dietaEditar).subscribe(
             response => {
               console.log(response.mensaje);
@@ -175,7 +180,8 @@ export class DietaComponent implements OnInit {
       confirmButtonColor: '#780116',
     }).then((result: { [x: string]: any; }) => {
       if (result['isConfirmed']) {
-        this.dietaEliminar.estado=2;
+        this.dietaEliminar.estado=2;        
+        this.dietaEliminar.usuario!.id_usuario= parseInt(this.tokenService.getId());
         this.dietaService.actualizarDieta(this.dietaEliminar).subscribe(
           response => {
             console.log(response.mensaje);

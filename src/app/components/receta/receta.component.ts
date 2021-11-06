@@ -16,7 +16,8 @@ import { RecetaService } from 'src/app/services/receta.service';
 import { TipoComidaService } from 'src/app/services/tipo-comida.service';
 import { MicroondasService } from 'src/app/services/microondas.service';
 import { Microondas } from 'src/app/models/microondas.model';
-declare var fotoBlob: any;
+import { TokenService } from 'src/app/services/token.service';
+
 
 @Component({
   selector: 'app-receta',
@@ -51,6 +52,9 @@ export class RecetaComponent implements OnInit {
     ocasion: {
       id_ocasion: -1
     },
+    usuario:{
+      id_usuario: parseInt(this.tokenService.getId())
+    }
   }
   recetaEditar: Receta = {
     dificultad: {
@@ -75,7 +79,7 @@ export class RecetaComponent implements OnInit {
 
   constructor(private recetaService: RecetaService, private dificultadService: DificultadService,
     private ocasionService: OcasionService, private dietaService: DietaService, private tipoComidaService: TipoComidaService,
-    private estiloPlatoService: EstiloPlatoService, private microondasService: MicroondasService) {
+    private estiloPlatoService: EstiloPlatoService, private microondasService: MicroondasService,private tokenService: TokenService,) {
    $("#example1 > tbody").empty(),
     this.recetaService.listarRecetasActivas().subscribe(
       (recetas) => {
@@ -196,7 +200,7 @@ export class RecetaComponent implements OnInit {
           this.recetaEditar.utensilio = String($("#idutensilios").val());
           this.recetaEditar.tip = String($("#idtips").val());
           this.recetaEditar.video = String($("#idvideo").val());
-
+          this.recetaEditar.usuario!.id_usuario= parseInt(this.tokenService.getId());
           if (this.recetaEditar.fotoBase64 != $('.preview img').attr('src')) {
             this.recetaEditar.fotoBase64 = $('.preview img').attr('src')
           }
@@ -302,12 +306,13 @@ export class RecetaComponent implements OnInit {
       }).then((result: { [x: string]: any; }) => {
         if (result['isConfirmed']) {
           this.recetaEliminar.estado = 2;
-
+          this.recetaEliminar.usuario!.id_usuario= parseInt(this.tokenService.getId());
 
           this.recetaService.actualizarReceta(this.recetaEliminar).subscribe(
             response => {
               this.microondas.forEach(obj => {
                 obj.estado = 2;
+                obj.usuario!.id_usuario= parseInt(this.tokenService.getId());
                 this.microondasService.actualizarMicroondas(obj).subscribe(
                   response => {
                 console.log(response);
@@ -539,7 +544,7 @@ publicar(val: any) {
     }).then((result: { [x: string]: any; }) => {
       if (result['isConfirmed']) {
         this.recetaEliminar.estado = 1;
-
+        this.recetaEliminar.usuario!.id_usuario= parseInt(this.tokenService.getId());
 
         this.recetaService.actualizarReceta(this.recetaEliminar).subscribe(
           response => {

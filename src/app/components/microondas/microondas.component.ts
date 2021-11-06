@@ -6,6 +6,7 @@ import { Microondas } from 'src/app/models/microondas.model';
 import { Receta } from 'src/app/models/receta.model';
 import { MicroondasService } from 'src/app/services/microondas.service';
 import { RecetaService } from 'src/app/services/receta.service';
+import { TokenService } from 'src/app/services/token.service';
 declare var Swal: any;
 
 @Component({
@@ -20,6 +21,9 @@ export class MicroondasComponent implements OnInit {
   microondasxReceta: Microondas[] = []
   microonda: Microondas = {
     receta: {
+    },
+    usuario:{
+      id_usuario: parseInt(this.tokenService.getId())
     }
   }
   microondaEditar: Microondas = {
@@ -50,7 +54,7 @@ export class MicroondasComponent implements OnInit {
   allDataFetched: boolean = false;
   allDataFetched1: boolean = false;
 
-  constructor(private recetaService: RecetaService, private microondasService: MicroondasService) {
+  constructor(private recetaService: RecetaService, private microondasService: MicroondasService,private tokenService: TokenService) {
     $("#example1 > tbody").empty(),
       this.recetaService.listarRecetasActivas().subscribe(
         (recetas) => {
@@ -187,7 +191,7 @@ export class MicroondasComponent implements OnInit {
         if (result['isConfirmed']) {
           this.microondaEditar.descripcion = String($("#idnombre").val());
           this.microondaEditar.receta = this.receta;
-
+          this.microondaEditar.usuario!.id_usuario= parseInt(this.tokenService.getId());
 
           if (this.microondaEditar.fotoBase64 != $('.preview img').attr('src')) {
             this.microondaEditar.fotoBase64 = $('.preview img').attr('src')
@@ -292,6 +296,7 @@ export class MicroondasComponent implements OnInit {
     }).then((result: { [x: string]: any; }) => {
       if (result['isConfirmed']) {
         this.microondaEliminar.estado = 2;
+        this.microondaEliminar.usuario!.id_usuario= parseInt(this.tokenService.getId());
         this.microondasService.actualizarMicroondas(this.microondaEliminar).subscribe(
           response => {
             Swal.fire({
@@ -452,6 +457,7 @@ export class MicroondasComponent implements OnInit {
     }).then((result: { [x: string]: any; }) => {
       if (result['isConfirmed']) {
         this.microondaEliminar.estado = 1;
+        this.microondaEliminar.usuario!.id_usuario= parseInt(this.tokenService.getId());
         this.microondasService.actualizarMicroondas(this.microondaEliminar).subscribe(
           response => {
             Swal.fire({

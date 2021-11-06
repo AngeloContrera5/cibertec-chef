@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { TipoComidaService } from 'src/app/services/tipo-comida.service';
 import { TipoComida } from 'src/app/models/tipo-comida.model';
 import * as $ from "jquery";
+import { TokenService } from 'src/app/services/token.service';
 declare var Swal: any;
 
 @Component({
@@ -15,6 +16,9 @@ export class TipoComidaComponent implements OnInit {
   tipos: TipoComida[] = [];
   tipo: TipoComida = {
     id_tipo_comida: 0,
+    usuario:{
+      id_usuario: parseInt(this.tokenService.getId())
+    }
   };
   tipoEditar: TipoComida = {
     id_tipo_comida: 0,
@@ -25,7 +29,7 @@ export class TipoComidaComponent implements OnInit {
   allDataFetched: boolean = false;
   nombre: String = "";
 
-  constructor(private tipoService: TipoComidaService,) {
+  constructor(private tipoService: TipoComidaService,private tokenService: TokenService) {
     $("#example1 > tbody").empty(),
     this.tipoService.listarTipoComidasActivas().subscribe(
       (tipos) => {
@@ -99,6 +103,7 @@ export class TipoComidaComponent implements OnInit {
       }).then((result: { [x: string]: any; }) => {
         if (result['isConfirmed']) {
           this.tipoEditar.nombre = String($("#idnombre").val());
+          this.tipoEditar.usuario!.id_usuario= parseInt(this.tokenService.getId());
           this.tipoService.actualizarTipoComida(this.tipoEditar).subscribe(
             response => {
               console.log(response.mensaje);
@@ -178,6 +183,7 @@ export class TipoComidaComponent implements OnInit {
       }).then((result: { [x: string]: any; }) => {
         if (result['isConfirmed']) {
           this.tipoEliminar.estado = 2;
+          this.tipoEliminar.usuario!.id_usuario= parseInt(this.tokenService.getId());
           this.tipoService.actualizarTipoComida(this.tipoEliminar).subscribe(
             response => {
               console.log(response.mensaje);
