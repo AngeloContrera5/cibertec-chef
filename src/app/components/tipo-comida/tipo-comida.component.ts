@@ -26,7 +26,8 @@ export class TipoComidaComponent implements OnInit {
   nombre: String = "";
 
   constructor(private tipoService: TipoComidaService,) {
-    this.tipoService.listarTipoComidas().subscribe(
+    $("#example1 > tbody").empty(),
+    this.tipoService.listarTipoComidasActivas().subscribe(
       (tipos) => {
         this.tipos = tipos,
           this.allDataFetched = true;
@@ -153,7 +154,7 @@ export class TipoComidaComponent implements OnInit {
         this.tipoEliminar = tipoEliminar;
       });
 
-    if (estado == 2) {
+  /*  if (estado == 2) {
       Swal.fire({
         title: 'El tipo de comida ya está en estado inactivo.',
         text: '',
@@ -162,7 +163,7 @@ export class TipoComidaComponent implements OnInit {
         showCloseButton: true,
       })
     }
-    else {
+    else {*/
 
       Swal.fire({
         title: '¿Seguro que deseas modificar tipo de comida a estado inactivo?',
@@ -222,6 +223,7 @@ export class TipoComidaComponent implements OnInit {
       })
 
 
-    }}
+    /*}*/
+  }
 
   }

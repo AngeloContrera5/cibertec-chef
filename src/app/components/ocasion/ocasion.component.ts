@@ -27,7 +27,8 @@ export class OcasionComponent implements OnInit {
   nombre: String = "";
 
   constructor(private ocasionService: OcasionService,) {
-    this.ocasionService.listarOcasiones().subscribe(
+    $("#example1 > tbody").empty(),
+    this.ocasionService.listarOcasionesActivas().subscribe(
       (ocasiones) => {
         this.ocasiones = ocasiones,
           this.allDataFetched = true;
@@ -154,7 +155,7 @@ export class OcasionComponent implements OnInit {
         this.ocasionEliminar = ocasionEliminar;
       });
 
-    if (estado == 2) {
+   /* if (estado == 2) {
       Swal.fire({
         title: 'La ocasión ya está en estado inactivo.',
         text: '',
@@ -163,7 +164,7 @@ export class OcasionComponent implements OnInit {
         showCloseButton: true,
       })
     }
-    else {
+    else {*/
 
       Swal.fire({
         title: '¿Seguro que deseas modificar ocasión a estado inactivo?',
@@ -223,7 +224,8 @@ export class OcasionComponent implements OnInit {
       })
 
 
-    }}
+   /* }*/
+  }
 
 
   }

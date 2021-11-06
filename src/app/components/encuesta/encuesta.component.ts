@@ -63,6 +63,7 @@ export class EncuestaComponent implements OnInit {
     private encuestaService: EncuestaService,
     private encuestaItemService:EncuestaItemService,
     ) { 
+      $("#example1 > tbody").empty(),
     this.listarEncuestas();
     this.retornaCodigo();
     //alert(this.idEncuesta.id_encuesta)
@@ -293,7 +294,7 @@ export class EncuestaComponent implements OnInit {
 
   //contenidoModalActualizarItemActutaliza
   ngOnInit(): void {
-    $.getScript('assets/dist/js/file.js');
+    //$.getScript('assets/dist/js/file.js');
     $.getScript('assets/dist/js/datatable.js');
   }
 

@@ -25,7 +25,8 @@ export class DietaComponent implements OnInit {
   nombre : String="";
 
   constructor(private dietaService: DietaService,) {
-    this.dietaService.listarDietas().subscribe(
+    $("#example1 > tbody").empty(),
+    this.dietaService.listarDietasActivas().subscribe(
       (dietas) => {
         this.dietas = dietas,
         this.allDataFetched = true;
@@ -151,7 +152,7 @@ export class DietaComponent implements OnInit {
       (dietaEliminar) => {this.dietaEliminar = dietaEliminar;
       });
   
-    if(estado==2){
+  /*  if(estado==2){
       Swal.fire({
         title: 'La dieta ya está en estado inactivo.',
         text: '',
@@ -160,7 +161,7 @@ export class DietaComponent implements OnInit {
         showCloseButton: true,
       })
     }
-    else{
+    else{*/
 
     Swal.fire({
       title: '¿Seguro que deseas modificar dieta a estado inactivo?',
@@ -219,7 +220,7 @@ export class DietaComponent implements OnInit {
       }
     })
   
-    }
+  /*  }*/
   }
 
 

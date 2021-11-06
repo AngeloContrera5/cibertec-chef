@@ -76,7 +76,8 @@ export class RecetaComponent implements OnInit {
   constructor(private recetaService: RecetaService, private dificultadService: DificultadService,
     private ocasionService: OcasionService, private dietaService: DietaService, private tipoComidaService: TipoComidaService,
     private estiloPlatoService: EstiloPlatoService, private microondasService: MicroondasService) {
-    this.recetaService.listarRecetas().subscribe(
+   $("#example1 > tbody").empty(),
+    this.recetaService.listarRecetasActivas().subscribe(
       (recetas) => {
         this.recetas = recetas,
           this.allDataFetched = true;
@@ -120,12 +121,12 @@ export class RecetaComponent implements OnInit {
 
         response => {
         Swal.fire({
-          title: 'Se está registrando receta',
+          title: '<br> Se está registrando receta',
           text: 'Procesando datos...',
           width: '500px',
-          imageUrl: 'https://www.boasnotas.com/img/loading2.gif',
-          imageHeight: 150,
-          imageWidth: 150,
+          didOpen: () => {
+            Swal.showLoading()
+          },
           buttons: false,
           timerProgressBar: true,
           closeOnClickOutside: false,
@@ -205,12 +206,12 @@ export class RecetaComponent implements OnInit {
           this.recetaService.actualizarReceta(this.recetaEditar).subscribe(
             response => {
             Swal.fire({
-              title: 'Se está modificando receta.',
+              title: '<br> Se está modificando receta.',
               text: 'Procesando datos...',
               width: '500px',
-              imageUrl: 'https://www.boasnotas.com/img/loading2.gif',
-              imageHeight: 150,
-              imageWidth: 150,
+              didOpen: () => {
+                Swal.showLoading()
+              },
               buttons: false,
               timerProgressBar: true,
               closeOnClickOutside: false,
@@ -277,7 +278,7 @@ export class RecetaComponent implements OnInit {
         this.microondas = microondas;
       });
 
-    if (estado == 2) {
+  /*  if (estado == 2) {
       Swal.fire({
         title: 'La receta ya está en estado inactivo.',
         text: '',
@@ -286,7 +287,7 @@ export class RecetaComponent implements OnInit {
         showCloseButton: true,
       })
     }
-    else {
+    else {*/
 
       Swal.fire({
         title: '¿Seguro que deseas modificar receta a estado inactivo?',
@@ -324,12 +325,12 @@ export class RecetaComponent implements OnInit {
                 )
               })
               Swal.fire({
-                title: 'Se está modificando receta y microondas.',
+                title: '<br> Se está modificando receta y microondas.',
                 text: 'Procesando datos...',
                 width: '500px',
-                imageUrl: 'https://www.boasnotas.com/img/loading2.gif',
-                imageHeight: 150,
-                imageWidth: 150,
+                didOpen: () => {
+                  Swal.showLoading()
+                },
                 buttons: false,
                 timerProgressBar: true,
                 closeOnClickOutside: false,
@@ -376,7 +377,7 @@ export class RecetaComponent implements OnInit {
           })
         }
       })
-    }
+  /*  }*/
 
   }
 
@@ -435,7 +436,7 @@ export class RecetaComponent implements OnInit {
   editar(val: any, val2: any) {
     const idReceta = val;
     const estado = val2;
-    if (estado != 2) {
+    /*if (estado != 2) {*/
       this.recetaService.getRecetaxId(idReceta).subscribe(
         (recetaEditar) => {
           this.recetaEditar = recetaEditar;
@@ -504,7 +505,7 @@ export class RecetaComponent implements OnInit {
 
 
         });
-    }
+   /* }
     else {
       Swal.fire({
         title: 'La receta está en estado inactivo.',
@@ -513,8 +514,91 @@ export class RecetaComponent implements OnInit {
         confirmButtonColor: '#780116',
         showCloseButton: true,
       })
-    }
+    }*/
   }
+
+
+
+  
+publicar(val: any) {
+  const idReceta = val;
+  this.recetaService.getRecetaxId(idReceta).subscribe(
+    (recetaEliminar) => {
+      this.recetaEliminar = recetaEliminar;
+    });
+    Swal.fire({
+      title: '¿Seguro que deseas publicar receta?',
+      text: 'Se publicará receta y sus microondas.',
+      icon: "warning",
+      closeOnClickOutside: false,
+      confirmButtonText: 'Sí',
+      showCancelButton: true,
+      cancelButtonText: "No",
+      dangerMode: true,
+      confirmButtonColor: '#780116',
+    }).then((result: { [x: string]: any; }) => {
+      if (result['isConfirmed']) {
+        this.recetaEliminar.estado = 1;
+
+
+        this.recetaService.actualizarReceta(this.recetaEliminar).subscribe(
+          response => {
+            Swal.fire({
+              title: '<br> Se está publicando receta.',
+              text: 'Procesando datos...',
+              width: '500px',
+              didOpen: () => {
+                Swal.showLoading()
+              },
+              buttons: false,
+              timerProgressBar: true,
+              closeOnClickOutside: false,
+              timer: 2000,
+              showCancelButton: false,
+              showConfirmButton: false,
+            })
+              .then(function () {
+                Swal.fire({
+                  title: 'Se publicó receta.',
+                  text: '',
+                  icon: 'success',
+                  buttons: false,
+                  closeOnClickOutside: false,
+                  timer: 3500,
+                  showCancelButton: false,
+                  showConfirmButton: false,
+
+                })
+                  .then(function () {
+                    window.location.href = "http://localhost:4200/receta";
+                  })
+              })
+          },
+            error => {
+              console.log(error);
+              Swal.fire({
+                title: 'Error al publicar receta.',
+                text: '',
+                icon: 'error',
+                confirmButtonColor: '#780116',
+                showCloseButton: true,
+              })
+            },
+        );
+
+      } else {
+        Swal.fire({
+          title: 'Se canceló publicación.',
+          text: '',
+          icon: 'error',
+          confirmButtonColor: '#780116',
+          showCloseButton: true,
+        })
+      }
+    })
+
+
+}
 
 }
 

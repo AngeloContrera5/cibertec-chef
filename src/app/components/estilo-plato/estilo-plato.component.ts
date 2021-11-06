@@ -25,7 +25,8 @@ export class EstiloPlatoComponent implements OnInit {
   nombre: String = "";
 
   constructor(private estiloService: EstiloPlatoService,) {
-    this.estiloService.listarEstiloPlatos().subscribe(
+    $("#example1 > tbody").empty(),
+    this.estiloService.listarEstiloPlatosActivas().subscribe(
       (estilos) => {
         this.estilos = estilos,
           this.allDataFetched = true;
@@ -151,7 +152,7 @@ export class EstiloPlatoComponent implements OnInit {
       (estiloEliminar) => {
         this.estiloEliminar = estiloEliminar;
       });
-    if (estado == 2) {
+   /* if (estado == 2) {
       Swal.fire({
         title: 'El estilo de plato ya está en estado inactivo.',
         text: '',
@@ -160,7 +161,7 @@ export class EstiloPlatoComponent implements OnInit {
         showCloseButton: true,
       })
     }
-    else {
+    else {*/
 
       Swal.fire({
         title: '¿Seguro que deseas modificar estilo de plato a estado inactivo?',
@@ -220,6 +221,6 @@ export class EstiloPlatoComponent implements OnInit {
       })
 
     }
-    }
+   /* }*/
 
   }

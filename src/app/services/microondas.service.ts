@@ -24,6 +24,9 @@ export class MicroondasService {
     return this.http.get<Microondas[]>(baseUrl);
   }
   
+  listarMicroondasActivas():Observable<Microondas[]>{
+    return this.http.get<Microondas[]>(baseUrl+"/activos");
+  }
   getMicroondasxId(idMicroo:any):Observable<Microondas>{
     return this.http.get<Microondas>(baseUrl+"/id/"+idMicroo);
   }
