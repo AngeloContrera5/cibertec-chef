@@ -3,6 +3,8 @@ import { Injectable } from '@angular/core';
 const TOKEN_KEY = 'AuthToken';
 const USERNAME_KEY = 'AuthUserName';
 const AUTHORITIES_KEY = 'AuthAuthorities';
+const NOMBRES_COMPLETOS_KEY = 'AuthNombresCompletos';
+const ID_KEY = 'AuthId';
 
 @Injectable({
   providedIn: 'root',
@@ -21,6 +23,15 @@ export class TokenService {
     return localStorage.getItem(TOKEN_KEY)!;
   }
 
+  public setId(id: string): void {
+    window.localStorage.removeItem(ID_KEY);
+    window.localStorage.setItem(ID_KEY, id);
+  }
+
+  public getId(): string {
+    return localStorage.getItem(ID_KEY)!;
+  }
+
   public setUserName(userName: string): void {
     window.localStorage.removeItem(USERNAME_KEY);
     window.localStorage.setItem(USERNAME_KEY, userName);
@@ -28,6 +39,15 @@ export class TokenService {
 
   public getUserName(): string {
     return localStorage.getItem(USERNAME_KEY)!;
+  }
+
+  public setNombresCompletos(nomCompleto: string): void {
+    window.localStorage.removeItem(NOMBRES_COMPLETOS_KEY);
+    window.localStorage.setItem(NOMBRES_COMPLETOS_KEY, nomCompleto);
+  }
+
+  public getNombresCompletos(): string {
+    return localStorage.getItem(NOMBRES_COMPLETOS_KEY)!;
   }
 
   public setAuthorities(authorities: string[]): void {

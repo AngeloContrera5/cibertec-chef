@@ -34,6 +34,8 @@ export class LoginComponent implements OnInit {
       this.isLogged = true;
       this.isLoginFail = false;
       this.roles = this.tokenService.getAuthorities();
+      this.router.navigate(['/home']);
+      //window.location.href = 'http://localhost:4200/home';
     }
   }
 
@@ -46,20 +48,32 @@ export class LoginComponent implements OnInit {
         this.tokenService.setToken(data.token!);
         this.tokenService.setUserName(data.username!);
         this.tokenService.setAuthorities(data.authorities!);
+        this.tokenService.setNombresCompletos(data.nombresCompletos!);
+        this.tokenService.setId(data.id!);
         this.roles = data.authorities!;
-        this.router.navigate(['/home']);
+        this.router.navigate(['']).then(function () {
+          window.location.href = 'http://localhost:4200/home';
+        });
       },
       (err) => {
         this.isLogged = false;
         this.isLoginFail = true;
-        //this.errMsj = err.error.mensaje;
+        this.errMsj = err.error.mensaje;
         //console.log(this.errMsj);
         //console.log(err);
-        Swal.fire({
-          icon: 'error',
-          title: 'Oops...',
-          text: 'Error en el login: Datos incorrectos',
-        });
+        if (this.errMsj == 'Usuario inactivo') {
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Error en el login: Usuario inactivo',
+          });
+        } else {
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Error en el login: Datos incorrectos',
+          });
+        }
       }
     );
   }

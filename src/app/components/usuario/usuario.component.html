@@ -31,9 +31,9 @@
               </h3>
             </div>
             <div class="card-body">
-              <form id="idRegistrarUsuario" #f="ngForm" (ngSubmit)="onRegister()" novalidate>
+              <form id="idRegistrarUsuario" role="form" method="post" (ngSubmit)="onRegister()" novalidate>
                 <div class="row">
-                  <input type="hidden" class="form-control" id="idCodUsuario">
+                  <input type="text" class="form-control" id="idCodUsuario" value="" hidden>
                   <div class="col-sm-4">
                     <div class="form-group col-sm-12">
                       <label for="idnombres">Nombres</label>
@@ -68,7 +68,7 @@
                       <select class="form-control" name="rol" id="idrol">
                         <!-- [ngModel] = "rol" -->
                         <option value="-1">[Seleccione]</option>
-                        <option *ngFor="let obj of rol" value="{{obj.id}}">
+                        <option *ngFor="let obj of rol" value="{{obj.rolNombre}}">
                           {{obj.rolNombre}}</option>
                       </select>
                     </div>
@@ -82,8 +82,8 @@
                     </div>
                     <div class="form-group col-sm-12	">
                       <label for="idcontrasena">Contraseña</label>
-                      <input type="password" value="XXXXXXXXXX" class="form-control" id="idcontrasena" placeholder=""
-                        name="clave" [(ngModel)]="clave" required>
+                      <input type="password" class="form-control" id="idcontrasena" placeholder="" name="clave"
+                        [(ngModel)]="clave" required>
                     </div>
 
                   </div>
@@ -137,7 +137,7 @@
                   <div class="col-sm-12 ">
                     <button type="button" class="btn btn-outline-secondary float-right m-2" id="btnLimpiar">
                       <i class="fas fa-broom p-1"></i><span class="boton">Limpiar</span></button>
-                    <button type="submit" class="btn btn-info float-right m-2 " id="btnRegistrar">
+                    <button type="button" class="btn btn-info float-right m-2 " id="btnRegistrar">
                       <i class="fas fa-save p-1"></i><span id="boton" class="boton">Registrar</span></button>
                   </div>
                 </div>
@@ -178,8 +178,8 @@
                     <th class="ult-col"></th>
                   </tr>
                 </thead>
-                <tbody>
-                  <tr *ngFor="let aux of usuarios">
+                <tbody *ngIf="allDataFetched">
+                  <tr *ngFor="let aux of listadoUsuarios">
                     <td>{{aux.id_usuario}}</td>
                     <td>{{aux.nombres}}</td>
                     <td>{{aux.apellidos}}</td>

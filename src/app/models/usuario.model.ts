@@ -13,6 +13,7 @@ export class Usuario {
   fecha_registro?: Date;
   fecha_actualiza?: Date;
   fotoBase64?: any;
+  rolUsuario?: string;
   //agregar roles o rol?
 
   constructor(
@@ -23,7 +24,8 @@ export class Usuario {
     correo: string,
     usuario: string,
     clave: string,
-    fotoBase64: any
+    fotoBase64: any,
+    rolUsuario: string
   ) {
     this.nombres = nombres;
     this.apellidos = apellidos;
@@ -33,5 +35,6 @@ export class Usuario {
     this.usuario = usuario;
     this.clave = clave;
     this.fotoBase64 = fotoBase64;
+    this.rolUsuario = rolUsuario;
   }
 }

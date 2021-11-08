@@ -17,15 +17,8 @@ declare var Swal: any;
 })
 export class UsuarioComponent implements OnInit {
   rol: Rol[] = [];
-  usuarios: Usuario[] = [];
-
-  /* 
-  nombreRolFront: string = "-1"
-  rol: {
-    nombreRol: nombreRolFront
-  } 
-  */
-
+  listadoUsuarios: Usuario[] = [];
+  allDataFetched: boolean = false;
   isRegister = false;
   isRegisterFail = false;
   nuevoUsuario?: Usuario;
@@ -38,6 +31,7 @@ export class UsuarioComponent implements OnInit {
 
   usuario?: string;
   clave?: string;
+  rolUsuario?: string;
 
   //roles: String[] = [];
   errMsj?: string;
@@ -45,11 +39,13 @@ export class UsuarioComponent implements OnInit {
 
   fotoBase64: any;
 
-  usuarioVer?: Usuario;
-  usuarioEliminar?: Usuario;
-  usuarioEditar?: Usuario;
+  usuarioVer: Usuario = {};
+  usuarioEliminar: Usuario = {};
+  usuarioEditar: Usuario = {};
 
-  //usuarioObj: Usuario = {};
+  //PARSEO PARA ACTUALIZACION DE FECHA DE NACIMIENTO
+  fecha?: string;
+  fechaActualizada?: Date;
 
   constructor(
     private rolService: RolService,
@@ -60,15 +56,14 @@ export class UsuarioComponent implements OnInit {
   ) {
     this.rolService.listarRol().subscribe((rol) => (this.rol = rol));
 
-    this.usuarioService
-      .listaUsuario()
-      .subscribe((usuarios) => (this.usuarios = usuarios));
+    this.usuarioService.listaUsuario().subscribe((listadoUsuarios) => {
+      (this.listadoUsuarios = listadoUsuarios), (this.allDataFetched = true);
+    });
   }
 
   ngOnInit(): void {
     $.getScript('assets/dist/js/file1.js');
     $.getScript('assets/dist/js/datatable.js');
-
     $.getScript('assets/build/js/usuario.js');
 
     if (this.tokenService.getToken()) {
@@ -78,6 +73,8 @@ export class UsuarioComponent implements OnInit {
 
   onRegister(): void {
     if ($('#idCodUsuario').val() == '') {
+      this.rolUsuario = String($('#idrol').val());
+      console.log(this.rolUsuario);
       this.nuevoUsuario = new Usuario(
         this.nombres!,
         this.apellidos!,
@@ -86,64 +83,59 @@ export class UsuarioComponent implements OnInit {
         this.correo!,
         this.usuario!,
         this.clave!,
-        (this.fotoBase64 = $('.preview img').attr('src'))
+        (this.fotoBase64 = $('.preview img').attr('src')),
+        this.rolUsuario!
       );
       this.authService.nuevo(this.nuevoUsuario).subscribe(
-        (response) => {
-          if (response.mensaje == 'Registro Exitoso.') {
-            $('#idRegistrarUsuario').trigger('reset');
-            Swal.fire({
-              title: 'Se está registrando el usuario',
-              text: 'Procesando datos...',
-              width: '500px',
-              imageUrl: 'https://www.boasnotas.com/img/loading2.gif',
-              imageHeight: 150,
-              imageWidth: 150,
-              buttons: false,
-              timerProgressBar: true,
-              closeOnClickOutside: false,
-              timer: 10000,
-              showCancelButton: false,
-              showConfirmButton: false,
-            }).then(function () {
-              Swal.fire({
-                title: 'El usuario se registró exitosamente.',
-                text: '',
-                icon: 'success',
-                buttons: false,
-                closeOnClickOutside: false,
-                timer: 3500,
-                showCancelButton: false,
-                showConfirmButton: false,
-              }).then(function () {
-                window.location.href = 'http://localhost:4200/usuario';
-              });
-            });
-          } else if (response.mensaje == 'ErrorUsuario') {
-            //console.log(error);
-            Swal.fire({
-              title: 'Error al registrar usuario.',
-              text: '',
-              icon: 'error',
-              confirmButtonColor: '#780116',
-              showCloseButton: true,
-            });
-          }
-        },
-        (err) => {
-          console.log(err);
-          console.log(err.error);
+        //$('#idRegistrarUsuario').trigger('reset');
+        Swal.fire({
+          title: '<br> Se está registrando el usuario',
+          text: 'Procesando datos...',
+          width: '500px',
+          didOpen: () => {
+            Swal.showLoading();
+          },
+          imageHeight: 150,
+          imageWidth: 150,
+          buttons: false,
+          timerProgressBar: true,
+          closeOnClickOutside: false,
+          timer: 10000,
+          showCancelButton: false,
+          showConfirmButton: false,
+        }).then(function () {
+          Swal.fire({
+            title: 'El usuario se registró exitosamente.',
+            text: '',
+            icon: 'success',
+            buttons: false,
+            closeOnClickOutside: false,
+            timer: 3500,
+            showCancelButton: false,
+            showConfirmButton: false,
+          }).then(function () {
+            window.location.href = 'http://localhost:4200/usuario';
+          });
+        }),
+        (error) => {
+          console.log(error);
+          Swal.fire({
+            title: 'Error al registrar usuario.',
+            text: '',
+            icon: 'error',
+            confirmButtonColor: '#780116',
+            showCloseButton: true,
+          });
         }
       );
-    } else {
-      //alert('holaaaaaaaaaa');
+    } else if ($('#idCodUsuario').val() != '') {
       this.usuarioService
         .getUsuarioxId(Number($('#idCodUsuario').val()))
         .subscribe((usuarioEditar) => {
           this.usuarioEditar = usuarioEditar;
-          console.log($('#idCodUsuario').val());
+          //console.log($('#idCodUsuario').val());
         });
-
+      //alert('holaaaaaaaaaa');
       Swal.fire({
         title: '¿Seguro que deseas modificar usuario?',
         text: '',
@@ -158,34 +150,29 @@ export class UsuarioComponent implements OnInit {
         if (result['isConfirmed']) {
           this.usuarioEditar!.nombres = String($('#idnombres').val());
           this.usuarioEditar!.apellidos = String($('#idapellidos').val());
-          //this.usuarioEditar!.fecha_nacimiento = Date.parse(String($("#idfecnac").val()));
+          //PARSEO FECHA DE STRING A DATE Y LUEGO LE ASIGNO LA NUEVA FECHA A FECHA DE NACIMIENTO
+          this.fecha = String($('#idfecnac').val());
+          this.fechaActualizada = new Date(this.fecha!);
+          this.usuarioEditar!.fecha_nacimiento = this.fechaActualizada;
+          //FIN DEL PARSEO
           this.usuarioEditar!.telefono = String($('#idtelefono').val());
           this.usuarioEditar!.correo = String($('#idcorreo').val());
           this.usuarioEditar!.usuario = String($('#idusuario').val());
           this.usuarioEditar!.clave = String($('#idcontrasena').val());
-          // this.usuarioEditar!.apellidos = String($("#idapellidos").val());
-          // this.usuarioEditar!.porcion = Number($("#idporciones").val());
-          // this.usuarioEditar!.dificultad!.id_dificultad = Number($("#iddificultad").val());
-          // this.usuarioEditar!.estiloPlato!.id_estilo_plato = Number($("#idestiloplato").val());
-          // this.usuarioEditar!.dieta!.id_dieta = Number($("#iddieta").val());
-          // this.usuarioEditar!.tipoComida!.id_tipo_comida = Number($("#idtipocomida").val());
-          // this.usuarioEditar!.ocasion!.id_ocasion = Number($("#idocasion").val());
-          // this.usuarioEditar!.ingrediente = String($("#idingredientes").val());
-          // this.usuarioEditar.instruccion = String($("#idintrucciones").val());
-          // this.usuarioEditar.utensilio = String($("#idutensilios").val());
-          // this.usuarioEditar.tip = String($("#idtips").val());
-          // this.usuarioEditar.video = String($("#idvideo").val());
+          this.usuarioEditar!.rolUsuario = String($('#idrol').val());
 
           if (this.usuarioEditar!.fotoBase64 != $('.preview img').attr('src')) {
             this.usuarioEditar!.fotoBase64 = $('.preview img').attr('src');
           }
 
-          this.usuarioService.actualizarUsuario(this.usuarioEditar!).subscribe(
+          this.usuarioService.actualizarUsuario(this.usuarioEditar).subscribe(
             Swal.fire({
-              title: 'Se está modificando usuario.',
+              title: '<br> Se está modificando usuario.',
               text: 'Procesando datos...',
               width: '500px',
-              imageUrl: 'https://www.boasnotas.com/img/loading2.gif',
+              didOpen: () => {
+                Swal.showLoading();
+              },
               imageHeight: 150,
               imageWidth: 150,
               buttons: false,
@@ -248,7 +235,7 @@ export class UsuarioComponent implements OnInit {
       );
       $('#det7').text(this.usuarioVer.usuario!);
       //AQUI MUESTRA EL ROL
-      $('#det8').text(this.usuarioVer.usuario!);
+      $('#det8').text(this.usuarioVer.rolUsuario!);
       $('#det9').text(
         String(
           formatDate(this.usuarioVer.fecha_registro!, 'dd/MM/yyyy', 'en-US')
@@ -315,10 +302,12 @@ export class UsuarioComponent implements OnInit {
             .subscribe(
               (response) => {
                 Swal.fire({
-                  title: 'Se está modificando el usuario.',
+                  title: '<br> Se está modificando el usuario.',
                   text: 'Procesando datos...',
                   width: '500px',
-                  imageUrl: 'https://www.boasnotas.com/img/loading2.gif',
+                  didOpen: () => {
+                    Swal.showLoading();
+                  },
                   imageHeight: 150,
                   imageWidth: 150,
                   buttons: false,
@@ -395,38 +384,7 @@ export class UsuarioComponent implements OnInit {
           $('#idcorreo').val(String(this.usuarioEditar.correo));
           $('#idusuario').val(String(this.usuarioEditar.usuario));
           $('#idcontrasena').val(String(this.usuarioEditar.clave));
-
-          // if (this.usuarioEditar.estiloPlato?.estado == 2) {
-          //   $('#idestiloplato').val(-1);
-          // } else {
-          //   $('#idestiloplato').val(
-          //     String(this.recetaEditar.estiloPlato?.id_estilo_plato)
-          //   );
-          // }
-
-          // if (this.recetaEditar.dieta?.estado == 2) {
-          //   $('#iddieta').val(-1);
-          // } else {
-          //   $('#iddieta').val(String(this.recetaEditar.dieta?.id_dieta));
-          // }
-          // if (this.recetaEditar.tipoComida?.estado == 2) {
-          //   $('#idtipocomida').val(-1);
-          // } else {
-          //   $('#idtipocomida').val(
-          //     String(this.recetaEditar.tipoComida?.id_tipo_comida)
-          //   );
-          // }
-          // if (this.recetaEditar.ocasion?.estado == 2) {
-          //   $('#idocasion').val(-1);
-          // } else {
-          //   $('#idocasion').val(String(this.recetaEditar.ocasion?.id_ocasion));
-          // }
-
-          // $('#idingredientes').val(String(this.recetaEditar.ingrediente));
-          // $('#idintrucciones').val(String(this.recetaEditar.instruccion));
-          // $('#idutensilios').val(String(this.recetaEditar.utensilio));
-          // $('#idtips').val(String(this.recetaEditar.tip));
-          // $('#idvideo').val(String(this.recetaEditar.video));
+          $('#idrol').val(String(this.usuarioEditar.rolUsuario));
           $('#previews').empty();
           $('#previews').append(
             "<div class='row mt-2 dz-image-preview'><div class='col-auto'><span class='preview'><img" +
@@ -449,47 +407,4 @@ export class UsuarioComponent implements OnInit {
       });
     }
   }
-
-  /* BACKUP FUNCIONAL DE REGISTRAR
-  
-
-  onRegister(): void {
-    this.nuevoUsuario = new Usuario(
-      this.nombres!,
-      this.apellidos!,
-      this.fecha_nacimiento!,
-      this.telefono!,
-      this.correo!,
-      this.usuario!,
-      this.clave!,
-      (this.fotoBase64 = $('.preview img').attr('src'))
-    );
-    this.authService.nuevo(this.nuevoUsuario).subscribe(
-      (response) => {
-        if (response.mensaje == 'Registro Exitoso.') {
-          $('#idRegistrarUsuario').trigger('reset');
-          Swal.fire({
-            position: 'top-end',
-            icon: 'success',
-            title: response.mensaje,
-            showConfirmButton: false,
-            timer: 2500,
-          });
-        } else if (response.mensaje == 'ErrorUsuario') {
-          Swal.fire({
-            icon: 'error',
-            text: 'El usuario ingresado ya existe. No se pudo registrar.',
-          });
-        }
-      },
-      (err) => {
-        console.log(err);
-        console.log(err.error);
-      }
-    );
-  }
-  
-  
-  
-  */
 } ////FINNNNNNNNNNN
