@@ -22,10 +22,13 @@ export class AppComponent {
 
   usuarioObj: Usuario = {};
 
+<<<<<<< HEAD
   usuarioVerAdmin: Usuario = {};
 
   isAdmin: boolean = false;
 
+=======
+>>>>>>> 7c4572fdd0eac34f8cdda75a1d5b8d59e882e930
   constructor(
     private router: Router,
     private tokenService: TokenService,

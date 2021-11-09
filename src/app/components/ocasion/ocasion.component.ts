@@ -3,6 +3,7 @@ import { Ocasion } from 'src/app/models/ocasion.model';
 import { OcasionService } from 'src/app/services/ocasion.service';
 
 import * as $ from "jquery";
+import { TokenService } from 'src/app/services/token.service';
 declare var Swal: any;
 
 @Component({
@@ -16,6 +17,9 @@ export class OcasionComponent implements OnInit {
   ocasiones: Ocasion[] = [];
   ocasion: Ocasion = {
     id_ocasion: 0,
+    usuario:{
+      id_usuario: parseInt(this.tokenService.getId())
+    }
   };
   ocasionEditar: Ocasion = {
     id_ocasion: 0,
@@ -26,8 +30,9 @@ export class OcasionComponent implements OnInit {
   allDataFetched: boolean = false;
   nombre: String = "";
 
-  constructor(private ocasionService: OcasionService,) {
-    this.ocasionService.listarOcasiones().subscribe(
+  constructor(private ocasionService: OcasionService,private tokenService: TokenService) {
+    $("#example1 > tbody").empty(),
+    this.ocasionService.listarOcasionesActivas().subscribe(
       (ocasiones) => {
         this.ocasiones = ocasiones,
           this.allDataFetched = true;
@@ -99,6 +104,7 @@ export class OcasionComponent implements OnInit {
       }).then((result: { [x: string]: any; }) => {
         if (result['isConfirmed']) {
           this.ocasionEditar.nombre = String($("#idnombre").val());
+          this.ocasionEditar.usuario!.id_usuario= parseInt(this.tokenService.getId());
           this.ocasionService.actualizarOcasion(this.ocasionEditar).subscribe(
             response => {
               console.log(response.mensaje);
@@ -154,7 +160,7 @@ export class OcasionComponent implements OnInit {
         this.ocasionEliminar = ocasionEliminar;
       });
 
-    if (estado == 2) {
+   /* if (estado == 2) {
       Swal.fire({
         title: 'La ocasión ya está en estado inactivo.',
         text: '',
@@ -163,7 +169,7 @@ export class OcasionComponent implements OnInit {
         showCloseButton: true,
       })
     }
-    else {
+    else {*/
 
       Swal.fire({
         title: '¿Seguro que deseas modificar ocasión a estado inactivo?',
@@ -178,6 +184,7 @@ export class OcasionComponent implements OnInit {
       }).then((result: { [x: string]: any; }) => {
         if (result['isConfirmed']) {
           this.ocasionEliminar.estado = 2;
+          this.ocasionEliminar.usuario!.id_usuario= parseInt(this.tokenService.getId());
           this.ocasionService.actualizarOcasion(this.ocasionEliminar).subscribe(
             response => {
               console.log(response.mensaje);
@@ -223,7 +230,8 @@ export class OcasionComponent implements OnInit {
       })
 
 
-    }}
+   /* }*/
+  }
 
 
   }

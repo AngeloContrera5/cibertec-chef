@@ -231,14 +231,28 @@
                       <td> {{obj.fecha_registro | date : 'dd/MM/yyyy'}}</td>
                       <td *ngIf="obj.fecha_actualiza!=null"> {{obj.fecha_actualiza | date : 'dd/MM/yyyy'}}</td>
                       <td *ngIf="obj.fecha_actualiza==null">No existe</td>
-                      <td *ngIf="obj.estado==1">Activo</td>
-                      <td *ngIf="obj.estado==2">Inactivo</td>
-                    <td class="d-flex align-items-center justify-content-center">
+                      <td *ngIf="obj.estado==1">Publicado</td>
+                      <td *ngIf="obj.estado==3">Por confirmar</td>
+                    <td class="d-flex align-items-center justify-content-center" *ngIf="obj.estado==1">
                       <button type="button" class="btn btn-warning mr-2" data-toggle="modal" data-target="#modalVer" (click)="ver(obj.id_receta)"
                         id="btnVer">
                         <i class="fas fa-eye"></i></button>
                       <button type="button" class="btn btn-info mr-2" data-toggle="modal" id="btnEditar" (click)="editar(obj.id_receta,obj.estado)">
                         <i class="fas fa-edit"></i></button>
+                        <form id="idEliminar" role="form" (ngSubmit)="elimina(obj.id_receta,obj.estado)">
+                          <button type="submit" class="btn btn-danger" 
+                          id="btnEliminar" >  <i class="fas fa-trash-alt"></i></button>
+                          </form>
+                     
+                    </td>
+
+                    <td class="d-flex align-items-center justify-content-center" *ngIf="obj.estado==3">
+                      <button type="button" class="btn btn-warning mr-2" data-toggle="modal" data-target="#modalVer" (click)="ver(obj.id_receta)"
+                        id="btnVer">
+                        <i class="fas fa-eye"></i></button>
+                      <button type="button" class="btn btn-primary mr-2" (click)="publicar(obj.id_receta)">
+                        <i class="fas fa-clipboard-check 4x"></i>
+                        </button>
                         <form id="idEliminar" role="form" (ngSubmit)="elimina(obj.id_receta,obj.estado)">
                           <button type="submit" class="btn btn-danger" 
                           id="btnEliminar" >  <i class="fas fa-trash-alt"></i></button>

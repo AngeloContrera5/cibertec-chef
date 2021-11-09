@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { EstiloPlato } from 'src/app/models/estilo-plato.model';
 import { EstiloPlatoService } from 'src/app/services/estilo-plato.service';
 import * as $ from "jquery";
+import { TokenService } from 'src/app/services/token.service';
 declare var Swal: any;
 
 @Component({
@@ -14,6 +15,9 @@ export class EstiloPlatoComponent implements OnInit {
   estilos: EstiloPlato[] = [];
   estilo: EstiloPlato = {
     id_estilo_plato: 0,
+    usuario:{
+      id_usuario: parseInt(this.tokenService.getId())
+    }
   };
   estiloEditar: EstiloPlato = {
     id_estilo_plato: 0,
@@ -24,8 +28,9 @@ export class EstiloPlatoComponent implements OnInit {
   allDataFetched: boolean = false;
   nombre: String = "";
 
-  constructor(private estiloService: EstiloPlatoService,) {
-    this.estiloService.listarEstiloPlatos().subscribe(
+  constructor(private estiloService: EstiloPlatoService,private tokenService: TokenService) {
+    $("#example1 > tbody").empty(),
+    this.estiloService.listarEstiloPlatosActivas().subscribe(
       (estilos) => {
         this.estilos = estilos,
           this.allDataFetched = true;
@@ -97,6 +102,7 @@ export class EstiloPlatoComponent implements OnInit {
       }).then((result: { [x: string]: any; }) => {
         if (result['isConfirmed']) {
           this.estiloEditar.nombre = String($("#idnombre").val());
+          this.estiloEditar.usuario!.id_usuario= parseInt(this.tokenService.getId());
           this.estiloService.actualizarEstiloPlato(this.estiloEditar).subscribe(
             response => {
               console.log(response.mensaje);
@@ -151,7 +157,7 @@ export class EstiloPlatoComponent implements OnInit {
       (estiloEliminar) => {
         this.estiloEliminar = estiloEliminar;
       });
-    if (estado == 2) {
+   /* if (estado == 2) {
       Swal.fire({
         title: 'El estilo de plato ya está en estado inactivo.',
         text: '',
@@ -160,7 +166,7 @@ export class EstiloPlatoComponent implements OnInit {
         showCloseButton: true,
       })
     }
-    else {
+    else {*/
 
       Swal.fire({
         title: '¿Seguro que deseas modificar estilo de plato a estado inactivo?',
@@ -175,6 +181,7 @@ export class EstiloPlatoComponent implements OnInit {
       }).then((result: { [x: string]: any; }) => {
         if (result['isConfirmed']) {
           this.estiloEliminar.estado = 2;
+          this.estiloEliminar.usuario!.id_usuario= parseInt(this.tokenService.getId());
           this.estiloService.actualizarEstiloPlato(this.estiloEliminar).subscribe(
             response => {
               console.log(response.mensaje);
@@ -220,6 +227,6 @@ export class EstiloPlatoComponent implements OnInit {
       })
 
     }
-    }
+   /* }*/
 
   }
