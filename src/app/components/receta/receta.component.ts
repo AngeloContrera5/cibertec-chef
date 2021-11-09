@@ -51,14 +51,10 @@ export class RecetaComponent implements OnInit {
     ocasion: {
       id_ocasion: -1,
     },
-<<<<<<< HEAD
-  };
-=======
     usuario:{
       id_usuario: parseInt(this.tokenService.getId())
     }
   }
->>>>>>> 7c4572fdd0eac34f8cdda75a1d5b8d59e882e930
   recetaEditar: Receta = {
     dificultad: {
       id_dificultad: -1,
@@ -75,44 +71,6 @@ export class RecetaComponent implements OnInit {
     ocasion: {
       id_ocasion: -1,
     },
-<<<<<<< HEAD
-  };
-  recetaEliminar: Receta = {};
-  recetaVer: Receta = {};
-
-  constructor(
-    private recetaService: RecetaService,
-    private dificultadService: DificultadService,
-    private ocasionService: OcasionService,
-    private dietaService: DietaService,
-    private tipoComidaService: TipoComidaService,
-    private estiloPlatoService: EstiloPlatoService,
-    private microondasService: MicroondasService
-  ) {
-    this.recetaService.listarRecetas().subscribe((recetas) => {
-      (this.recetas = recetas), (this.allDataFetched = true);
-    });
-
-    this.dificultadService
-      .listarDificultad()
-      .subscribe((dificultad) => (this.dificultad = dificultad));
-
-    this.dietaService
-      .listarDietasActivas()
-      .subscribe((dieta) => (this.dieta = dieta));
-
-    this.ocasionService
-      .listarOcasionesActivas()
-      .subscribe((ocasion) => (this.ocasion = ocasion));
-
-    this.tipoComidaService
-      .listarTipoComidasActivas()
-      .subscribe((tipoComida) => (this.tipoComida = tipoComida));
-
-    this.estiloPlatoService
-      .listarEstiloPlatosActivas()
-      .subscribe((estiloPlato) => (this.estiloPlato = estiloPlato));
-=======
   }
   recetaEliminar: Receta = {}
   recetaVer: Receta = {}
@@ -148,7 +106,6 @@ export class RecetaComponent implements OnInit {
     this.estiloPlatoService.listarEstiloPlatosActivas().subscribe(
       (estiloPlato) => this.estiloPlato = estiloPlato
     );
->>>>>>> 7c4572fdd0eac34f8cdda75a1d5b8d59e882e930
   }
 
   ngOnInit(): void {
@@ -162,11 +119,8 @@ export class RecetaComponent implements OnInit {
       this.receta.fotoBase64 = $('.preview img').attr('src');
 
       this.recetaService.registrarReceta(this.receta).subscribe(
-<<<<<<< HEAD
-=======
 
         response => {
->>>>>>> 7c4572fdd0eac34f8cdda75a1d5b8d59e882e930
         Swal.fire({
           title: '<br> Se está registrando receta',
           text: 'Procesando datos...',
@@ -180,24 +134,6 @@ export class RecetaComponent implements OnInit {
           timer: 2000,
           showCancelButton: false,
           showConfirmButton: false,
-<<<<<<< HEAD
-        }).then(function () {
-          Swal.fire({
-            title: 'Se registró receta exitosamente.',
-            text: '',
-            icon: 'success',
-            buttons: false,
-            closeOnClickOutside: false,
-            timer: 3500,
-            showCancelButton: false,
-            showConfirmButton: false,
-          }).then(function () {
-            window.location.href = 'http://localhost:4200/receta';
-          });
-        }),
-
-        (error) => {
-=======
         })
           .then(function () {
             Swal.fire({
@@ -218,7 +154,6 @@ export class RecetaComponent implements OnInit {
 
         },
         error => {
->>>>>>> 7c4572fdd0eac34f8cdda75a1d5b8d59e882e930
           console.log(error);
           Swal.fire({
             title: 'Error al registrar receta.',
@@ -248,30 +183,6 @@ export class RecetaComponent implements OnInit {
         dangerMode: true,
       }).then((result: { [x: string]: any }) => {
         if (result['isConfirmed']) {
-<<<<<<< HEAD
-          this.recetaEditar.nombre_platillo = String($('#idnombre').val());
-          this.recetaEditar.tiempo_preparacion = Number(
-            $('#idtiempoprep').val()
-          );
-          this.recetaEditar.porcion = Number($('#idporciones').val());
-          this.recetaEditar.dificultad!.id_dificultad = Number(
-            $('#iddificultad').val()
-          );
-          this.recetaEditar.estiloPlato!.id_estilo_plato = Number(
-            $('#idestiloplato').val()
-          );
-          this.recetaEditar.dieta!.id_dieta = Number($('#iddieta').val());
-          this.recetaEditar.tipoComida!.id_tipo_comida = Number(
-            $('#idtipocomida').val()
-          );
-          this.recetaEditar.ocasion!.id_ocasion = Number($('#idocasion').val());
-          this.recetaEditar.ingrediente = String($('#idingredientes').val());
-          this.recetaEditar.instruccion = String($('#idintrucciones').val());
-          this.recetaEditar.utensilio = String($('#idutensilios').val());
-          this.recetaEditar.tip = String($('#idtips').val());
-          this.recetaEditar.video = String($('#idvideo').val());
-
-=======
           this.recetaEditar.nombre_platillo = String($("#idnombre").val());
           this.recetaEditar.tiempo_preparacion = Number($("#idtiempoprep").val());
           this.recetaEditar.porcion = Number($("#idporciones").val());
@@ -286,16 +197,12 @@ export class RecetaComponent implements OnInit {
           this.recetaEditar.tip = String($("#idtips").val());
           this.recetaEditar.video = String($("#idvideo").val());
           this.recetaEditar.usuario!.id_usuario= parseInt(this.tokenService.getId());
->>>>>>> 7c4572fdd0eac34f8cdda75a1d5b8d59e882e930
           if (this.recetaEditar.fotoBase64 != $('.preview img').attr('src')) {
             this.recetaEditar.fotoBase64 = $('.preview img').attr('src');
           }
 
           this.recetaService.actualizarReceta(this.recetaEditar).subscribe(
-<<<<<<< HEAD
-=======
             response => {
->>>>>>> 7c4572fdd0eac34f8cdda75a1d5b8d59e882e930
             Swal.fire({
               title: '<br> Se está modificando receta.',
               text: 'Procesando datos...',
@@ -309,23 +216,6 @@ export class RecetaComponent implements OnInit {
               timer: 2000,
               showCancelButton: false,
               showConfirmButton: false,
-<<<<<<< HEAD
-            }).then(function () {
-              Swal.fire({
-                title: 'Se modificó receta exitosamente.',
-                text: '',
-                icon: 'success',
-                buttons: false,
-                closeOnClickOutside: false,
-                timer: 3500,
-                showCancelButton: false,
-                showConfirmButton: false,
-              }).then(function () {
-                window.location.href = 'http://localhost:4200/receta';
-              });
-            }),
-            (error) => {
-=======
             })
               .then(function () {
                 Swal.fire({
@@ -346,7 +236,6 @@ export class RecetaComponent implements OnInit {
 
               })},
             error => {
->>>>>>> 7c4572fdd0eac34f8cdda75a1d5b8d59e882e930
               console.log(error);
               Swal.fire({
                 title: 'Error al modificar receta.',
@@ -390,15 +279,10 @@ export class RecetaComponent implements OnInit {
         icon: 'warning',
         confirmButtonColor: '#780116',
         showCloseButton: true,
-<<<<<<< HEAD
-      });
-    } else {
-=======
       })
     }
     else {*/
 
->>>>>>> 7c4572fdd0eac34f8cdda75a1d5b8d59e882e930
       Swal.fire({
         title: '¿Seguro que deseas modificar receta a estado inactivo?',
         text: 'Se modificará receta y sus microondas a estado inactivo',
@@ -412,10 +296,7 @@ export class RecetaComponent implements OnInit {
       }).then((result: { [x: string]: any }) => {
         if (result['isConfirmed']) {
           this.recetaEliminar.estado = 2;
-<<<<<<< HEAD
-=======
           this.recetaEliminar.usuario!.id_usuario= parseInt(this.tokenService.getId());
->>>>>>> 7c4572fdd0eac34f8cdda75a1d5b8d59e882e930
 
           this.recetaService.actualizarReceta(this.recetaEliminar).subscribe(
             (response) => {
@@ -423,43 +304,10 @@ export class RecetaComponent implements OnInit {
                 obj.estado = 2;
                 obj.usuario!.id_usuario= parseInt(this.tokenService.getId());
                 this.microondasService.actualizarMicroondas(obj).subscribe(
-<<<<<<< HEAD
-                  Swal.fire({
-                    title: 'Se está modificando receta y microondas.',
-                    text: 'Procesando datos...',
-                    width: '500px',
-                    imageUrl: 'https://www.boasnotas.com/img/loading2.gif',
-                    imageHeight: 150,
-                    imageWidth: 150,
-                    buttons: false,
-                    timerProgressBar: true,
-                    closeOnClickOutside: false,
-                    timer: 8000,
-                    showCancelButton: false,
-                    showConfirmButton: false,
-                  }).then(function () {
-                    Swal.fire({
-                      title:
-                        'Se modificó receta y microondas a estado inactivo exitosamente.',
-                      text: '',
-                      icon: 'success',
-                      buttons: false,
-                      closeOnClickOutside: false,
-                      timer: 2500,
-                      showCancelButton: false,
-                      showConfirmButton: false,
-                    }).then(function () {
-                      alert('-');
-                      window.location.href = 'http://localhost:4200/receta';
-                    });
-                  }),
-                  (error) => {
-=======
                   response => {
                 console.log(response);
                   },
                   error => {
->>>>>>> 7c4572fdd0eac34f8cdda75a1d5b8d59e882e930
                     console.log(error);
                     Swal.fire({
                       title: 'Error al modificar microondas.',
@@ -467,12 +315,6 @@ export class RecetaComponent implements OnInit {
                       icon: 'error',
                       confirmButtonColor: '#780116',
                       showCloseButton: true,
-<<<<<<< HEAD
-                    });
-                  }
-                );
-              });
-=======
                     })
                   },
                 )
@@ -507,7 +349,6 @@ export class RecetaComponent implements OnInit {
                       window.location.href = "http://localhost:4200/receta";
                     })
                 })
->>>>>>> 7c4572fdd0eac34f8cdda75a1d5b8d59e882e930
             },
             (error) => {
               console.log(error);
@@ -529,14 +370,9 @@ export class RecetaComponent implements OnInit {
             showCloseButton: true,
           });
         }
-<<<<<<< HEAD
-      });
-    }
-=======
       })
   /*  }*/
 
->>>>>>> 7c4572fdd0eac34f8cdda75a1d5b8d59e882e930
   }
 
   ver(val: any) {
@@ -607,43 +443,6 @@ export class RecetaComponent implements OnInit {
   editar(val: any, val2: any) {
     const idReceta = val;
     const estado = val2;
-<<<<<<< HEAD
-    if (estado != 2) {
-      this.recetaService.getRecetaxId(idReceta).subscribe((recetaEditar) => {
-        this.recetaEditar = recetaEditar;
-        $('#idRegistrar').trigger('reset');
-        $('#idCodReceta').val(idReceta);
-        $('#idnombre').removeClass('error').next('label.error').remove();
-        $('#idtiempoprep').removeClass('error').next('label.error').remove();
-        $('#idingredientes').removeClass('error').next('label.error').remove();
-        $('#idintrucciones').removeClass('error').next('label.error').remove();
-        $('#idporciones').removeClass('error').next('label.error').remove();
-        $('#idutensilios').removeClass('error').next('label.error').remove();
-        $('#idtips').removeClass('error').next('label.error').remove();
-        $('#iddieta').removeClass('error').next('label.error').remove();
-        $('#iddificultad').removeClass('error').next('label.error').remove();
-        $('#idestiloplato').removeClass('error').next('label.error').remove();
-        $('#idtipocomida').removeClass('error').next('label.error').remove();
-        $('#idocasion').removeClass('error').next('label.error').remove();
-        $('#idvideo').removeClass('error').next('label.error').remove();
-        $('#elimFoto').click();
-        $('#errorimagen').text();
-
-        $('#idnombre').val(String(this.recetaEditar.nombre_platillo));
-        $('#idtiempoprep').val(String(this.recetaEditar.tiempo_preparacion));
-        $('#idporciones').val(String(this.recetaEditar.porcion));
-        $('#iddificultad').val(
-          String(this.recetaEditar.dificultad?.id_dificultad)
-        );
-
-        if (this.recetaEditar.estiloPlato?.estado == 2) {
-          $('#idestiloplato').val(-1);
-        } else {
-          $('#idestiloplato').val(
-            String(this.recetaEditar.estiloPlato?.id_estilo_plato)
-          );
-        }
-=======
     /*if (estado != 2) {*/
       this.recetaService.getRecetaxId(idReceta).subscribe(
         (recetaEditar) => {
@@ -710,7 +509,6 @@ export class RecetaComponent implements OnInit {
             "<div class='col d-flex align-items-center'><p clas='mb-0'><span class='lead'>Foto-de-receta-" + idReceta + ".jpg</span></p>" +
             "</div></div></div>");
 
->>>>>>> 7c4572fdd0eac34f8cdda75a1d5b8d59e882e930
 
         if (this.recetaEditar.dieta?.estado == 2) {
           $('#iddieta').val(-1);
@@ -730,41 +528,15 @@ export class RecetaComponent implements OnInit {
           $('#idocasion').val(String(this.recetaEditar.ocasion?.id_ocasion));
         }
 
-<<<<<<< HEAD
-        $('#idingredientes').val(String(this.recetaEditar.ingrediente));
-        $('#idintrucciones').val(String(this.recetaEditar.instruccion));
-        $('#idutensilios').val(String(this.recetaEditar.utensilio));
-        $('#idtips').val(String(this.recetaEditar.tip));
-        $('#idvideo').val(String(this.recetaEditar.video));
-        $('#previews').empty();
-        $('#previews').append(
-          "<div class='row mt-2 dz-image-preview'><div class='col-auto'><span class='preview'><img" +
-            " src='" +
-            this.recetaEditar.fotoBase64 +
-            "' alt='Foto-de-receta-guardada' style='width:350px; height:200px'></span></div>" +
-            "<div class='col d-flex align-items-center'><p clas='mb-0'><span class='lead'>Foto-de-receta-" +
-            idReceta +
-            '.jpg</span></p>' +
-            '</div></div></div>'
-        );
-      });
-    } else {
-=======
         });
    /* }
     else {
->>>>>>> 7c4572fdd0eac34f8cdda75a1d5b8d59e882e930
       Swal.fire({
         title: 'La receta está en estado inactivo.',
         text: '',
         icon: 'warning',
         confirmButtonColor: '#780116',
         showCloseButton: true,
-<<<<<<< HEAD
-      });
-    }
-  }
-=======
       })
     }*/
   }
@@ -852,5 +624,4 @@ publicar(val: any) {
 
 }
 
->>>>>>> 7c4572fdd0eac34f8cdda75a1d5b8d59e882e930
 }
