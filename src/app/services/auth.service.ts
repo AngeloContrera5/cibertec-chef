@@ -9,7 +9,7 @@ import { Usuario } from '../models/usuario.model';
   providedIn: 'root',
 })
 export class AuthService {
-  authURL = 'http://localhost:8080/auth/';
+  authURL = 'https://cibertec-chef.herokuapp.com/auth/';
 
   constructor(private httpClient: HttpClient) {}
 

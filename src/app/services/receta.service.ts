@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Receta } from '../models/receta.model';
-const baseUrl = 'http://localhost:8080/rest/receta';
+const baseUrl = 'https://cibertec-chef.herokuapp.com/rest/receta';
 
 @Injectable({
   providedIn: 'root'

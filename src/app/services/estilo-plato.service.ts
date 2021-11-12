@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { EstiloPlato } from 'src/app/models/estilo-plato.model';
 
-const baseUrl = 'http://localhost:8080/rest/estilo-plato';
+const baseUrl = 'https://cibertec-chef.herokuapp.com/rest/estilo-plato';
 
 @Injectable({
   providedIn: 'root'

@@ -4,7 +4,7 @@ import { Observable, Subject } from 'rxjs';
 import { Encuesta } from '../models/encuesta.model';
 import { tap } from 'rxjs/operators'
 
-const baseUrl = 'http://localhost:8080/rest/encuesta';
+const baseUrl = 'https://cibertec-chef.herokuapp.com/rest/encuesta';
 @Injectable({
   providedIn: 'root'
 })

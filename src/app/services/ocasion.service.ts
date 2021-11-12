@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Ocasion } from '../models/ocasion.model';
 
-const baseUrl = 'http://localhost:8080/rest/ocasion';
+const baseUrl = 'https://cibertec-chef.herokuapp.com/rest/ocasion';
 
 @Injectable({
   providedIn: 'root'

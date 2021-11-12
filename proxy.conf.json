@@ -1,0 +1,9 @@
+
+{
+  "/auth": {
+    "target": "https://cibertec-chef.herokuapp.com",
+    "secure": true,
+    "changeOrigin": true
+   
+  }
+}

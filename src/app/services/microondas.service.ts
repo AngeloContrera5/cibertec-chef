@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Microondas } from '../models/microondas.model';
-const baseUrl = 'http://localhost:8080/rest/horno_microondas';
+const baseUrl = 'https://cibertec-chef.herokuapp.com/rest/horno_microondas';
 
 
 @Injectable({
