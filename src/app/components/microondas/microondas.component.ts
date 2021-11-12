@@ -418,7 +418,7 @@ export class MicroondasComponent implements OnInit {
 
         $('#previews').empty();
         $("#previews").append("<div class='row mt-2 dz-image-preview'><div class='col-auto'><span class='preview'><img" +
-          " src='" + this.microondaEditar.fotoBase64 + "' alt='Foto-de-receta-guardada' style='width:350px; height:200px'></span></div>" +
+          " src='" + this.microondaEditar.fotoBase64 + "' alt='Foto-de-receta-guardada' style='width:350px; height:350px'></span></div>" +
           "<div class='col d-flex align-items-center'><p clas='mb-0'><span class='lead'>Foto-de-microondas-" + idMicroondas + ".jpg</span></p>" +
           "</div></div></div>");
 
