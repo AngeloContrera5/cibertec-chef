@@ -427,16 +427,19 @@ export class RecetaComponent implements OnInit {
       $('#custom-content-below-settings-tab').removeClass('active');
       $('#custom-content-below-settings1-tab').removeClass('active');
       $('#custom-content-below-settings2-tab').removeClass('active');
+      $('#custom-content-below-settings3-tab').removeClass('active');
       $('#custom-content-below-profile').removeClass('show');
       $('#custom-content-below-messages').removeClass('show');
       $('#custom-content-below-settings').removeClass('show');
       $('#custom-content-below-settings1').removeClass('show');
       $('#custom-content-below-settings2').removeClass('show');
+      $('#custom-content-below-settings3').removeClass('show');
       $('#custom-content-below-profile').removeClass('active');
       $('#custom-content-below-messages').removeClass('active');
       $('#custom-content-below-settings').removeClass('active');
       $('#custom-content-below-settings1').removeClass('active');
       $('#custom-content-below-settings2').removeClass('active');
+      $('#custom-content-below-settings3').removeClass('active');
     });
   }
 
@@ -505,7 +508,7 @@ export class RecetaComponent implements OnInit {
           $("#idvideo").val(String(this.recetaEditar.video));
           $('#previews').empty();
           $("#previews").append("<div class='row mt-2 dz-image-preview'><div class='col-auto'><span class='preview'><img" +
-            " src='" + this.recetaEditar.fotoBase64 + "' alt='Foto-de-receta-guardada' style='width:350px; height:200px'></span></div>" +
+            " src='" + this.recetaEditar.fotoBase64 + "' alt='Foto-de-receta-guardada' style='width:350px; height:350px'></span></div>" +
             "<div class='col d-flex align-items-center'><p clas='mb-0'><span class='lead'>Foto-de-receta-" + idReceta + ".jpg</span></p>" +
             "</div></div></div>");
 
