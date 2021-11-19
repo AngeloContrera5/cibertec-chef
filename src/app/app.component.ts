@@ -17,6 +17,7 @@ export class AppComponent {
   isLogged = false;
 
   headerFooter: any;
+  headerFooter2: any;
 
   nombreUsuario?: string;
 

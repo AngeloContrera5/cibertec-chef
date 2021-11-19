@@ -12,6 +12,7 @@ import { TipoComidaComponent } from './components/tipo-comida/tipo-comida.compon
 import { EncuestaComponent } from './components/encuesta/encuesta.component';
 import { MicroondasComponent } from './components/microondas/microondas.component';
 import { VigilanteGuard } from './vigilante.guard';
+import { RecetaShareComponent } from './components/receta-share/receta-share.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent, canActivate: [VigilanteGuard] },
@@ -21,6 +22,10 @@ const routes: Routes = [
     canActivate: [VigilanteGuard],
   },
   { path: 'receta', component: RecetaComponent, canActivate: [VigilanteGuard] },
+  {
+    path: 'receta-share',
+    component: RecetaShareComponent,
+  },
   {
     path: 'ocasion',
     component: OcasionComponent,

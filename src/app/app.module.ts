@@ -14,6 +14,7 @@ import { DietaComponent } from './components/dieta/dieta.component';
 import { HttpClientModule } from '@angular/common/http';
 import { MicroondasComponent } from './components/microondas/microondas.component';
 import { EncuestaComponent } from './components/encuesta/encuesta.component';
+import { RecetaShareComponent } from './components/receta-share/receta-share.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { EncuestaComponent } from './components/encuesta/encuesta.component';
     TipoComidaComponent,
     DietaComponent,
     MicroondasComponent,
-    EncuestaComponent
+    EncuestaComponent,
+    RecetaShareComponent
   ],
   imports: [
     BrowserModule,
