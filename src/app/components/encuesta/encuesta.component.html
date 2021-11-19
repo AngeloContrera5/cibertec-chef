@@ -1,0 +1,391 @@
+<div class="content-wrapper" style="padding-left: 60px;padding-right:60px;">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1>
+                        Encuesta
+                    </h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item active">Encuesta</li>
+                    </ol>
+                </div>
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card card-warning card-outline">
+                        <div class="card-header">
+                            <h3 class="card-title">
+                                <i class="fas fa-arrow-circle-right p-1"></i>
+                                Registrar Encuesta
+                            </h3>
+                        </div>
+                        <div class="card-body">
+                            <form id="idRegistrar" role="form" method="post">
+                                <div class="row">
+
+                                    <div class="col-sm-12">
+                                        <div class="form-group col-sm-12 ">
+                                            <label for="idnombre">Título de la encuesta</label>
+                                            <input type="text" class="form-control" id="tituloEncuesta" name="tituloEncuesta" placeholder="" [(ngModel)] = "tituloEncuesta">
+                                        </div>
+
+                                        <div class="col-sm-12">
+                                            <label for="" style="width: 100%;">Detalle de la Encuesta
+                                                <hr>
+                                            </label>
+
+                                        </div>
+                                        <div class="form-group col-sm-12 ">
+                                            <button type="button" class="btn btn-warning " data-toggle="modal"
+                                                data-target="#modalNuevoItem" (click)="modal.open(contenidoModalNuevoItem)" id="btnNuevoItem">
+                                                <!-- REVISAR AQUI!!!!! (ARRIBA ESTA EL CLICK) -->
+                                                <i class="fas fa-file-medical"></i> Nuevo Item</button>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12" style="margin: auto;padding: auto;">
+                                        <div class="col-sm-8">
+                                            <div class="table-responsive">
+                                                <table id="example2" class="table table-bordered ">
+                                                    <thead>
+                                                        <tr>
+                                                            <!-- <th>Id</th> -->
+                                                            <th>Nombre de Receta</th>
+                                                            <th>Puntuación</th>
+                                                            <th class="ult-col"></th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr *ngFor="let aux of itemLista" >
+                                                            <!-- <td>{{aux.id}}</td> -->
+                                                            <td>{{aux.nombre_receta}}</td>
+                                                            <td>{{aux.puntuacion}}</td>
+                                                            <td
+                                                                class="d-flex align-items-center justify-content-center">
+                                                                <button type="button" class="btn btn-info mr-2"
+                                                                    data-toggle="modal" id="btnEditarItem"
+                                                                    data-target="#modalEditarItem" (click)="mostrarModalActualizarItem(contenidoModalActualizarItem,aux)">
+                                                                    <i class="fas fa-edit"></i>
+                                                                </button>
+                                                                <button type="button" class="btn btn-danger"
+                                                                    data-toggle="modal" data-target="#modalEliminarItem"
+                                                                    id="btnEliminar" (click)="eliminarItemRegistro(aux)">
+                                                                    <i class="fas fa-trash-alt"></i>
+                                                                </button>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-12 ">
+                                        <button type="button" class="btn btn-outline-secondary float-right m-2"
+                                            id="btnLimpiar" (click)="limpiarItem()">
+                                            <i class="fas fa-broom p-1"></i><span class="boton">Limpiar</span></button>
+                                        <button type="submit" (click)="registrarEncuesta()" class="btn btn-info float-right m-2 " id="btnRegistrar">
+                                            <i class="fas fa-save p-1"></i><span class="boton">Registrar</span></button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <!-- /.card -->
+                    </div>
+                </div>
+                <!-- /.col -->
+            </div>
+            <!-- ./row -->
+        </div><!-- /.container-fluid -->
+
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card card-warning card-outline">
+                        <div class="card-header">
+                            <h3 class="card-title">
+                                <i class="fas fa-arrow-circle-right p-1"></i>
+                                Lista de Encuestas
+                            </h3>
+                        </div>
+                        <div class="card-body">
+                            <table id="example1" class="table table-bordered ">
+                                <thead>
+                                    <tr>
+                                        <th>Código</th>
+                                        <th>Título del Encuesta</th>
+                                        <th>Usuario</th>
+                                        <th>Fecha de Registro</th>
+                                        <th>Estado</th>
+                                        <th class="ult-col"></th>
+                                    </tr>
+                                </thead>
+                                <tbody *ngIf="allDataFetched">
+                                    <tr *ngFor="let aux of encuesta">
+                                        <td>{{aux.id_encuesta}}</td>
+                                        <td>{{aux.titulo_encuesta}}</td>
+                                        <td>{{aux.usuario?.usuario}}</td>
+                                        <td>{{aux.fecha_registra}}</td>
+                                        <td *ngIf="aux.estado==1" >Activo</td>
+                                        <td class="d-flex align-items-center justify-content-center">
+                                            <button type="button" class="btn btn-warning mr-2" data-toggle="modal"
+                                                data-target="#modalVer" id="btnVer" (click)="mostrarModalVerEncuesta(contenidoModalVerEncuesta,aux)">
+                                                <i class="fas fa-eye"></i></button>
+                                            <button type="button" class="btn btn-info mr-2" data-toggle="modal"
+                                                id="btnEditar" (click)="mostrarModalVerEncuesta(contenidoModalActualizarEncuesta,aux)">
+                                                <i class="fas fa-edit"></i></button>
+                                            <button type="button" class="btn btn-danger" data-toggle="modal" (click)="enviarIdEncuestaFinalizar(aux.id_encuesta)"
+                                                data-target="#modalFinalizar" id="btnFinalizar">
+                                                <i class="fas fa-hourglass-end"></i></button>
+                                        </td>
+                                    </tr>
+                            </table>
+                        </div>
+                        <!-- /.card -->
+                    </div>
+                </div>
+                <!-- /.col -->
+            </div>
+            <!-- ./row -->
+        </div><!-- /.container-fluid -->
+
+        
+
+
+        <!-- Modal NuevoItem-->
+        <ng-template #contenidoModalNuevoItem let-modal>
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Nuevo Item</h5>
+                <button type="button" class="close" (click)="modal.dismiss()" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" style="padding-top: 0px;">
+                <div class="row">
+                    <div class="card-body">
+                        <div class="row p-3">
+                            <div class="col-sm-12">
+                                <div class="form-group col-sm-12 ">
+                                    <label for="idnombreReceta">Nombre de Receta</label>
+                                    <input type="text" class="form-control" id="idnombreReceta" placeholder=""
+                                    name="nombreRecetaReg" [(ngModel)] = "nombreRecetaReg">
+                                </div>
+                                <div class="form-group col-sm-12 ">
+                                    <label for="idnombre">Puntuación</label>
+                                    <input type="text" class="form-control" value="0" readonly
+                                    name="puntuacionRecetaReg" [(ngModel)] = "puntuacionRecetaReg">
+                                </div>
+                            </div>
+                            <div class="col-sm-12 " style="text-align: center;">
+                                <button type="button" class="btn btn-warning " data-toggle="modal"
+                                    id="btnNuevoItemModal" (click)="agregarItemReg()">
+                                    <i class="fas fa-file-medical"></i> Agregar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>  
+        </ng-template>
+
+        <!-- Modal EditarItem-->
+        <ng-template #contenidoModalActualizarItem let-modal>
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Editar Item</h5>
+                <button type="button" class="close" (click)="modal.dismiss()" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" style="padding-top: 0px;">
+                <div class="row">
+                    <div class="card-body">
+                        <div class="row p-3">
+                            <div class="col-sm-12">
+                                <div class="form-group col-sm-12 ">
+                                    <label for="idnombreReceta">Nombre de Receta </label>
+                                    <input type="text" class="form-control" id="idnombreRecetaEdit" placeholder=""
+                                    [(ngModel)] = "nombreRecetaAct">
+                                </div>
+                                <div class="form-group col-sm-12 ">
+                                    <label for="idnombre">Puntuación</label>
+                                    <input type="text" class="form-control" value="0" readonly name="puntuacionRecetaReg"
+                                    [(ngModel)] = "puntuacionRecetaAct">
+                                </div>
+                            </div>
+                            <div class="col-sm-12 " style="text-align: center;">
+                                <button type="button" class="btn btn-warning " data-toggle="modal"
+                                    id="btnNuevoItemModal" (click)="actualizarItemArray()">
+                                    <i class="fas fa-edit"></i> Editar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </ng-template> 
+
+        
+
+        <!-- Modal Ver detalle-->
+        <ng-template #contenidoModalVerEncuesta let-modal>
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Detalle de Encuesta N° {{encuesta_by_id.id_encuesta}}<span
+                        id="detalle11"></span></h5>
+
+                <button type="button" class="close" (click)="modal.dismiss()" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" style="padding-top: 0px;">
+                <div class="row">
+                    <div class="card-body">
+                        <div class="row card1">
+                            <div class="col-sm-12">
+                                <div class="form-group row" style="margin-bottom: 1px; color: #fda614;">
+                                    <h2 class="col-sm-12" id="detalle1">{{encuesta_by_id.titulo_encuesta}}</h2>
+                                </div>
+                                
+                                <div class="form-group row" style="margin-bottom: 1px;">
+                                    <label for="staticEmail" class="col-sm-5 col-form-label">Usuario:</label>
+                                    <div class="col-sm-6">
+                                        <p class="form-control-plaintext">{{encuesta_by_id.usuario?.usuario}}</p>
+                                    </div>
+                                </div>
+                                <div class="form-group row" style="margin-bottom: 1px;">
+                                    <label for="staticEmail" class="col-sm-5 col-form-label">Fecha de registro:</label>
+                                    <div class="col-sm-6">
+                                        <p class="form-control-plaintext">{{encuesta_by_id.fecha_registra}}</p>
+                                    </div>
+                                </div>
+                                <div class="form-group row" >
+                                    <label for="staticEmail" class="col-sm-5 col-form-label">Fecha de actualización:</label>
+                                    <div class="col-sm-6">
+                                        <p class="form-control-plaintext">{{encuesta_by_id.fecha_actualiza}}</p>
+                                    </div>
+                                </div>
+                                <div class="table-responsive">
+                                    <table id="example2" class="table table-bordered ">
+                                        <thead>
+                                            <tr>
+                                                <th>Código</th>
+                                                <th>Nombre de Receta</th>
+                                                <th>Puntuación</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let aux of itemListaActualizar">
+                                                <td>{{aux.id_encuesta_item}}</td>
+                                                <td>{{aux.nombre_receta}}</td>
+                                                <td>{{aux.puntuacion}}</td>
+                                            </tr>
+                                        </tbody>   
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </ng-template>
+
+        <!-- Modal Actualizar -->
+        <ng-template #contenidoModalActualizarEncuesta let-modal class="">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Actualizar de Encuesta N° {{encuesta_by_id.id_encuesta}}<span
+                        id="detalle11"></span></h5>
+
+                <button type="button" class="close" (click)="modal.dismiss()" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" style="padding-top: 0px;">
+                <div class="row">
+                    <div class="card-body">
+                        <div class="row card1">
+                            <div class="col-sm-12">
+                                
+                                    <div class="form-group row" style="margin-bottom: 1px; color: #fda614; font-size: 17px;">
+                                        <label for="idnombre">Cabecera de la Encuesta</label>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="idnombre">Título de la encuesta:</label>
+                                        <input type="text" class="form-control" placeholder="" value="{{encuesta_by_id.titulo_encuesta}}" 
+                                        id="tituloEncuestaActualiza" name="tituloEncuestaActualiza" [(ngModel)] = "tituloEncuestaActualiza">
+                                    </div>
+                                    <div class="form-group row" style="margin-bottom: 1px; color: #fda614; font-size: 17px;">
+                                        <label for="idnombre">Detalle de Encuesta</label>
+                                    </div>
+                                    <div *ngFor="let aux of itemListaActualizar; let i= index" class="form-group row">
+                                        <label for="idnombre">Titlo de la Receta:</label>
+                                        <input type="text" class="form-control" placeholder="" value="{{aux.nombre_receta}}" 
+                                        id="tituloRecetaActualiza" name="tituloRecetaActualiza" [(ngModel)] = "tituloRecetaActualiza[i]" > <!--  -->
+                                    </div>
+                                    <div class="col-sm-15 ">
+                                        <button type="button" class="btn btn-outline-secondary float-right m-2"
+                                            id="btnLimpiar" (click)="modal.dismiss()">
+                                            <i class="fas fa-times p-1"></i><span class="boton">Cancelar</span></button>
+                                        <button type="submit" (click)="ActualizarEncuesta()" class="btn btn-info float-right m-2 " 
+                                            id="btnRegistrar">
+                                            <i class="fas fa-save p-1"></i><span class="boton">Actualizar</span></button>
+                                    </div>
+                                    
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </ng-template>
+
+
+
+        <div class="modal fade" id="modalFinalizar" tabindex="-1" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog  modal-dialog-centered modal-lg">
+                <div class="modal-content">
+
+                    <div class="modal-body" style="padding-top: 5%;">
+                        <form method="post">
+                            <input type="hidden" id="idFinalizar" name="codigoEliminar">
+                            <h4>¿Seguro que deseas finalizar Encuesta?</h4>
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-info" data-dismiss="modal" (click)="finalizarEncuesta()">Sí</button>
+                                <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">No</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- <div class="modal fade" id="modalEliminarItem" tabindex="-1" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog  modal-dialog-centered modal-lg">
+                <div class="modal-content">
+
+                    <div class="modal-body" style="padding-top: 5%;">
+                        <form method="post">
+                            <input type="hidden" id="idEliminarItem" name="codigoEliminarItem">
+                            <h4>¿Seguro que deseas eliminar Item?</h4>
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-info">Sí</button>
+                                <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">No</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div> -->
+        <!-- /.modal -->
+
+    </section>
+    <!-- /.content -->
+</div>

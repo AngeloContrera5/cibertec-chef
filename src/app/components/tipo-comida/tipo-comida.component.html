@@ -1,0 +1,130 @@
+<div class="content-wrapper" style="padding-left: 60px;padding-right:60px;">
+  <!-- Content Header (Page header) -->
+  <section class="content-header">
+    <div class="container-fluid">
+      <div class="row mb-2">
+        <div class="col-sm-6">
+          <h1>
+            Tipo de Comida
+          </h1>
+        </div>
+        <div class="col-sm-6">
+          <ol class="breadcrumb float-sm-right">
+            <li class="breadcrumb-item"><a href="#">Home</a></li>
+            <li class="breadcrumb-item active">Tipo de Comida</li>
+          </ol>
+        </div>
+      </div>
+    </div><!-- /.container-fluid -->
+  </section>
+
+  <!-- Main content -->
+  <section class="content">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card card-warning card-outline">
+            <div class="card-header">
+              <h3 class="card-title">
+                <i class="fas fa-arrow-circle-right p-1"></i>
+               <span id="titulo">Registrar Tipo de Comida</span> 
+              </h3>
+            </div>
+            <div class="card-body">
+              <form id="idRegistrar" role="form" method="post" (ngSubmit)="registra()">
+                <div class="row">
+                  <input type="text" class="form-control" id="idCodTipoComida"  value="" hidden>
+                  <div class="col-sm-8">
+                    <div class="form-group col-sm-12 ">
+                      <label for="idnombre">Nombre de tipo de comida</label>
+                      <input type="text" class="form-control" id="idnombre" placeholder="" name="nombre"  
+                       [(ngModel)]="tipo.nombre" 
+                     >
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-12 ">
+                    <button type="button" class="btn btn-outline-secondary float-right m-2" id="btnLimpiar">
+                      <i class="fas fa-broom p-1"></i><span class="boton">Limpiar</span></button>
+                    <button type="button" class="btn btn-info float-right m-2 " id="btnRegistrar">
+                      <i class="fas fa-save p-1"></i><span class="boton" id="boton">Registrar</span></button>
+                  </div>
+                </div>
+              </form>
+
+            </div>
+            <!-- /.card -->
+          </div>
+
+
+        </div>
+        <!-- /.col -->
+      </div>
+      <!-- ./row -->
+    </div><!-- /.container-fluid -->
+
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card card-warning card-outline">
+            <div class="card-header">
+              <h3 class="card-title">
+                <i class="fas fa-arrow-circle-right p-1"></i>
+                Lista de Tipo de Comidas
+              </h3>
+            </div>
+            <div class="card-body">
+              <table id="example1" class="table table-bordered ">
+                <thead>
+                  <tr>
+                    <th>Código</th>
+                    <th>Nombre de tipo de comida</th>
+                    <th>Usuario</th>
+                    <th>Fecha de registro</th>
+                    <th>Fecha de actualización</th>
+                    <th>Estado</th>
+                    <th class="ult-col"></th>
+
+
+                  </tr>
+                </thead>
+                <tbody *ngIf="allDataFetched">
+                  <tr *ngFor="let obj of tipos">
+                    <td>{{obj.id_tipo_comida}}</td>
+                    <td>{{obj.nombre}} </td>
+                    <td> {{obj.usuario!.nombres}}  {{obj.usuario!.apellidos}}</td>
+                    <td> {{obj.fecha_registra | date : 'dd/MM/yyyy'}}</td>
+                    <td *ngIf="obj.fecha_actualiza!=null"> {{obj.fecha_actualiza | date : 'dd/MM/yyyy'}}</td>
+                    <td *ngIf="obj.fecha_actualiza==null">No existe</td>
+                    <td *ngIf="obj.estado==1">Activo</td>
+                    <td *ngIf="obj.estado==2">Inactivo</td>
+                    <td class="d-flex align-items-center justify-content-center">
+                      <button type="button" class="btn btn-info mr-2" data-toggle="modal" id="btnEditar">
+                        <i class="fas fa-edit"></i></button>
+                        <form id="idEliminar" role="form" (ngSubmit)="elimina(obj.id_tipo_comida,obj.estado)">
+                          <button type="submit" class="btn btn-danger" 
+                          id="btnEliminar" >  <i class="fas fa-trash-alt"></i></button>
+                          </form>
+                    </td>
+                  </tr>
+
+              </table>
+            </div>
+            <!-- /.card -->
+          </div>
+
+
+        </div>
+        <!-- /.col -->
+      </div>
+      <!-- ./row -->
+    </div><!-- /.container-fluid -->
+
+
+    
+    <!-- /.modal -->
+
+  </section>
+  <!-- /.content -->
+</div>
